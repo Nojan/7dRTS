@@ -1,0 +1,34 @@
+#include "graphicentity.h"
+
+#include <QPainter>
+
+GraphicEntity::GraphicEntity()
+{
+}
+
+QRectF GraphicEntity::boundingRect() const
+{
+  return QRectF(-10, -10, 10, 10);
+}
+
+QPainterPath GraphicEntity::shape() const
+{
+  QPainterPath path;
+  path.addRect(-10, -10, 10, 10);
+  return path;
+}
+
+void GraphicEntity::paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
+           QWidget *widget)
+{
+  painter->setBrush(Qt::red);
+  painter->drawEllipse(-10, -10, 10, 10);
+}
+
+void GraphicEntity::advance(int step)
+{
+  if(step<1)
+    return;
+
+  setPos(pos()+QPointF(1.f, 0.f));
+}
