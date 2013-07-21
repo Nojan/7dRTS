@@ -15,8 +15,16 @@ TEMPLATE = app
 SOURCES += main.cpp\
            gameview.cpp \
     graphicentity.cpp \
-    gameworld.cpp
+    gameworld.cpp \
+    entitymanager.cpp \
+    entityposition.cpp \
+    entitymodule.cpp \
+    entitygraphicholder.cpp
 
 HEADERS  += gameview.h \
     graphicentity.h \
-    gameworld.h
+    gameworld.h \
+    entitymanager.h \
+    entityposition.h \
+    entitymodule.h \
+    entitygraphicholder.h

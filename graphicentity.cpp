@@ -25,10 +25,15 @@ void GraphicEntity::paint(QPainter *painter, const QStyleOptionGraphicsItem *opt
   painter->drawEllipse(-10, -10, 10, 10);
 }
 
+void GraphicEntity::setPosition(int x, int y)
+{
+  _position = QPointF(x, y);
+}
+
 void GraphicEntity::advance(int step)
 {
   if(step<1)
     return;
 
-  setPos(pos()+QPointF(1.f, 0.f));
+  setPos(_position);
 }
