@@ -13,17 +13,15 @@ public:
   explicit GameView(QGraphicsScene *scene, QWidget *parent = 0);
 
 signals:
+  void switchPause();
 
 public slots:
 
 protected:
   virtual void keyPressEvent(QKeyEvent *event);
 
-protected:
-  void switchPause();
-
 private:
-  QTimer _gameplayTimer;
+
 
 };
 

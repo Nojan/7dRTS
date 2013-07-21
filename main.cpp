@@ -1,5 +1,5 @@
 #include "gameview.h"
-#include "graphicentity.h"
+#include "gameworld.h"
 
 #include <QApplication>
 #include <QtWidgets>
@@ -8,13 +8,9 @@ int main(int argc, char *argv[])
 {
   QApplication a(argc, argv);
 
-  QGraphicsScene scene;
-  scene.setSceneRect(-300, -300, 600, 600);
-  scene.setItemIndexMethod(QGraphicsScene::NoIndex);
+  GameWorld world;
 
-  scene.addItem(new GraphicEntity());
-
-  GameView view(&scene);
+  GameView view(world.scene());
   view.setRenderHint(QPainter::Antialiasing);
   view.setCacheMode(QGraphicsView::CacheBackground);
   view.setViewportUpdateMode(QGraphicsView::BoundingRectViewportUpdate);
@@ -22,6 +18,8 @@ int main(int argc, char *argv[])
   view.setWindowTitle("7dRTS");
   view.resize(400, 300);
   view.show();
+
+  QObject::connect(&view, SIGNAL(switchPause()), &world, SLOT(switchPause()));
 
   return a.exec();
 }

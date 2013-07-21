@@ -14,7 +14,9 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
            gameview.cpp \
-    graphicentity.cpp
+    graphicentity.cpp \
+    gameworld.cpp
 
 HEADERS  += gameview.h \
-    graphicentity.h
+    graphicentity.h \
+    gameworld.h
