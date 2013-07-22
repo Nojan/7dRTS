@@ -3,6 +3,7 @@
 #include "entitygraphicholder.h"
 #include "entitymodule.h"
 #include "entityposition.h"
+#include "entityteam.h"
 
 #include <assert.h>
 
@@ -23,6 +24,7 @@ size_t EntityManager::createEntityId()
   ++_maxEntity;
   _positionModules.push_back(NULL);
   _graphicHolderModules.push_back(NULL);
+  _teamModules.push_back(NULL);
   return entityId;
 }
 
@@ -62,6 +64,17 @@ EntityGraphicHolder *EntityManager::GraphicHolderModule(size_t entityId)
   return _graphicHolderModules[entityId];
 }
 
+void EntityManager::registerTeamModule(EntityTeam *module)
+{
+  assert(NULL == _teamModules[module->entityId()]);
+  _teamModules[module->entityId()] = module;
+}
+
+EntityTeam *EntityManager::TeamModule(size_t entityId)
+{
+  assert(entityId < _maxEntity);
+  return _teamModules[entityId];
+}
 
 size_t EntityManagerHelpers::createSimpleUnit(GraphicEntity *graphicEntity)
 {
@@ -69,5 +82,6 @@ size_t EntityManagerHelpers::createSimpleUnit(GraphicEntity *graphicEntity)
   const size_t entityId = entityManager.createEntityId();
   entityManager.registerPositionModule(new EntityPosition(entityId));
   entityManager.registerGraphicHolderModule(new EntityGraphicHolder(entityId, graphicEntity));
+  entityManager.registerTeamModule(new EntityTeam(entityId));
   return entityId;
 }
