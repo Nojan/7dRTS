@@ -22,7 +22,8 @@ SOURCES += main.cpp\
     entitymodule.cpp \
     entitygraphicholder.cpp \
     entityteam.cpp \
-    generalmap.cpp
+    generalmap.cpp \
+    graphicmap.cpp
 
 HEADERS  += gameview.h \
     graphicentity.h \
@@ -32,4 +33,5 @@ HEADERS  += gameview.h \
     entitymodule.h \
     entitygraphicholder.h \
     entityteam.h \
-    generalmap.h
+    generalmap.h \
+    graphicmap.h
