@@ -27,5 +27,5 @@ void EntityGraphicHolder::update()
 {
   EntityManager& entityManager = EntityManager::Instance();
   EntityPosition* position = entityManager.positionModule(entityId());
-  _entityGraphics->setPosition(position->position().x, position->position().y);
+  _entityGraphics->setPosition(position->position().x(), position->position().y());
 }
