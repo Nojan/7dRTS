@@ -6,6 +6,7 @@
 
 class EntityGraphicHolder;
 class EntityModule;
+class EntityStateMachine;
 class EntityTeam;
 class EntityPosition;
 class GraphicEntity;
@@ -25,6 +26,9 @@ public:
   void registerGraphicHolderModule(EntityGraphicHolder* module);
   EntityGraphicHolder* GraphicHolderModule(size_t entityId);
 
+  void registerStateMachineModule(EntityStateMachine* module);
+  EntityStateMachine* stateMachineModule(size_t entityId);
+
   void registerTeamModule(EntityTeam* module);
   EntityTeam* TeamModule(size_t entityId);
 
@@ -35,6 +39,7 @@ private:
   size_t _maxEntity;
   std::vector<EntityPosition*> _positionModules;
   std::vector<EntityGraphicHolder*> _graphicHolderModules;
+  std::vector<EntityStateMachine*> _stateMachineModules;
   std::vector<EntityTeam*> _teamModules;
 };
 

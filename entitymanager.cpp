@@ -3,6 +3,7 @@
 #include "entitygraphicholder.h"
 #include "entitymodule.h"
 #include "entityposition.h"
+#include "entitystatemachine.h"
 #include "entityteam.h"
 
 #include <assert.h>
@@ -24,6 +25,7 @@ size_t EntityManager::createEntityId()
   ++_maxEntity;
   _positionModules.push_back(NULL);
   _graphicHolderModules.push_back(NULL);
+  _stateMachineModules.push_back(NULL);
   _teamModules.push_back(NULL);
   return entityId;
 }
@@ -37,6 +39,10 @@ void EntityManager::processModules(int deltaMs)
   foreach(EntityGraphicHolder* graphicModule, _graphicHolderModules)
   {
     graphicModule->update();
+  }
+  foreach(EntityStateMachine* stateMachineModule, _stateMachineModules)
+  {
+    stateMachineModule->update();
   }
 }
 
@@ -64,6 +70,18 @@ EntityGraphicHolder *EntityManager::GraphicHolderModule(size_t entityId)
   return _graphicHolderModules[entityId];
 }
 
+void EntityManager::registerStateMachineModule(EntityStateMachine *module)
+{
+  assert(NULL == _stateMachineModules[module->entityId()]);
+  _stateMachineModules[module->entityId()] = module;
+}
+
+EntityStateMachine *EntityManager::stateMachineModule(size_t entityId)
+{
+  assert(entityId < _maxEntity);
+  return _stateMachineModules[entityId];
+}
+
 void EntityManager::registerTeamModule(EntityTeam *module)
 {
   assert(NULL == _teamModules[module->entityId()]);
@@ -82,6 +100,7 @@ size_t EntityManagerHelpers::createSimpleUnit(GraphicEntity *graphicEntity)
   const size_t entityId = entityManager.createEntityId();
   entityManager.registerPositionModule(new EntityPosition(entityId));
   entityManager.registerGraphicHolderModule(new EntityGraphicHolder(entityId, graphicEntity));
+  entityManager.registerStateMachineModule(new EntityStateMachine(entityId));
   entityManager.registerTeamModule(new EntityTeam(entityId));
   return entityId;
 }
