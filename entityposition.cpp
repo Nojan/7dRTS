@@ -9,7 +9,7 @@ EntityPosition::EntityPosition(size_t entityId, const Eigen::Vector2f position)
 {
 }
 
-Eigen::Vector2f EntityPosition::position()
+Eigen::Vector2f EntityPosition::position() const
 {
   return _position;
 }
