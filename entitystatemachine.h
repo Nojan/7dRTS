@@ -1,5 +1,6 @@
 #ifndef ENTITYSTATEMACHINE_H
 #define ENTITYSTATEMACHINE_H
+#include "pch.h"
 
 #include "entitymodule.h"
 

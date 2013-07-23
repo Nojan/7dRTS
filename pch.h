@@ -6,7 +6,9 @@
 #ifdef __cplusplus
 // add C++ includes here
 
+#include <cfloat>
 #include <cmath>
+#include <climits>
 
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunused-local-typedefs"
