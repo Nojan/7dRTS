@@ -6,7 +6,10 @@
 #ifdef __cplusplus
 // add C++ includes here
 
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-local-typedefs"
 #include <Eigen/Eigen>
+#pragma GCC diagnostic pop
 
 #endif // __cplusplus
 
