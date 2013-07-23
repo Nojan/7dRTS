@@ -6,30 +6,40 @@
 #include <vector>
 #include <limits>
 
+// core
+#include "grid.h"
+
 
 // forward declaration
-class EntityManager;
 
 namespace core
 {
+
+// forward declaration
+class GimpImage;
+
 
 typedef unsigned int tile_index;
 
 
 struct Tile
 {
-  enum Type {Grass=0, Path, Floor, None};
+  enum class Type {Free, Obstacle, None};
+  enum class Texture {Grass, Wall, Floor, Path, None};
 
   Tile()
-    : type(None)
+    : type(Type::None)
+    , texture(Texture::None)
   {}
 
-  Tile(Type t)
+  Tile(Type t, Texture tex)
     : type(t)
+    , texture(tex)
   {}
 
 
   Type type;
+  Texture texture;
 };
 
 
@@ -64,25 +74,23 @@ struct Door
 
 
   tile_index from, to;
-  /// @todo add faction
-  /// @todo add life
-  /// @todo maybe door must be an entity ?
 };
 
-
-typedef std::vector<std::vector<Tile> > TileGrid;
 
 
 class GeneralMap
 {
 public:
+  static GeneralMap&& fromGimpImage(const GimpImage& gImage);
+
+public:
   // since we must copy tile, obstacles and doors we can pass it by value.
   // this allow compiler optimization and it's less verbose.
-  GeneralMap(TileGrid tiles, std::vector<Obstacle> obstacles,
-             std::vector<Door> doors, const EntityManager* entityManager);
+  GeneralMap(Grid<Tile> tiles, std::vector<Obstacle> obstacles,
+             std::vector<Door> doors);
 
   // accessors
-  const TileGrid& tileGrid() const
+  const Grid<Tile>& tileGrid() const
   {
     return _tileGrid;
   }
@@ -97,16 +105,10 @@ public:
     return _doors;
   }
 
-  const EntityManager* entityManager() const
-  {
-    return _entityManager;
-  }
-
 private:
-  TileGrid _tileGrid;
+  Grid<Tile> _tileGrid;
   std::vector<Obstacle> _obstacles;
   std::vector<Door> _doors;
-  const EntityManager* _entityManager;
 };
 
 }
