@@ -20,6 +20,11 @@ EntityManager::EntityManager()
 {
 }
 
+size_t EntityManager::entityCount() const
+{
+  return _maxEntity;
+}
+
 size_t EntityManager::createEntityId()
 {
   const size_t entityId = _maxEntity;

@@ -19,6 +19,7 @@ class EntityManager
 public:
   static EntityManager& Instance();
 
+  size_t entityCount() const;
   size_t createEntityId();
 
   void processModules(int deltaMs);
