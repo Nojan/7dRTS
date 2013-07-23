@@ -22,8 +22,8 @@ GeneralMap GeneralMap::fromGimpImage(const GimpImage& gImage)
   {
     for(std::size_t y = 0; y < tileGrid.height(); ++y)
     {
-      Tile::Type type;
-      Tile::Texture tex;
+      Tile::Type type = Tile::Type::None;
+      Tile::Texture tex = Tile::Texture::None;
       const GimpColor& c = gImage(x, y);
       if(c == gimpGrass)
       {
