@@ -15,8 +15,17 @@ GameWorld::GameWorld(QObject *parent) :
   {
     GraphicEntity * unitGraphic = new GraphicEntity();
     unitGraphic->setBrush(Qt::red);
-    const Eigen::Vector2f position(0,0);
+    const Eigen::Vector2f position(0,15);
     const EntityTeam::Team team(EntityTeam::TeamA);
+    EntityManagerHelpers::createSimpleUnit(unitGraphic, position, team);
+    _graphicsScene.addItem(unitGraphic);
+  }
+
+  {
+    GraphicEntity * unitGraphic = new GraphicEntity();
+    unitGraphic->setBrush(Qt::blue);
+    const Eigen::Vector2f position(30,-15);
+    const EntityTeam::Team team(EntityTeam::TeamB);
     EntityManagerHelpers::createSimpleUnit(unitGraphic, position, team);
     _graphicsScene.addItem(unitGraphic);
   }
