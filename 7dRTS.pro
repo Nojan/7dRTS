@@ -29,7 +29,8 @@ SOURCES += main.cpp\
     entitystatemachine.cpp \
     entityteam.cpp \
     generalmap.cpp \
-    graphicmap.cpp
+    graphicmap.cpp \
+    hardcodedmap.cpp
 
 HEADERS  += pch.h\
     gameview.h \
@@ -43,4 +44,6 @@ HEADERS  += pch.h\
     entityteam.h \
     generalmap.h \
     graphicmap.h \
-
+    gimpimage.h \
+    hardcodedmap.h \
+    grid.h
