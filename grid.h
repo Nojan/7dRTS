@@ -6,6 +6,8 @@
 // std
 #include <vector>
 
+namespace core
+{
 
 template <typename T>
 class Grid
@@ -83,5 +85,6 @@ inline const T& Grid<T>::operator()(std::size_t x, std::size_t y) const
   return _data[x + y*_width];
 }
 
+} // core
 
 #endif // GRID_H
