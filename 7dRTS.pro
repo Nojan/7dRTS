@@ -10,10 +10,13 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = 7dRTS
 TEMPLATE = app
+CONFIG += precompile_header
 
 QMAKE_CXXFLAGS += -std=c++11
 
 INCLUDEPATH += external
+
+PRECOMPILED_HEADER = pch.h
 
 SOURCES += main.cpp\
            gameview.cpp \
@@ -28,7 +31,8 @@ SOURCES += main.cpp\
     generalmap.cpp \
     graphicmap.cpp
 
-HEADERS  += gameview.h \
+HEADERS  += pch.h\
+    gameview.h \
     graphicentity.h \
     gameworld.h \
     entitymanager.h \
@@ -38,4 +42,5 @@ HEADERS  += gameview.h \
     entitystatemachine.h \
     entityteam.h \
     generalmap.h \
-    graphicmap.h
+    graphicmap.h \
+
