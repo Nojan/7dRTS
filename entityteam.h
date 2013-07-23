@@ -12,7 +12,7 @@ public:
     Invalid
   };
 
-  EntityTeam(size_t entityId);
+  EntityTeam(size_t entityId, Team team);
 
   Team team() const;
 

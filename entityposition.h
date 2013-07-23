@@ -7,7 +7,7 @@
 class EntityPosition : public EntityModule
 {
 public:
-  EntityPosition(size_t entityId);
+  EntityPosition(size_t entityId, const Eigen::Vector2f position);
 
   Eigen::Vector2f position();
   void setPosition(const Eigen::Vector2f position);

@@ -50,9 +50,4 @@ private:
   std::vector<EntityTeam*> _teamModules;
 };
 
-namespace EntityManagerHelpers
-{
-size_t createSimpleUnit(GraphicEntity* graphicEntity);
-}
-
 #endif // ENTITYMANAGER_H

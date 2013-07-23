@@ -116,15 +116,3 @@ EntityTeam *EntityManager::TeamModule(size_t entityId)
   assert(entityId < _maxEntity);
   return _teamModules[entityId];
 }
-
-size_t EntityManagerHelpers::createSimpleUnit(GraphicEntity *graphicEntity)
-{
-  EntityManager& entityManager = EntityManager::Instance();
-  const size_t entityId = entityManager.createEntityId();
-  entityManager.registerPositionModule(new EntityPosition(entityId));
-  entityManager.registerMovementModule(new EntityMovement(entityId));
-  entityManager.registerGraphicHolderModule(new EntityGraphicHolder(entityId, graphicEntity));
-  entityManager.registerStateMachineModule(new EntityStateMachine(entityId));
-  entityManager.registerTeamModule(new EntityTeam(entityId));
-  return entityId;
-}

@@ -3,8 +3,9 @@
 #include "entitymanager.h"
 #include "entitymovement.h"
 
-EntityPosition::EntityPosition(size_t entityId)
+EntityPosition::EntityPosition(size_t entityId, const Eigen::Vector2f position)
   : EntityModule(entityId)
+  , _position(position)
 {
 }
 

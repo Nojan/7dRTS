@@ -1,8 +1,8 @@
 #include "entityteam.h"
 
-EntityTeam::EntityTeam(size_t entityId)
+EntityTeam::EntityTeam(size_t entityId, Team team)
   : EntityModule(entityId)
-  , _team(EntityTeam::Team::Invalid)
+  , _team(team)
 {
 }
 
