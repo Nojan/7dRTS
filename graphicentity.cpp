@@ -21,6 +21,8 @@ QPainterPath GraphicEntity::shape() const
 void GraphicEntity::paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
            QWidget *widget)
 {
+  Q_UNUSED(option)
+  Q_UNUSED(widget);
   painter->setBrush(Qt::red);
   painter->drawEllipse(-10, -10, 10, 10);
 }

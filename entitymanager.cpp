@@ -30,7 +30,7 @@ size_t EntityManager::createEntityId()
   return entityId;
 }
 
-void EntityManager::processModules(int deltaMs)
+void EntityManager::processModules(int /*deltaMs*/)
 {
   foreach(EntityPosition* positionModule, _positionModules)
   {
