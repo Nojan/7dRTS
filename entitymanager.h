@@ -1,6 +1,8 @@
 #ifndef ENTITYMANAGER_H
 #define ENTITYMANAGER_H
 
+#include "pch.h"
+
 #include <stdlib.h>
 #include <vector>
 

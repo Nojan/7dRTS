@@ -6,6 +6,8 @@
 #ifdef __cplusplus
 // add C++ includes here
 
+#include <Eigen/Eigen>
+
 #endif // __cplusplus
 
 #endif // PCH_H

@@ -34,7 +34,7 @@ void EntityManager::processModules(int deltaMs)
 {
   foreach(EntityPosition* positionModule, _positionModules)
   {
-    positionModule->setPosition(positionModule->position()+int2(1,0));
+    positionModule->setPosition(positionModule->position()+Eigen::Vector2i(1,0));
   }
   foreach(EntityGraphicHolder* graphicModule, _graphicHolderModules)
   {

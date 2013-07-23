@@ -1,5 +1,6 @@
 #ifndef ENTITYPOSITION_H
 #define ENTITYPOSITION_H
+#include "pch.h"
 
 #include "entitymodule.h"
 
@@ -36,11 +37,11 @@ class EntityPosition : public EntityModule
 public:
   EntityPosition(size_t entityId);
 
-  int2 position();
-  void setPosition(const int2 position);
+  Eigen::Vector2i position();
+  void setPosition(const Eigen::Vector2i position);
 
 private:
-  int2 _position;
+  Eigen::Vector2i _position;
 };
 
 #endif // ENTITYPOSITION_H
