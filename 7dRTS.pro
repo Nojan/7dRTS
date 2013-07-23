@@ -13,6 +13,8 @@ TEMPLATE = app
 
 QMAKE_CXXFLAGS += -std=c++11
 
+INCLUDEPATH += external
+
 SOURCES += main.cpp\
            gameview.cpp \
     graphicentity.cpp \
