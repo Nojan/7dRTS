@@ -3,6 +3,8 @@
 
 #include <QGraphicsItem>
 
+#include <QBrush>
+
 class GraphicEntity : public QGraphicsItem
 {
 public:
@@ -14,11 +16,13 @@ public:
              QWidget *widget);
 
   void setPosition(int x, int y);
+  void setBrush(QBrush brush);
 
 protected:
   virtual void advance(int step);
 
 private:
+  QBrush _brush;
   QPointF _position;
 };
 

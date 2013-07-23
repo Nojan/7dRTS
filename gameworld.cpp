@@ -14,6 +14,7 @@ GameWorld::GameWorld(QObject *parent) :
 
   {
     GraphicEntity * unitGraphic = new GraphicEntity();
+    unitGraphic->setBrush(Qt::red);
     const Eigen::Vector2f position(0,0);
     const EntityTeam::Team team(EntityTeam::TeamA);
     EntityManagerHelpers::createSimpleUnit(unitGraphic, position, team);

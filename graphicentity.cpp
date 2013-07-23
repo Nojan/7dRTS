@@ -3,6 +3,7 @@
 #include <QPainter>
 
 GraphicEntity::GraphicEntity()
+  : _brush(Qt::black)
 {
 }
 
@@ -23,13 +24,18 @@ void GraphicEntity::paint(QPainter *painter, const QStyleOptionGraphicsItem *opt
 {
   Q_UNUSED(option)
   Q_UNUSED(widget);
-  painter->setBrush(Qt::red);
+  painter->setBrush(_brush);
   painter->drawEllipse(-10, -10, 10, 10);
 }
 
 void GraphicEntity::setPosition(int x, int y)
 {
   _position = QPointF(x, y);
+}
+
+void GraphicEntity::setBrush(QBrush brush)
+{
+  _brush = brush;
 }
 
 void GraphicEntity::advance(int step)
