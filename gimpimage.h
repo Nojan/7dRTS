@@ -42,7 +42,7 @@ public:
     {
       for(std::size_t y = 0; y < h; ++y)
       {
-        operator()(x, y) = {*(iter+0), *(iter+1), *(iter+2)};
+        operator()(y, x) = {*(iter+0), *(iter+1), *(iter+2)};
         iter += 3;
       }
     }
