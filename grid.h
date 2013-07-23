@@ -75,14 +75,14 @@ inline void Grid<T>::resize(std::size_t width, std::size_t height)
 template <typename T>
 inline T& Grid<T>::operator()(std::size_t x, std::size_t y)
 {
-  return _data[x + y*_width];
+  return _data[x*_height + y];
 }
 
 
 template <typename T>
 inline const T& Grid<T>::operator()(std::size_t x, std::size_t y) const
 {
-  return _data[x + y*_width];
+  return _data[x*_height + y];
 }
 
 } // core
