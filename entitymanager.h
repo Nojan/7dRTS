@@ -8,6 +8,7 @@
 
 class EntityGraphicHolder;
 class EntityModule;
+class EntityMovement;
 class EntityStateMachine;
 class EntityTeam;
 class EntityPosition;
@@ -21,6 +22,9 @@ public:
   size_t createEntityId();
 
   void processModules(int deltaMs);
+
+  void registerMovementModule(EntityMovement* module);
+  EntityMovement* movementModule(size_t entityId);
 
   void registerPositionModule(EntityPosition* module);
   EntityPosition* positionModule(size_t entityId);
@@ -39,6 +43,7 @@ private:
 
 private:
   size_t _maxEntity;
+  std::vector<EntityMovement*> _movementModules;
   std::vector<EntityPosition*> _positionModules;
   std::vector<EntityGraphicHolder*> _graphicHolderModules;
   std::vector<EntityStateMachine*> _stateMachineModules;

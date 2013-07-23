@@ -23,6 +23,7 @@ SOURCES += main.cpp\
     graphicentity.cpp \
     gameworld.cpp \
     entitymanager.cpp \
+    entitymovement.cpp \
     entityposition.cpp \
     entitymodule.cpp \
     entitygraphicholder.cpp \
@@ -37,6 +38,7 @@ HEADERS  += pch.h\
     graphicentity.h \
     gameworld.h \
     entitymanager.h \
+    entitymovement.h \
     entityposition.h \
     entitymodule.h \
     entitygraphicholder.h \

@@ -1,6 +1,7 @@
 #include "entitymanager.h"
 
 #include "entitygraphicholder.h"
+#include "entitymovement.h"
 #include "entitymodule.h"
 #include "entityposition.h"
 #include "entitystatemachine.h"
@@ -23,6 +24,7 @@ size_t EntityManager::createEntityId()
 {
   const size_t entityId = _maxEntity;
   ++_maxEntity;
+  _movementModules.push_back(NULL);
   _positionModules.push_back(NULL);
   _graphicHolderModules.push_back(NULL);
   _stateMachineModules.push_back(NULL);
@@ -30,20 +32,41 @@ size_t EntityManager::createEntityId()
   return entityId;
 }
 
-void EntityManager::processModules(int /*deltaMs*/)
+void EntityManager::processModules(int deltaMs)
 {
+  const float fdeltaS = static_cast<float>(deltaMs)/1000.f;
+  foreach(EntityMovement* movementModule, _movementModules)
+  {
+    if(movementModule)
+      movementModule->update(fdeltaS);
+  }
   foreach(EntityPosition* positionModule, _positionModules)
   {
-    positionModule->setPosition(positionModule->position()+Eigen::Vector2i(1,0));
+    if(positionModule)
+      positionModule->update();
   }
   foreach(EntityGraphicHolder* graphicModule, _graphicHolderModules)
   {
-    graphicModule->update();
+    if(graphicModule)
+      graphicModule->update();
   }
   foreach(EntityStateMachine* stateMachineModule, _stateMachineModules)
   {
-    stateMachineModule->update();
+    if(stateMachineModule)
+      stateMachineModule->update();
   }
+}
+
+void EntityManager::registerMovementModule(EntityMovement *module)
+{
+  assert(NULL == _movementModules[module->entityId()]);
+  _movementModules[module->entityId()] = module;
+}
+
+EntityMovement *EntityManager::movementModule(size_t entityId)
+{
+  assert(entityId < _maxEntity);
+  return _movementModules[entityId];
 }
 
 void EntityManager::registerPositionModule(EntityPosition *module)
@@ -99,6 +122,7 @@ size_t EntityManagerHelpers::createSimpleUnit(GraphicEntity *graphicEntity)
   EntityManager& entityManager = EntityManager::Instance();
   const size_t entityId = entityManager.createEntityId();
   entityManager.registerPositionModule(new EntityPosition(entityId));
+  entityManager.registerMovementModule(new EntityMovement(entityId));
   entityManager.registerGraphicHolderModule(new EntityGraphicHolder(entityId, graphicEntity));
   entityManager.registerStateMachineModule(new EntityStateMachine(entityId));
   entityManager.registerTeamModule(new EntityTeam(entityId));

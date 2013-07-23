@@ -37,11 +37,13 @@ class EntityPosition : public EntityModule
 public:
   EntityPosition(size_t entityId);
 
-  Eigen::Vector2i position();
-  void setPosition(const Eigen::Vector2i position);
+  Eigen::Vector2f position();
+  void setPosition(const Eigen::Vector2f position);
+
+  void update();
 
 private:
-  Eigen::Vector2i _position;
+  Eigen::Vector2f _position;
 };
 
 #endif // ENTITYPOSITION_H
