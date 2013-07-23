@@ -2,6 +2,7 @@
 
 #include "entitymanager.h"
 #include "entitymanagerhelper.h"
+#include "entitymovement.h"
 #include "graphicentity.h"
 
 const int framestep = 1000 / 33;
@@ -17,7 +18,11 @@ GameWorld::GameWorld(QObject *parent) :
     unitGraphic->setBrush(Qt::red);
     const Eigen::Vector2f position(0,15);
     const EntityTeam::Team team(EntityTeam::TeamA);
-    EntityManagerHelpers::createSimpleUnit(unitGraphic, position, team);
+    const size_t entityId =
+        EntityManagerHelpers::createSimpleUnit(unitGraphic, position, team);
+    EntityMovement * movementModule = EntityManager::Instance().movementModule(entityId);
+    MovememtTarget * target = new MovememtTarget(Eigen::Vector2f(30,-15));
+    movementModule->SetTarget(target);
     _graphicsScene.addItem(unitGraphic);
   }
 
@@ -26,7 +31,11 @@ GameWorld::GameWorld(QObject *parent) :
     unitGraphic->setBrush(Qt::blue);
     const Eigen::Vector2f position(30,-15);
     const EntityTeam::Team team(EntityTeam::TeamB);
-    EntityManagerHelpers::createSimpleUnit(unitGraphic, position, team);
+    const size_t entityId =
+        EntityManagerHelpers::createSimpleUnit(unitGraphic, position, team);
+    EntityMovement * movementModule = EntityManager::Instance().movementModule(entityId);
+    MovememtTarget * target = new MovememtTarget(Eigen::Vector2f(0,15));
+    movementModule->SetTarget(target);
     _graphicsScene.addItem(unitGraphic);
   }
 
