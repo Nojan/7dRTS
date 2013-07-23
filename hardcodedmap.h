@@ -8,7 +8,7 @@
 namespace core
 {
 
-class HardCodedImage
+struct HardCodedImage
 {
   static GimpImage test;
 };

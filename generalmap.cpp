@@ -12,7 +12,7 @@ namespace core
 {
 
 
-GeneralMap&& GeneralMap::fromGimpImage(const GimpImage& gImage)
+GeneralMap GeneralMap::fromGimpImage(const GimpImage& gImage)
 {
   Grid<Tile> tileGrid(gImage.width(), gImage.height());
   std::vector<Obstacle> obstacles;

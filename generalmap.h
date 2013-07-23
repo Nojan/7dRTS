@@ -81,7 +81,7 @@ struct Door
 class GeneralMap
 {
 public:
-  static GeneralMap&& fromGimpImage(const GimpImage& gImage);
+  static GeneralMap fromGimpImage(const GimpImage& gImage);
 
 public:
   // since we must copy tile, obstacles and doors we can pass it by value.
