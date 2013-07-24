@@ -12,45 +12,49 @@ namespace core
 {
 
 
-bool isValidRoom(const TilePos& pos, const Grid<Tile>& tileGrid,
-                 std::unordered_set<TilePos>& roomed)
+void fillRoom(const TilePos& pos, const Grid<Tile> tileGrid,
+              Room& room,
+              std::unordered_set<TilePos>& roomed,
+              std::unordered_set<EdgePos>& walled)
 {
-  return tileGrid.inGrid(pos.x, pos.y) &&
-         tileGrid(pos.x, pos.y).texture == Tile::Texture::Floor &&
-         roomed.find(pos) == std::end(roomed);
-}
-
-
-void addRoomTile(const TilePos& pos, const Grid<Tile> tileGrid,
-                 std::vector<TilePos>& tiles,
-                 std::unordered_set<TilePos>& roomed)
-{
-  tiles.push_back(pos);
+  room.tiles.push_back(pos);
   roomed.insert(pos);
-  if(isValidRoom({pos.x + 1, pos.y}, tileGrid, roomed))
+
+  auto add = [&](const TilePos& p)
   {
-    addRoomTile({pos.x + 1, pos.y}, tileGrid, tiles, roomed);
-  }
-  if(isValidRoom({pos.x - 1, pos.y}, tileGrid, roomed))
-  {
-    addRoomTile({pos.x - 1, pos.y}, tileGrid, tiles, roomed);
-  }
-  if(isValidRoom({pos.x, pos.y + 1}, tileGrid, roomed))
-  {
-    addRoomTile({pos.x, pos.y + 1}, tileGrid, tiles, roomed);
-  }
-  if(isValidRoom({pos.x, pos.y - 1}, tileGrid, roomed))
-  {
-    addRoomTile({pos.x, pos.y - 1}, tileGrid, tiles, roomed);
-  }
+    if(tileGrid.inGrid(p.x, p.y))
+    {
+      if(tileGrid(p.x, p.y).texture == Tile::Texture::Floor &&
+         roomed.find(p) == std::end(roomed))
+      {
+        fillRoom(p, tileGrid, room, roomed, walled);
+      }
+      else
+      {
+        EdgePos wall = {pos, p};
+        if(tileGrid(p.x, p.y).texture != Tile::Texture::Floor &&
+           walled.find(wall) == std::end(walled))
+        {
+          room.walls.push_back(wall);
+          walled.insert(wall);
+        }
+      }
+    }
+  };
+
+  add({pos.x + 1, pos.y});
+  add({pos.x - 1, pos.y});
+  add({pos.x, pos.y + 1});
+  add({pos.x, pos.y - 1});
 }
 
 
 Room createRoom(const TilePos& pos, const Grid<Tile> tileGrid,
                 std::unordered_set<TilePos>& roomed)
 {
+  std::unordered_set<EdgePos> walled;
   Room room;
-  addRoomTile(pos, tileGrid, room.tiles, roomed);
+  fillRoom(pos, tileGrid, room, roomed, walled);
   return std::move(room);
 }
 

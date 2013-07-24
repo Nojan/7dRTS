@@ -37,6 +37,11 @@ struct TilePos
 struct EdgePos
 {
   TilePos from, to;
+
+  bool operator==(const EdgePos& p) const
+  {
+    return from == p.from && to == p.to;
+  }
 };
 
 
@@ -133,6 +138,18 @@ public:
   {
     return std::hash<core::tile_index>()(s.x);
         (std::hash<core::tile_index>()(s.y) << 1);
+  }
+};
+
+
+template<>
+struct hash<core::EdgePos>
+{
+public:
+  std::size_t operator()(const core::EdgePos& s) const
+  {
+    return std::hash<core::TilePos>()(s.from);
+        (std::hash<core::TilePos>()(s.to) << 1);
   }
 };
 
