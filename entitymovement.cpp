@@ -49,7 +49,7 @@ Eigen::Vector2f EntityMovement::position() const
   return _position;
 }
 
-void EntityMovement::SetTarget(MovememtTarget *target)
+void EntityMovement::setTarget(MovememtTarget *target)
 {
   if(NULL != _target)
     delete _target;

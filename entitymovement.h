@@ -33,7 +33,7 @@ public:
   ~EntityMovement();
 
   Eigen::Vector2f position() const;
-  void SetTarget(MovememtTarget * target);
+  void setTarget(MovememtTarget * target);
 
   void update(float deltas);
 

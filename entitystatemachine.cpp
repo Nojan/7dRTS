@@ -58,9 +58,6 @@ void EntityStateMachine::update()
     {
         movement->SetTarget(NULL);
     }
-
-
-
     weapon->setTarget(new WeaponTarget(enemy));
   }
   else
