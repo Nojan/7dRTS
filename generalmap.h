@@ -48,7 +48,7 @@ struct EdgePos
 struct Tile
 {
   enum class Type {Free, Obstacle, None};
-  enum class Texture {Grass, Rempart, Floor, Path, None};
+  enum class Texture {Grass, Rampart, Floor, Path, None};
 
   Tile()
     : type(Type::None)

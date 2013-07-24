@@ -86,7 +86,7 @@ GeneralMap GeneralMap::fromGimpImage(const GimpImage& gImage)
       else if(c == gimpRampart)
       {
         type = Tile::Type::Obstacle;
-        tex = Tile::Texture::Rempart;
+        tex = Tile::Texture::Rampart;
       }
 
       tileGrid(x, y) = Tile{type, tex};
@@ -116,6 +116,8 @@ GeneralMap::GeneralMap(Grid<Tile> tiles, std::vector<Obstacle> obstacles,
       }
     }
   }
+
+
 }
 
 } // core
