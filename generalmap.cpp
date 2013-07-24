@@ -12,30 +12,32 @@ namespace core
 {
 
 
-void fillRoom(const TilePos& pos, const Grid<Tile> tileGrid,
-              Room& room,
-              std::unordered_set<TilePos>& roomed,
-              std::unordered_set<EdgePos>& walled)
+void fillFromTexture(const TilePos& pos, const Grid<Tile> tileGrid,
+                     Tile::Texture texture,
+                     std::vector<TilePos>& tiles,
+                     std::vector<EdgePos>& walls,
+                     std::unordered_set<TilePos>& tiled,
+                     std::unordered_set<EdgePos>& walled)
 {
-  room.tiles.push_back(pos);
-  roomed.insert(pos);
+  tiles.push_back(pos);
+  tiled.insert(pos);
 
   auto add = [&](const TilePos& p)
   {
     if(tileGrid.inGrid(p.x, p.y))
     {
-      if(tileGrid(p.x, p.y).texture == Tile::Texture::Floor &&
-         roomed.find(p) == std::end(roomed))
+      if(tileGrid(p.x, p.y).texture == texture &&
+         tiled.find(p) == std::end(tiled))
       {
-        fillRoom(p, tileGrid, room, roomed, walled);
+        fillFromTexture(p, tileGrid, texture, tiles, walls, tiled, walled);
       }
       else
       {
         EdgePos wall = {pos, p};
-        if(tileGrid(p.x, p.y).texture != Tile::Texture::Floor &&
+        if(tileGrid(p.x, p.y).texture != texture &&
            walled.find(wall) == std::end(walled))
         {
-          room.walls.push_back(wall);
+          walls.push_back(wall);
           walled.insert(wall);
         }
       }
@@ -54,8 +56,19 @@ Room createRoom(const TilePos& pos, const Grid<Tile> tileGrid,
 {
   std::unordered_set<EdgePos> walled;
   Room room;
-  fillRoom(pos, tileGrid, room, roomed, walled);
+  fillFromTexture(pos, tileGrid, Tile::Texture::Floor, room.tiles, room.walls, roomed, walled);
   return std::move(room);
+}
+
+
+Rampart createRampart(const TilePos& pos, const Grid<Tile> tileGrid)
+{
+  std::unordered_set<TilePos> rampared;
+  std::unordered_set<EdgePos> walled;
+  Rampart ramp;
+  fillFromTexture(pos, tileGrid, Tile::Texture::Rampart, ramp.tiles, ramp.walls,
+                  rampared, walled);
+  return std::move(ramp);
 }
 
 
@@ -117,7 +130,18 @@ GeneralMap::GeneralMap(Grid<Tile> tiles, std::vector<Obstacle> obstacles,
     }
   }
 
-
+  bool rampartFound = false;
+  for(std::size_t x = 0; !rampartFound && x < _tileGrid.width(); ++x)
+  {
+    for(std::size_t y = 0; !rampartFound && y < _tileGrid.height(); ++y)
+    {
+      if(_tileGrid(x, y).texture == Tile::Texture::Rampart)
+      {
+        _rampart = createRampart({tile_index(x), tile_index(y)}, _tileGrid);
+        rampartFound = true;
+      }
+    }
+  }
 }
 
 } // core
