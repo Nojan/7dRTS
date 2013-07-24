@@ -15,6 +15,12 @@
 static const QSize GridSize(32, 32);
 
 
+QPoint toPixelPos(const core::TilePos& pos)
+{
+  return QPoint(pos.x*GridSize.width(), pos.y*GridSize.height());
+}
+
+
 namespace graphic
 {
 
@@ -38,6 +44,38 @@ void drawTile(QPainter& painter, QPoint pos, QColor tile)
   painter.setPen(QPen(QColor(0, 0, 0, 127), 1.));
   painter.drawLine(rect.topRight(), rect.bottomRight());
   painter.drawLine(rect.bottomLeft(), rect.bottomRight());
+
+  painter.restore();
+}
+
+
+void drawVWall(QPainter& painter, QPoint begin, QPoint end)
+{
+  painter.save();
+  painter.setBrush(QBrush(Qt::black));
+  painter.setPen(Qt::NoPen);
+  QRect wall(begin + QPoint(-2, -2), end);
+  painter.drawRect(wall);
+
+  // draw shadow
+  painter.setPen(QPen(QColor(0, 0, 0, 127), 1.));
+  painter.drawLine(wall.topLeft() + QPoint(-1, 2), wall.bottomLeft() + QPoint(-1, -2));
+
+  painter.restore();
+}
+
+
+void drawHWall(QPainter& painter, QPoint begin, QPoint end)
+{
+  painter.save();
+  painter.setBrush(QBrush(Qt::black));
+  painter.setPen(Qt::NoPen);
+  QRect wall(begin + QPoint(-2, -2), end);
+  painter.drawRect(wall);
+
+  // draw shadow
+  painter.setPen(QPen(QColor(0, 0, 0, 127), 1.));
+  painter.drawLine(wall.bottomLeft() + QPoint(2, 1), wall.bottomRight() + QPoint(-2, 1));
 
   painter.restore();
 }
@@ -75,7 +113,7 @@ QPixmap GraphicMap::pixmapFromGeneralMap(const core::GeneralMap* map)
   {
     for(std::size_t y = 0; y < tileGrid.height(); ++y)
     {
-      QPoint pos(x*GridSize.width(), y*GridSize.height());
+      QPoint pos(toPixelPos({core::tile_index(x), core::tile_index(y)}));
       if(tileGrid(x, y).texture == core::Tile::Texture::Grass)
       {
         drawGrass(painter, pos);
@@ -87,6 +125,38 @@ QPixmap GraphicMap::pixmapFromGeneralMap(const core::GeneralMap* map)
       else if(tileGrid(x, y).texture == core::Tile::Texture::Wall)
       {
         drawWall(painter, pos);
+      }
+    }
+  }
+
+
+  for(const core::Room& room: map->rooms())
+  {
+    for(const core::EdgePos& ep: room.walls)
+    {
+      if(ep.from.x > ep.to.x)
+      {
+        QPoint begin(toPixelPos(ep.from));
+        QPoint end(begin + QPoint(0, GridSize.height()));
+        drawVWall(painter, begin, end);
+      }
+      if(ep.from.x < ep.to.x)
+      {
+        QPoint begin(toPixelPos(ep.to));
+        QPoint end(begin + QPoint(0, GridSize.height()));
+        drawVWall(painter, begin, end);
+      }
+      if(ep.from.y > ep.to.y)
+      {
+        QPoint begin(toPixelPos(ep.from));
+        QPoint end(begin + QPoint(GridSize.width(), 0));
+        drawHWall(painter, begin, end);
+      }
+      if(ep.from.y < ep.to.y)
+      {
+        QPoint begin(toPixelPos(ep.to));
+        QPoint end(begin + QPoint(GridSize.width(), 0));
+        drawHWall(painter, begin, end);
       }
     }
   }

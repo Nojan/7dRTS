@@ -106,14 +106,19 @@ public:
     return _tileGrid;
   }
 
-  const std::vector<Obstacle>& obstacles()
+  const std::vector<Obstacle>& obstacles() const
   {
     return _obstacles;
   }
 
-  const std::vector<Door>& doors()
+  const std::vector<Door>& doors() const
   {
     return _doors;
+  }
+
+  const std::vector<Room>& rooms() const
+  {
+    return _rooms;
   }
 
 private:
