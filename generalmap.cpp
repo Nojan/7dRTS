@@ -84,10 +84,10 @@ GeneralMap GeneralMap::fromGimpImage(const GimpImage& gImage)
         type = Tile::Type::Free;
         tex = Tile::Texture::Floor;
       }
-      else if(c == gimpWall)
+      else if(c == gimpRampart)
       {
         type = Tile::Type::Obstacle;
-        tex = Tile::Texture::Wall;
+        tex = Tile::Texture::Rempart;
       }
 
       tileGrid(x, y) = Tile{type, tex};

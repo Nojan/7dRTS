@@ -95,7 +95,7 @@ void drawFloor(QPainter& painter, QPoint pos)
 }
 
 
-void drawWall(QPainter& painter, QPoint pos)
+void drawRempart(QPainter& painter, QPoint pos)
 {
   QColor wallColor(0x50, 0x2d, 0x16);
   drawTile(painter, pos, wallColor);
@@ -122,9 +122,9 @@ QPixmap GraphicMap::pixmapFromGeneralMap(const core::GeneralMap* map)
       {
         drawFloor(painter, pos);
       }
-      else if(tileGrid(x, y).texture == core::Tile::Texture::Wall)
+      else if(tileGrid(x, y).texture == core::Tile::Texture::Rempart)
       {
-        drawWall(painter, pos);
+        drawRempart(painter, pos);
       }
     }
   }

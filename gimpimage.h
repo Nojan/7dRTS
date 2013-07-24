@@ -26,7 +26,7 @@ struct GimpColor
 // defined color
 const GimpColor gimpGrass = {0x00, 0x80, 0x00};
 const GimpColor gimpFloor = {0x99, 0x99, 0x99};
-const GimpColor gimpWall = {0x50, 0x2d, 0x16};
+const GimpColor gimpRampart = {0x50, 0x2d, 0x16};
 
 
 class GimpImage : public Grid<GimpColor>
