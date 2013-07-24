@@ -31,12 +31,67 @@ size_t EntityManager::createEntityId()
 {
   const size_t entityId = _maxEntity;
   ++_maxEntity;
+  _damageModules.push_back(NULL);
   _movementModules.push_back(NULL);
   _positionModules.push_back(NULL);
   _graphicHolderModules.push_back(NULL);
   _stateMachineModules.push_back(NULL);
   _teamModules.push_back(NULL);
+  _weaponModules.push_back(NULL);
   return entityId;
+}
+
+void EntityManager::deferredRemoveEntity(size_t entityId)
+{
+  _entityToRemove.push_back(entityId);
+}
+
+void EntityManager::removeEntity(size_t entityId)
+{
+  if(_damageModules[entityId])
+  {
+    delete _damageModules[entityId];
+    _damageModules[entityId] = NULL;
+  }
+  if(_movementModules[entityId])
+  {
+    delete _movementModules[entityId];
+    _movementModules[entityId] = NULL;
+  }
+  if(_positionModules[entityId])
+  {
+    delete _positionModules[entityId];
+    _positionModules[entityId] = NULL;
+  }
+  if(_graphicHolderModules[entityId])
+  {
+    delete _graphicHolderModules[entityId];
+    _graphicHolderModules[entityId] = NULL;
+  }
+  if(_stateMachineModules[entityId])
+  {
+    delete _stateMachineModules[entityId];
+    _stateMachineModules[entityId] = NULL;
+  }
+  if(_teamModules[entityId])
+  {
+    delete _teamModules[entityId];
+    _teamModules[entityId] = NULL;
+  }
+  if(_weaponModules[entityId])
+  {
+    delete _weaponModules[entityId];
+    _weaponModules[entityId] = NULL;
+  }
+}
+
+void EntityManager::processRemoveEntity()
+{
+  foreach(size_t entityId, _entityToRemove)
+  {
+    removeEntity(entityId);
+  }
+  _entityToRemove.clear();
 }
 
 void EntityManager::processModules(int deltaMs)
@@ -62,6 +117,18 @@ void EntityManager::processModules(int deltaMs)
     if(stateMachineModule)
       stateMachineModule->update();
   }
+  foreach(EntityWeapon* weaponModule, _weaponModules)
+  {
+    if(weaponModule)
+      weaponModule->update(deltaMs);
+  }
+  foreach(EntityDamage* damageModule, _damageModules)
+  {
+    if(damageModule)
+      damageModule->update();
+  }
+
+  processRemoveEntity();
 }
 
 void EntityManager::registerDamageModule(EntityDamage *module)

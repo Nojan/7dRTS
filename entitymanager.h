@@ -23,6 +23,7 @@ public:
 
   size_t entityCount() const;
   size_t createEntityId();
+  void   deferredRemoveEntity(size_t entityId);
 
   void processModules(int deltaMs);
 
@@ -49,6 +50,8 @@ public:
 
 private:
   EntityManager();
+  void removeEntity(size_t entityId);
+  void processRemoveEntity();
 
 private:
   size_t _maxEntity;
@@ -59,6 +62,8 @@ private:
   std::vector<EntityStateMachine*> _stateMachineModules;
   std::vector<EntityTeam*> _teamModules;
   std::vector<EntityWeapon*> _weaponModules;
+
+  std::vector<size_t> _entityToRemove;
 };
 
 #endif // ENTITYMANAGER_H

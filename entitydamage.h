@@ -8,6 +8,15 @@ class EntityDamage : public EntityModule
 {
 public:
   EntityDamage(size_t entityId);
+
+  void applyDamage(const int damagePoint);
+
+  int healthPoint() const;
+
+  void update();
+
+private:
+  int _healthPoint;
 };
 
 #endif // ENTITYDAMAGE_H

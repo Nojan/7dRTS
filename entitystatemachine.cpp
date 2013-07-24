@@ -3,6 +3,7 @@
 #include "entitymanager.h"
 #include "entitymovement.h"
 #include "entityposition.h"
+#include "entityweapon.h"
 
 namespace {
 size_t closestEnemyId(size_t id)
@@ -42,5 +43,15 @@ void EntityStateMachine::update()
     const EntityPosition* position = EntityManager::Instance().positionModule(enemy);
     EntityMovement* movement = EntityManager::Instance().movementModule(entityId());
     movement->SetTarget(new MovememtTarget(position->position()));
+    EntityWeapon* weapon = EntityManager::Instance().weaponModule(entityId());
+    weapon->setTarget(new WeaponTarget(enemy));
+  }
+  else
+  {
+    // A chier, gestion de la mort a faire par module
+    EntityMovement* movement = EntityManager::Instance().movementModule(entityId());
+    movement->SetTarget(NULL);
+    EntityWeapon* weapon = EntityManager::Instance().weaponModule(entityId());
+    weapon->setTarget(NULL);
   }
 }
