@@ -128,6 +128,11 @@ public:
     return _rooms;
   }
 
+  const Rampart& rampart() const
+  {
+    return _rampart;
+  }
+
 private:
   Grid<Tile> _tileGrid;
   std::vector<Obstacle> _obstacles;

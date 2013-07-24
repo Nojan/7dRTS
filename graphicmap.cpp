@@ -49,12 +49,12 @@ void drawTile(QPainter& painter, QPoint pos, QColor tile)
 }
 
 
-void drawVWall(QPainter& painter, QPoint begin, QPoint end)
+void drawVWall(QPainter& painter, QPoint begin, QPoint end, int size)
 {
   painter.save();
   painter.setBrush(QBrush(Qt::black));
   painter.setPen(Qt::NoPen);
-  QRect wall(begin + QPoint(-2, -2), end);
+  QRect wall(begin + QPoint(-size + 1, -size + 1), end);
   painter.drawRect(wall);
 
   // draw shadow
@@ -65,12 +65,12 @@ void drawVWall(QPainter& painter, QPoint begin, QPoint end)
 }
 
 
-void drawHWall(QPainter& painter, QPoint begin, QPoint end)
+void drawHWall(QPainter& painter, QPoint begin, QPoint end, int size)
 {
   painter.save();
   painter.setBrush(QBrush(Qt::black));
   painter.setPen(Qt::NoPen);
-  QRect wall(begin + QPoint(-2, -2), end);
+  QRect wall(begin + QPoint(-size + 1, -size + 1), end);
   painter.drawRect(wall);
 
   // draw shadow
@@ -99,6 +99,39 @@ void drawRampart(QPainter& painter, QPoint pos)
 {
   QColor wallColor(0x50, 0x2d, 0x16);
   drawTile(painter, pos, wallColor);
+}
+
+
+void drawWall(QPainter& painter, const std::vector<core::EdgePos>& walls,
+              int size)
+{
+  for(const core::EdgePos& ep: walls)
+  {
+    if(ep.from.x > ep.to.x)
+    {
+      QPoint begin(toPixelPos(ep.from));
+      QPoint end(begin + QPoint(0, GridSize.height()));
+      drawVWall(painter, begin, end, size);
+    }
+    if(ep.from.x < ep.to.x)
+    {
+      QPoint begin(toPixelPos(ep.to));
+      QPoint end(begin + QPoint(0, GridSize.height()));
+      drawVWall(painter, begin, end, size);
+    }
+    if(ep.from.y > ep.to.y)
+    {
+      QPoint begin(toPixelPos(ep.from));
+      QPoint end(begin + QPoint(GridSize.width(), 0));
+      drawHWall(painter, begin, end, size);
+    }
+    if(ep.from.y < ep.to.y)
+    {
+      QPoint begin(toPixelPos(ep.to));
+      QPoint end(begin + QPoint(GridSize.width(), 0));
+      drawHWall(painter, begin, end, size);
+    }
+  }
 }
 
 
@@ -132,35 +165,10 @@ QPixmap GraphicMap::pixmapFromGeneralMap(const core::GeneralMap* map)
 
   for(const core::Room& room: map->rooms())
   {
-    for(const core::EdgePos& ep: room.walls)
-    {
-      if(ep.from.x > ep.to.x)
-      {
-        QPoint begin(toPixelPos(ep.from));
-        QPoint end(begin + QPoint(0, GridSize.height()));
-        drawVWall(painter, begin, end);
-      }
-      if(ep.from.x < ep.to.x)
-      {
-        QPoint begin(toPixelPos(ep.to));
-        QPoint end(begin + QPoint(0, GridSize.height()));
-        drawVWall(painter, begin, end);
-      }
-      if(ep.from.y > ep.to.y)
-      {
-        QPoint begin(toPixelPos(ep.from));
-        QPoint end(begin + QPoint(GridSize.width(), 0));
-        drawHWall(painter, begin, end);
-      }
-      if(ep.from.y < ep.to.y)
-      {
-        QPoint begin(toPixelPos(ep.to));
-        QPoint end(begin + QPoint(GridSize.width(), 0));
-        drawHWall(painter, begin, end);
-      }
-    }
+    drawWall(painter, room.walls, 3);
   }
 
+  drawWall(painter, map->rampart().walls, 5);
 
   return QPixmap::fromImage(image);
 }
