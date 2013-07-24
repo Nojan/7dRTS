@@ -3,6 +3,7 @@
 
 // include
 // std
+#include <functional>
 #include <vector>
 #include <limits>
 
@@ -19,7 +20,24 @@ namespace core
 class GimpImage;
 
 
-typedef unsigned int tile_index;
+typedef int tile_index;
+
+
+struct TilePos
+{
+  tile_index x, y;
+
+  bool operator==(const TilePos& p) const
+  {
+    return x == p.x && y == p.y;
+  }
+};
+
+
+struct EdgePos
+{
+  TilePos from, to;
+};
 
 
 struct Tile
@@ -45,35 +63,23 @@ struct Tile
 
 struct Obstacle
 {
-  Obstacle()
-    : x(std::numeric_limits<tile_index>::max())
-    , y(std::numeric_limits<tile_index>::max())
-  {}
-
-  Obstacle(tile_index tx, tile_index ty)
-    : x(tx)
-    , y(ty)
-  {}
-
-
-  tile_index x, y;
+  TilePos pos;
 };
 
 
 struct Door
 {
-  Door()
-    : from(std::numeric_limits<tile_index>::max())
-    , to(std::numeric_limits<tile_index>::max())
-  {}
-
-  Door(tile_index f, tile_index t)
-    : from(f)
-    , to(t)
-  {}
+  std::vector<EdgePos> edges;
+};
 
 
-  tile_index from, to;
+struct Room
+{
+  enum class Type {None};
+
+  std::vector<TilePos> tiles;
+  std::vector<EdgePos> walls;
+  Door door;
 };
 
 
@@ -87,7 +93,7 @@ public:
   // since we must copy tile, obstacles and doors we can pass it by value.
   // this allow compiler optimization and it's less verbose.
   GeneralMap(Grid<Tile> tiles, std::vector<Obstacle> obstacles,
-             std::vector<Door> doors);
+             std::vector<Door> doors, std::vector<Room> rooms);
 
   // accessors
   const Grid<Tile>& tileGrid() const
@@ -109,8 +115,27 @@ private:
   Grid<Tile> _tileGrid;
   std::vector<Obstacle> _obstacles;
   std::vector<Door> _doors;
+  std::vector<Room> _rooms;
 };
 
 }
+
+
+// hash functions
+namespace std
+{
+
+template<>
+struct hash<core::TilePos>
+{
+public:
+  std::size_t operator()(const core::TilePos& s) const
+  {
+    return std::hash<core::tile_index>()(s.x);
+        (std::hash<core::tile_index>()(s.y) << 1);
+  }
+};
+
+} // std
 
 #endif // GENERALMAP_H
