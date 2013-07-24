@@ -31,6 +31,7 @@ SOURCES += main.cpp\
     entitygraphicholder.cpp \
     entitystatemachine.cpp \
     entityteam.cpp \
+    entityweapon.cpp \
     generalmap.cpp \
     graphicmap.cpp \
     hardcodedmap.cpp
@@ -48,6 +49,7 @@ HEADERS  += pch.h\
     entitygraphicholder.h \
     entitystatemachine.h \
     entityteam.h \
+    entityweapon.h \
     generalmap.h \
     graphicmap.h \
     gimpimage.h \

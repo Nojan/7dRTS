@@ -12,6 +12,7 @@ class EntityModule;
 class EntityMovement;
 class EntityStateMachine;
 class EntityTeam;
+class EntityWeapon;
 class EntityPosition;
 class GraphicEntity;
 
@@ -43,6 +44,9 @@ public:
   void registerTeamModule(EntityTeam* module);
   EntityTeam* TeamModule(size_t entityId);
 
+  void registerWeaponModule(EntityWeapon* module);
+  EntityWeapon* weaponModule(size_t entityId);
+
 private:
   EntityManager();
 
@@ -54,6 +58,7 @@ private:
   std::vector<EntityGraphicHolder*> _graphicHolderModules;
   std::vector<EntityStateMachine*> _stateMachineModules;
   std::vector<EntityTeam*> _teamModules;
+  std::vector<EntityWeapon*> _weaponModules;
 };
 
 #endif // ENTITYMANAGER_H

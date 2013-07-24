@@ -7,6 +7,7 @@
 #include "entityposition.h"
 #include "entitystatemachine.h"
 #include "entityteam.h"
+#include "entityweapon.h"
 
 #include <assert.h>
 
@@ -133,4 +134,16 @@ EntityTeam *EntityManager::TeamModule(size_t entityId)
 {
   assert(entityId < _maxEntity);
   return _teamModules[entityId];
+}
+
+void EntityManager::registerWeaponModule(EntityWeapon *module)
+{
+  assert(NULL == _weaponModules[module->entityId()]);
+  _weaponModules[module->entityId()] = module;
+}
+
+EntityWeapon *EntityManager::weaponModule(size_t entityId)
+{
+  assert(entityId < _maxEntity);
+  return _weaponModules[entityId];
 }
