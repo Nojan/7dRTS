@@ -6,23 +6,23 @@
 #include "gameworld.h"
 
 
-MovememtTarget::MovememtTarget(Eigen::Vector2f position)
+MovementTarget::MovementTarget(Eigen::Vector2f position)
   : _position(position)
   , _state(State::Ordered)
 {
 }
 
-Eigen::Vector2f MovememtTarget::position() const
+Eigen::Vector2f MovementTarget::position() const
 {
   return _position;
 }
 
-MovememtTarget::State MovememtTarget::state() const
+MovementTarget::State MovementTarget::state() const
 {
   return _state;
 }
 
-void MovememtTarget::setState(MovememtTarget::State state)
+void MovementTarget::setState(MovementTarget::State state)
 {
   _state = state;
 }
@@ -49,10 +49,11 @@ Eigen::Vector2f EntityMovement::position() const
   return _position;
 }
 
-void EntityMovement::setTarget(MovememtTarget *target)
+void EntityMovement::setTarget(MovementTarget *target)
 {
   if(NULL != _target)
     delete _target;
+
   _target = target;
   if(NULL != _target)
   {
@@ -64,7 +65,7 @@ void EntityMovement::setTarget(MovememtTarget *target)
 void EntityMovement::update(float deltas)
 {
   assert(fabs(_orientation.dot(_orientation)-1.f)<0.1f); //check _orientation.IsNormalized(0.1f) ...
-  if(_target && MovememtTarget::InProgress == _target->state())
+  if(_target && MovementTarget::InProgress == _target->state())
   {
     const Eigen::Vector2f targetDir = _target->position() - _position;
     _orientation = targetDir.normalized();
@@ -72,7 +73,7 @@ void EntityMovement::update(float deltas)
     if(targetDir.dot(_target->position() - _position) <= 0)
     {
       _position = _target->position();
-      _target->setState(MovememtTarget::Done);
+      _target->setState(MovementTarget::Done);
     }
   }
 }

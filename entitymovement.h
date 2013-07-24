@@ -5,7 +5,7 @@
 
 #include "entitymodule.h"
 
-class MovememtTarget
+class MovementTarget
 {
 public:
   enum State {
@@ -15,7 +15,7 @@ public:
     Abort,
   };
 public:
-  MovememtTarget(Eigen::Vector2f position);
+  MovementTarget(Eigen::Vector2f position);
 
   Eigen::Vector2f position() const;
   State state() const;
@@ -33,7 +33,7 @@ public:
   ~EntityMovement();
 
   Eigen::Vector2f position() const;
-  void setTarget(MovememtTarget * target);
+  void setTarget(MovementTarget * target);
 
   void update(float deltas);
 
