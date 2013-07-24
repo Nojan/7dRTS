@@ -64,7 +64,6 @@ GeneralMap GeneralMap::fromGimpImage(const GimpImage& gImage)
   Grid<Tile> tileGrid(gImage.width(), gImage.height());
   std::vector<Obstacle> obstacles;
   std::vector<Door> doors;
-  std::vector<Room> rooms;
 
   // initialize tile from image
   for(std::size_t x = 0; x < tileGrid.width(); ++x)
@@ -94,33 +93,29 @@ GeneralMap GeneralMap::fromGimpImage(const GimpImage& gImage)
     }
   }
 
-
-  std::unordered_set<TilePos> roomedTile;
-  for(std::size_t x = 0; x < tileGrid.width(); ++x)
-  {
-    for(std::size_t y = 0; y < tileGrid.height(); ++y)
-    {
-      TilePos pos = {tile_index(x), tile_index(y)};
-      if(tileGrid(x, y).texture == Tile::Texture::Floor &&
-         roomedTile.find(pos) == std::end(roomedTile))
-      {
-        rooms.push_back(createRoom(pos, tileGrid, roomedTile));
-      }
-    }
-  }
-
-  return std::move(GeneralMap(std::move(tileGrid), std::move(obstacles), std::move(doors),
-                   std::move(rooms)));
+  return std::move(GeneralMap(std::move(tileGrid), std::move(obstacles), std::move(doors)));
 }
 
 
 GeneralMap::GeneralMap(Grid<Tile> tiles, std::vector<Obstacle> obstacles,
-  std::vector<Door> doors, std::vector<Room> rooms)
+  std::vector<Door> doors)
   : _tileGrid(std::move(tiles))
   , _obstacles(std::move(obstacles))
   , _doors(std::move(doors))
-  , _rooms(std::move(rooms))
 {
+  std::unordered_set<TilePos> roomedTile;
+  for(std::size_t x = 0; x < _tileGrid.width(); ++x)
+  {
+    for(std::size_t y = 0; y < _tileGrid.height(); ++y)
+    {
+      TilePos pos = {tile_index(x), tile_index(y)};
+      if(_tileGrid(x, y).texture == Tile::Texture::Floor &&
+         roomedTile.find(pos) == std::end(roomedTile))
+      {
+        _rooms.push_back(createRoom(pos, _tileGrid, roomedTile));
+      }
+    }
+  }
 }
 
 } // core

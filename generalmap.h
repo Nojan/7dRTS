@@ -88,6 +88,13 @@ struct Room
 };
 
 
+struct Rampart
+{
+  std::vector<TilePos> tiles;
+  std::vector<EdgePos> walls;
+};
+
+
 
 class GeneralMap
 {
@@ -98,7 +105,7 @@ public:
   // since we must copy tile, obstacles and doors we can pass it by value.
   // this allow compiler optimization and it's less verbose.
   GeneralMap(Grid<Tile> tiles, std::vector<Obstacle> obstacles,
-             std::vector<Door> doors, std::vector<Room> rooms);
+             std::vector<Door> doors);
 
   // accessors
   const Grid<Tile>& tileGrid() const
@@ -126,6 +133,7 @@ private:
   std::vector<Obstacle> _obstacles;
   std::vector<Door> _doors;
   std::vector<Room> _rooms;
+  Rampart _rampart;
 };
 
 }
