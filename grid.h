@@ -19,6 +19,8 @@ public:
   std::size_t width() const;
   std::size_t height() const;
 
+  bool inGrid(std::size_t x, std::size_t y) const;
+
   void resize(std::size_t width, std::size_t height);
 
   T& operator()(std::size_t x, std::size_t y);
@@ -60,6 +62,13 @@ template <typename T>
 inline std::size_t Grid<T>::height() const
 {
   return _height;
+}
+
+
+template <typename T>
+bool Grid<T>::inGrid(std::size_t x, std::size_t y) const
+{
+  return x < _width && y < _height;
 }
 
 

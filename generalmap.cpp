@@ -11,16 +11,11 @@
 namespace core
 {
 
-bool inGrid(const TilePos& pos, const Grid<Tile>& tileGrid)
-{
-  return pos.x > 0 && std::size_t(pos.x) < tileGrid.width() &&
-         pos.y > 0 && std::size_t(pos.x) < tileGrid.height();
-}
 
 bool isValidRoom(const TilePos& pos, const Grid<Tile>& tileGrid,
                  std::unordered_set<TilePos>& roomed)
 {
-  return inGrid(pos, tileGrid) &&
+  return tileGrid.inGrid(pos.x, pos.y) &&
          tileGrid(pos.x, pos.y).texture == Tile::Texture::Floor &&
          roomed.find(pos) == std::end(roomed);
 }

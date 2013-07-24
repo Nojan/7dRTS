@@ -20,7 +20,7 @@ namespace core
 class GimpImage;
 
 
-typedef int tile_index;
+typedef unsigned int tile_index;
 
 
 struct TilePos
