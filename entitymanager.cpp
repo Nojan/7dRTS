@@ -1,5 +1,6 @@
 #include "entitymanager.h"
 
+#include "entitydamage.h"
 #include "entitygraphicholder.h"
 #include "entitymovement.h"
 #include "entitymodule.h"
@@ -60,6 +61,18 @@ void EntityManager::processModules(int deltaMs)
     if(stateMachineModule)
       stateMachineModule->update();
   }
+}
+
+void EntityManager::registerDamageModule(EntityDamage *module)
+{
+  assert(NULL == _damageModules[module->entityId()]);
+  _damageModules[module->entityId()] = module;
+}
+
+EntityDamage *EntityManager::damageModule(size_t entityId)
+{
+  assert(entityId < _maxEntity);
+  return _damageModules[entityId];
 }
 
 void EntityManager::registerMovementModule(EntityMovement *module)

@@ -22,6 +22,7 @@ SOURCES += main.cpp\
            gameview.cpp \
     graphicentity.cpp \
     gameworld.cpp \
+    entitydamage.cpp \
     entitymanager.cpp \
     entitymanagerhelper.cpp \
     entitymovement.cpp \
@@ -38,6 +39,7 @@ HEADERS  += pch.h\
     gameview.h \
     graphicentity.h \
     gameworld.h \
+    entitydamage.h \
     entitymanager.h \
     entitymanagerhelper.h \
     entitymovement.h \

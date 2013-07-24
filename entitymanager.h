@@ -6,6 +6,7 @@
 #include <stdlib.h>
 #include <vector>
 
+class EntityDamage;
 class EntityGraphicHolder;
 class EntityModule;
 class EntityMovement;
@@ -23,6 +24,9 @@ public:
   size_t createEntityId();
 
   void processModules(int deltaMs);
+
+  void registerDamageModule(EntityDamage* module);
+  EntityDamage* damageModule(size_t entityId);
 
   void registerMovementModule(EntityMovement* module);
   EntityMovement* movementModule(size_t entityId);
@@ -44,6 +48,7 @@ private:
 
 private:
   size_t _maxEntity;
+  std::vector<EntityDamage*> _damageModules;
   std::vector<EntityMovement*> _movementModules;
   std::vector<EntityPosition*> _positionModules;
   std::vector<EntityGraphicHolder*> _graphicHolderModules;
