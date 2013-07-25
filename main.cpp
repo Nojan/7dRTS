@@ -26,21 +26,22 @@ int main(int argc, char *argv[])
   world.scene()->setSceneRect(0, 0, map.tileGrid().height() * core::tileSize, map.tileGrid().width() * core::tileSize);
   world.scene()->addItem(gMap);
 
+  const Eigen::Vector2f mapHalfSize(map.tileGrid().height()*0.5f, map.tileGrid().width()*0.5f);
   {
     GraphicEntity * unitGraphic = new GraphicEntity();
     unitGraphic->setBrush(Qt::red);
-    const Eigen::Vector2f position(10,5);
+    const Eigen::Vector2f position(0,0);
     const EntityTeam::Team team(EntityTeam::TeamA);
-    EntityManagerHelpers::createSimpleUnit(unitGraphic, position* core::tileSize, team);
+    EntityManagerHelpers::createSimpleUnit(unitGraphic, (position+mapHalfSize)* core::tileSize, team);
     world.scene()->addItem(unitGraphic);
   }
 
   {
     GraphicEntity * unitGraphic = new GraphicEntity();
     unitGraphic->setBrush(Qt::blue);
-    const Eigen::Vector2f position(3,12);
+    const Eigen::Vector2f position(1,5);
     const EntityTeam::Team team(EntityTeam::TeamB);
-    EntityManagerHelpers::createSimpleUnit(unitGraphic, position* core::tileSize, team);
+    EntityManagerHelpers::createSimpleUnit(unitGraphic, (position+mapHalfSize)* core::tileSize, team);
     world.scene()->addItem(unitGraphic);
   }
 
