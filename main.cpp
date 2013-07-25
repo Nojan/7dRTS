@@ -1,5 +1,7 @@
+#include "entitymanagerhelper.h"
 #include "gameview.h"
 #include "gameworld.h"
+#include "graphicentity.h"
 
 #include "hardcodedmap.h"
 #include "generalmap.h"
@@ -20,7 +22,7 @@ int main(int argc, char *argv[])
   view.setViewportUpdateMode(QGraphicsView::BoundingRectViewportUpdate);
   view.setDragMode(QGraphicsView::ScrollHandDrag);
   view.setWindowTitle("7dRTS");
-  view.resize(400, 300);
+  view.resize(800, 600);
   view.show();
 
   // test map
@@ -28,8 +30,27 @@ int main(int argc, char *argv[])
   graphic::GraphicMap* gMap = new graphic::GraphicMap(&map);
   QImage img(gMap->pixmap().toImage());
   img.save("test.png");
+
+  world.scene()->setSceneRect(0, 0, map.tileGrid().height() * 32, map.tileGrid().width() * 32);
   world.scene()->addItem(gMap);
 
+  {
+    GraphicEntity * unitGraphic = new GraphicEntity();
+    unitGraphic->setBrush(Qt::red);
+    const Eigen::Vector2f position(50,75);
+    const EntityTeam::Team team(EntityTeam::TeamA);
+    EntityManagerHelpers::createSimpleUnit(unitGraphic, position, team);
+    world.scene()->addItem(unitGraphic);
+  }
+
+  {
+    GraphicEntity * unitGraphic = new GraphicEntity();
+    unitGraphic->setBrush(Qt::blue);
+    const Eigen::Vector2f position(200,150);
+    const EntityTeam::Team team(EntityTeam::TeamB);
+    EntityManagerHelpers::createSimpleUnit(unitGraphic, position, team);
+    world.scene()->addItem(unitGraphic);
+  }
 
   QObject::connect(&view, SIGNAL(switchPause()), &world, SLOT(switchPause()));
 

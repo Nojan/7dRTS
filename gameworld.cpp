@@ -13,32 +13,6 @@ GameWorld::GameWorld(QObject *parent) :
   _graphicsScene.setSceneRect(-300, -300, 600, 600);
   _graphicsScene.setItemIndexMethod(QGraphicsScene::NoIndex);
 
-  {
-    GraphicEntity * unitGraphic = new GraphicEntity();
-    unitGraphic->setBrush(Qt::red);
-    const Eigen::Vector2f position(0,15);
-    const EntityTeam::Team team(EntityTeam::TeamA);
-    const size_t entityId =
-        EntityManagerHelpers::createSimpleUnit(unitGraphic, position, team);
-    EntityMovement * movementModule = EntityManager::Instance().movementModule(entityId);
-    MovememtTarget * target = new MovememtTarget(Eigen::Vector2f(30,-15));
-    movementModule->SetTarget(target);
-    _graphicsScene.addItem(unitGraphic);
-  }
-
-  {
-    GraphicEntity * unitGraphic = new GraphicEntity();
-    unitGraphic->setBrush(Qt::blue);
-    const Eigen::Vector2f position(30,-15);
-    const EntityTeam::Team team(EntityTeam::TeamB);
-    const size_t entityId =
-        EntityManagerHelpers::createSimpleUnit(unitGraphic, position, team);
-    EntityMovement * movementModule = EntityManager::Instance().movementModule(entityId);
-    MovememtTarget * target = new MovememtTarget(Eigen::Vector2f(0,15));
-    movementModule->SetTarget(target);
-    _graphicsScene.addItem(unitGraphic);
-  }
-
   QObject::connect(&_gameplayTimer, SIGNAL(timeout()), this, SLOT(runWorld()));
   switchPause();
 }
