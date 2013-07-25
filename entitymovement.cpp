@@ -1,5 +1,6 @@
 #include "entitymovement.h"
 
+#include "constantes.h"
 #include "entitymanager.h"
 #include "entityposition.h"
 
@@ -31,7 +32,7 @@ EntityMovement::EntityMovement(size_t entityId)
   assert(EntityManager::Instance().positionModule(entityId));
   _position = EntityManager::Instance().positionModule(entityId)->position();
   _orientation = Eigen::Vector2f(1.f,0.f);
-  _speedMax = 10.f;
+  _speedMax = core::tileSizef;
   _target = NULL;
 }
 
