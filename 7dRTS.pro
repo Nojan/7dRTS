@@ -37,6 +37,7 @@ SOURCES += main.cpp\
     hardcodedmap.cpp
 
 HEADERS  += pch.h\
+    constantes.h \
     gameview.h \
     graphicentity.h \
     gameworld.h \

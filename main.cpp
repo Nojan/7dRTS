@@ -1,3 +1,4 @@
+#include "constantes.h"
 #include "entitymanagerhelper.h"
 #include "gameview.h"
 #include "gameworld.h"
@@ -31,24 +32,24 @@ int main(int argc, char *argv[])
   QImage img(gMap->pixmap().toImage());
   img.save("test.png");
 
-  world.scene()->setSceneRect(0, 0, map.tileGrid().height() * 32, map.tileGrid().width() * 32);
+  world.scene()->setSceneRect(0, 0, map.tileGrid().height() * core::tileSize, map.tileGrid().width() * core::tileSize);
   world.scene()->addItem(gMap);
 
   {
     GraphicEntity * unitGraphic = new GraphicEntity();
     unitGraphic->setBrush(Qt::red);
-    const Eigen::Vector2f position(50,75);
+    const Eigen::Vector2f position(10,5);
     const EntityTeam::Team team(EntityTeam::TeamA);
-    EntityManagerHelpers::createSimpleUnit(unitGraphic, position, team);
+    EntityManagerHelpers::createSimpleUnit(unitGraphic, position* core::tileSize, team);
     world.scene()->addItem(unitGraphic);
   }
 
   {
     GraphicEntity * unitGraphic = new GraphicEntity();
     unitGraphic->setBrush(Qt::blue);
-    const Eigen::Vector2f position(200,150);
+    const Eigen::Vector2f position(3,12);
     const EntityTeam::Team team(EntityTeam::TeamB);
-    EntityManagerHelpers::createSimpleUnit(unitGraphic, position, team);
+    EntityManagerHelpers::createSimpleUnit(unitGraphic, position* core::tileSize, team);
     world.scene()->addItem(unitGraphic);
   }
 
