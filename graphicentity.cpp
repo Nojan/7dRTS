@@ -31,7 +31,7 @@ void GraphicEntity::paint(QPainter *painter, const QStyleOptionGraphicsItem *opt
   painter->drawEllipse(0, 0, tileSize, tileSize);
 }
 
-void GraphicEntity::setPosition(int x, int y)
+void GraphicEntity::setPosition(float x, float y)
 {
   _position = QPointF(x, y);
 }

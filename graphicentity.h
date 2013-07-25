@@ -15,7 +15,7 @@ public:
   virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
              QWidget *widget);
 
-  void setPosition(int x, int y);
+  void setPosition(float x, float y);
   void setBrush(QBrush brush);
 
 protected:
