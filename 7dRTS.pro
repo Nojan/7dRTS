@@ -34,7 +34,8 @@ SOURCES += main.cpp\
     entityweapon.cpp \
     generalmap.cpp \
     graphicmap.cpp \
-    hardcodedmap.cpp
+    hardcodedmap.cpp \
+    pathfinder.cpp
 
 HEADERS  += pch.h\
     constantes.h \
@@ -55,4 +56,5 @@ HEADERS  += pch.h\
     graphicmap.h \
     gimpimage.h \
     hardcodedmap.h \
-    grid.h
+    grid.h \
+    pathfinder.h
