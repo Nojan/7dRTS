@@ -17,15 +17,6 @@ int main(int argc, char *argv[])
 
   GameWorld world;
 
-  GameView view(world.scene());
-  view.setRenderHint(QPainter::Antialiasing);
-  view.setCacheMode(QGraphicsView::CacheBackground);
-  view.setViewportUpdateMode(QGraphicsView::BoundingRectViewportUpdate);
-  view.setDragMode(QGraphicsView::ScrollHandDrag);
-  view.setWindowTitle("7dRTS");
-  view.resize(800, 600);
-  view.show();
-
   // test map
   core::GeneralMap map(core::GeneralMap::fromGimpImage(core::HardCodedImage::test));
   graphic::GraphicMap* gMap = new graphic::GraphicMap(&map);
@@ -52,6 +43,15 @@ int main(int argc, char *argv[])
     EntityManagerHelpers::createSimpleUnit(unitGraphic, position* core::tileSize, team);
     world.scene()->addItem(unitGraphic);
   }
+
+  GameView view(world.scene());
+  view.setRenderHint(QPainter::Antialiasing);
+  view.setCacheMode(QGraphicsView::CacheBackground);
+  view.setViewportUpdateMode(QGraphicsView::BoundingRectViewportUpdate);
+  view.setDragMode(QGraphicsView::ScrollHandDrag);
+  view.setWindowTitle("7dRTS");
+  view.resize(800, 600);
+  view.show();
 
   QObject::connect(&view, SIGNAL(switchPause()), &world, SLOT(switchPause()));
 

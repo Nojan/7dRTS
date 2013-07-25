@@ -3,7 +3,8 @@
 
 namespace core
 {
-  const size_t tileSize = 32;
+  const int tileSize = 32;
+  const int tileHalfSize = tileSize/2;
 }
 
 #endif // CONSTANTES_H

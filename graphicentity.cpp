@@ -1,6 +1,9 @@
 #include "graphicentity.h"
 
+#include "constantes.h"
 #include <QPainter>
+
+using namespace core;
 
 GraphicEntity::GraphicEntity()
   : _brush(Qt::black)
@@ -9,13 +12,13 @@ GraphicEntity::GraphicEntity()
 
 QRectF GraphicEntity::boundingRect() const
 {
-  return QRectF(-10, -10, 10, 10);
+  return QRectF(0, 0, tileSize, tileSize);
 }
 
 QPainterPath GraphicEntity::shape() const
 {
   QPainterPath path;
-  path.addRect(-10, -10, 10, 10);
+  path.addRect(boundingRect());
   return path;
 }
 
@@ -25,7 +28,7 @@ void GraphicEntity::paint(QPainter *painter, const QStyleOptionGraphicsItem *opt
   Q_UNUSED(option)
   Q_UNUSED(widget);
   painter->setBrush(_brush);
-  painter->drawEllipse(-10, -10, 10, 10);
+  painter->drawEllipse(0, 0, tileSize, tileSize);
 }
 
 void GraphicEntity::setPosition(int x, int y)
