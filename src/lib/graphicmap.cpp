@@ -147,15 +147,15 @@ QPixmap GraphicMap::pixmapFromGeneralMap(const core::GeneralMap* map)
     for(std::size_t y = 0; y < tileGrid.height(); ++y)
     {
       QPoint pos(toPixelPos({core::tile_index(x), core::tile_index(y)}));
-      if(tileGrid(x, y).texture == core::Tile::Texture::Grass)
+      if(tileGrid.at(x, y).texture == core::Tile::Texture::Grass)
       {
         drawGrass(painter, pos);
       }
-      else if(tileGrid(x, y).texture == core::Tile::Texture::Floor)
+      else if(tileGrid.at(x, y).texture == core::Tile::Texture::Floor)
       {
         drawFloor(painter, pos);
       }
-      else if(tileGrid(x, y).texture == core::Tile::Texture::Rampart)
+      else if(tileGrid.at(x, y).texture == core::Tile::Texture::Rampart)
       {
         drawRampart(painter, pos);
       }

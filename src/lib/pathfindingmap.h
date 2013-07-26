@@ -32,7 +32,7 @@ public:
 
   const std::vector<TilePos>& neighbor(const TilePos& pos) const
   {
-    return _nodes(pos.x, pos.y).neighbor;
+    return _nodes.at(pos.x, pos.y).neighbor;
   }
 
 private:

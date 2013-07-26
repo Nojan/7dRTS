@@ -24,7 +24,7 @@ public:
   void resize(std::size_t width, std::size_t height);
 
   T& operator()(std::size_t x, std::size_t y);
-  const T& operator()(std::size_t x, std::size_t y) const;
+  const T& at(std::size_t x, std::size_t y) const;
 
 private:
   std::size_t _width, _height;
@@ -89,7 +89,7 @@ inline T& Grid<T>::operator()(std::size_t x, std::size_t y)
 
 
 template <typename T>
-inline const T& Grid<T>::operator()(std::size_t x, std::size_t y) const
+inline const T& Grid<T>::at(std::size_t x, std::size_t y) const
 {
   return _data[x*_height + y];
 }

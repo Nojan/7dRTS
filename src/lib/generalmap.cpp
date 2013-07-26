@@ -26,7 +26,7 @@ void fillFromTexture(const TilePos& pos, const Grid<Tile> tileGrid,
   {
     if(tileGrid.inGrid(p.x, p.y))
     {
-      if(tileGrid(p.x, p.y).texture == texture &&
+      if(tileGrid.at(p.x, p.y).texture == texture &&
          tiled.find(p) == std::end(tiled))
       {
         fillFromTexture(p, tileGrid, texture, tiles, walls, tiled, walled);
@@ -34,7 +34,7 @@ void fillFromTexture(const TilePos& pos, const Grid<Tile> tileGrid,
       else
       {
         EdgePos wall = {pos, p};
-        if(tileGrid(p.x, p.y).texture != texture &&
+        if(tileGrid.at(p.x, p.y).texture != texture &&
            walled.find(wall) == std::end(walled))
         {
           walls.push_back(wall);
@@ -85,7 +85,7 @@ GeneralMap GeneralMap::fromGimpImage(const GimpImage& gImage)
     {
       Tile::Type type = Tile::Type::None;
       Tile::Texture tex = Tile::Texture::None;
-      const GimpColor& c = gImage(x, y);
+      const GimpColor& c = gImage.at(x, y);
       if(c == gimpGrass)
       {
         type = Tile::Type::Free;
