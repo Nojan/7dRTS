@@ -18,8 +18,9 @@ INCLUDEPATH += external
 
 PRECOMPILED_HEADER = pch.h
 
-SOURCES += main.cpp\
-           gameview.cpp \
+SOURCES += main.cpp \
+    ballisticprojectilemanager.cpp \
+    gameview.cpp \
     graphicentity.cpp \
     gameworld.cpp \
     entitydamage.cpp \
@@ -37,8 +38,9 @@ SOURCES += main.cpp\
     hardcodedmap.cpp \
     pathfinder.cpp
 
-HEADERS  += pch.h\
+HEADERS  += pch.h \
     constantes.h \
+    ballisticprojectilemanager.h \
     gameview.h \
     graphicentity.h \
     gameworld.h \
