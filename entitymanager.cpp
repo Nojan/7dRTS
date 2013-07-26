@@ -197,7 +197,7 @@ void EntityManager::registerTeamModule(EntityTeam *module)
   _teamModules[module->entityId()] = module;
 }
 
-EntityTeam *EntityManager::TeamModule(size_t entityId)
+EntityTeam *EntityManager::teamModule(size_t entityId)
 {
   assert(entityId < _maxEntity);
   return _teamModules[entityId];

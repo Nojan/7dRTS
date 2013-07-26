@@ -43,7 +43,7 @@ public:
   EntityStateMachine* stateMachineModule(size_t entityId);
 
   void registerTeamModule(EntityTeam* module);
-  EntityTeam* TeamModule(size_t entityId);
+  EntityTeam* teamModule(size_t entityId);
 
   void registerWeaponModule(EntityWeapon* module);
   EntityWeapon* weaponModule(size_t entityId);
