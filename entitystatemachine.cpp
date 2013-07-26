@@ -20,8 +20,7 @@ size_t closestEnemyId(size_t id)
   {
     const EntityPosition* otherPosition = EntityManager::Instance().positionModule(i);
     const EntityTeam* otherTeamModule = EntityManager::Instance().teamModule(i);
-    EntityTeam::Team otherTeam = otherTeamModule->team();
-    if(otherPosition && selfTeam != otherTeam && i != id)
+    if(otherPosition && otherTeamModule && selfTeam != otherTeamModule->team() && i != id)
     {
       const float distance = (otherPosition->position() - selfPosition).norm();
       if ( distance < shortDistance )
