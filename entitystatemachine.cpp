@@ -3,6 +3,7 @@
 #include "entitymanager.h"
 #include "entitymovement.h"
 #include "entityposition.h"
+#include "entityteam.h"
 #include "entityweapon.h"
 
 namespace {
@@ -11,12 +12,16 @@ size_t closestEnemyId(size_t id)
   float shortDistance = FLT_MAX;
   size_t shortId = -1;
   const EntityPosition* selfPosModule = EntityManager::Instance().positionModule(id);
+  const EntityTeam* selfTeamModule = EntityManager::Instance().teamModule(id);
+  EntityTeam::Team selfTeam = selfTeamModule->team();
   const Eigen::Vector2f selfPosition = selfPosModule->position();
   const size_t entityCount = EntityManager::Instance().entityCount();
   for(size_t i = 0; i<entityCount; ++i)
   {
     const EntityPosition* otherPosition = EntityManager::Instance().positionModule(i);
-    if(otherPosition && i != id)
+    const EntityTeam* otherTeamModule = EntityManager::Instance().teamModule(i);
+    EntityTeam::Team otherTeam = otherTeamModule->team();
+    if(otherPosition && selfTeam != otherTeam && i != id)
     {
       const float distance = (otherPosition->position() - selfPosition).norm();
       if ( distance < shortDistance )
