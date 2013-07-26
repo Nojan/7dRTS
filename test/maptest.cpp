@@ -16,14 +16,31 @@ private slots:
   void generalMap()
   {
     core::GeneralMap map(core::GeneralMap::fromGimpImage(core::HardCodedImage::test));
+    QCOMPARE(map.tileGrid().width(), std::size_t(64));
+    QCOMPARE(map.tileGrid().height(), std::size_t(64));
+    QCOMPARE(map.rooms().size(), std::size_t(11));
+  }
+
+  void graphicMap()
+  {
+    core::GeneralMap map(core::GeneralMap::fromGimpImage(core::HardCodedImage::test));
     graphic::GraphicMap* gMap = new graphic::GraphicMap(&map);
     QImage img(gMap->pixmap().toImage());
     img.save("test.png");
   }
-  void graphicMap()
-  {}
+
   void pathFindingMap()
-  {}
+  {
+    core::GeneralMap map(core::GeneralMap::fromGimpImage(core::HardCodedImage::test));
+    core::PathFindingMap pfMap(&map);
+    core::PathFinder<core::PathFindingMap> pf;
+    std::vector<core::TilePos> path = pf.find(pfMap, {0, 0}, {10, 10});
+    std::vector<core::TilePos> expectedPath = {
+      {0,0},{1,1},{2,2},{3,3},{4,4},{5,5},{6,6},{7,7},{8,8},{9,9},{10,10},
+    };
+
+    QCOMPARE(path, expectedPath);
+  }
 };
 
 QTEST_MAIN(TestMap)
