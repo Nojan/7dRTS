@@ -51,9 +51,12 @@ void EntityMovement::SetTarget(MovememtTarget *target)
 {
   if(NULL != _target)
     delete _target;
-  assert(MovememtTarget::Ordered == target->state());
   _target = target;
-  _target->setState(MovememtTarget::InProgress);
+  if(NULL != _target)
+  {
+    assert(MovememtTarget::Ordered == _target->state());
+    _target->setState(MovememtTarget::InProgress);
+  }
 }
 
 void EntityMovement::update(float deltas)
