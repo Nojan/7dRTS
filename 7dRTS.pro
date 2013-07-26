@@ -35,7 +35,8 @@ SOURCES += main.cpp\
     generalmap.cpp \
     graphicmap.cpp \
     hardcodedmap.cpp \
-    pathfinder.cpp
+    pathfinder.cpp \
+    pathfindingmap.cpp
 
 HEADERS  += pch.h\
     constantes.h \
@@ -57,4 +58,5 @@ HEADERS  += pch.h\
     gimpimage.h \
     hardcodedmap.h \
     grid.h \
-    pathfinder.h
+    pathfinder.h \
+    pathfindingmap.h

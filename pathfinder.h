@@ -6,6 +6,7 @@
 #include <set>
 #include <unordered_map>
 #include <unordered_set>
+#include <vector>
 
 namespace core
 {
@@ -45,7 +46,7 @@ PathFinder<M>::find(const model_t& model, const index_t& start, const index_t& o
   /// @todo less by Node->score()
   typedef std::set<Node*> openset_t;
   typedef typename openset_t::const_iterator openset_t_const_iterator;
-  openset_t openSet = {new Node{0., model.heuristique(start), start, nullptr}};
+  openset_t openSet = {new Node{0., model.heuristique(start, objectif), start, nullptr}};
   std::unordered_map<index_t, openset_t_const_iterator> openSetByIndex = {{start, openSet.begin()}};
   /// @todo hash by Node->index_t
   std::unordered_set<Node*> closedSet;
@@ -68,7 +69,7 @@ PathFinder<M>::find(const model_t& model, const index_t& start, const index_t& o
     for(const index_t& neighbor: model.neighbor(bestNode->index))
     {
       Node* candidate = new Node(model.cost(bestNode->index, neighbor),
-                                 model.heuristic(neighbor), neighbor, bestNode);
+                                 model.heuristic(neighbor, objectif), neighbor, bestNode);
       // if not in closed
       if(closedSet.find(candidate) == std::end(closedSet))
       {
@@ -78,7 +79,7 @@ PathFinder<M>::find(const model_t& model, const index_t& start, const index_t& o
         if(openSetIt != std::end(openSetByIndex))
         {
           // if candidate is better we delete it in openSet
-          if((*openSetIt)->score() > candidate->score())
+          if((*openSetIt)->c > candidate->c)
           {
             openSet.erase(*openSetIt);
             openSetByIndex.erase(openSetIt);
