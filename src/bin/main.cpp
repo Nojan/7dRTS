@@ -20,8 +20,6 @@ int main(int argc, char *argv[])
   // test map
   core::GeneralMap map(core::GeneralMap::fromGimpImage(core::HardCodedImage::test));
   graphic::GraphicMap* gMap = new graphic::GraphicMap(&map);
-  QImage img(gMap->pixmap().toImage());
-  img.save("test.png");
 
   world.scene()->setSceneRect(0, 0, map.tileGrid().height() * core::tileSize, map.tileGrid().width() * core::tileSize);
   world.scene()->addItem(gMap);
