@@ -9,8 +9,6 @@
 #include "entityteam.h"
 #include "entityweapon.h"
 
-#include <assert.h>
-
 EntityManager& EntityManager::Instance()
 {
     static EntityManager instance;

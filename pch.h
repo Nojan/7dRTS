@@ -6,6 +6,7 @@
 #ifdef __cplusplus
 // add C++ includes here
 
+#include <assert.h>
 #include <cfloat>
 #include <cmath>
 #include <climits>
