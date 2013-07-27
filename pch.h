@@ -10,6 +10,7 @@
 #include <cfloat>
 #include <cmath>
 #include <climits>
+#include <vector>
 
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunused-local-typedefs"

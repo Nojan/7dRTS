@@ -2,8 +2,6 @@
 #define BALLISTICPROJECTILEMANAGER_H
 #include "pch.h"
 
-#include <vector>
-
 namespace core {
 
 class BallisticProjectile

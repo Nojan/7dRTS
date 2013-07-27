@@ -4,7 +4,6 @@
 #include "pch.h"
 
 #include <stdlib.h>
-#include <vector>
 
 class EntityDamage;
 class EntityGraphicHolder;
