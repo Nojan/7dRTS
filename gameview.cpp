@@ -15,5 +15,5 @@ void GameView::keyPressEvent(QKeyEvent *event)
     event->accept();
   }
   else
-    QGraphicsView::event(event);
+    event->ignore();
 }
