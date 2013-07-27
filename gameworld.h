@@ -6,7 +6,7 @@ class GameWorld : public QObject
 {
   Q_OBJECT
 public:
-  explicit GameWorld(QObject *parent = 0);
+  static GameWorld& Instance();
 
   QGraphicsScene * scene();
 
@@ -15,6 +15,9 @@ signals:
 public slots:
   void runWorld();
   void switchPause();
+
+private:
+  GameWorld();
 
 private:
   QGraphicsScene _graphicsScene;

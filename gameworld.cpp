@@ -7,8 +7,14 @@
 
 const int framestep = 1000 / 33;
 
-GameWorld::GameWorld(QObject *parent) :
-  QObject(parent)
+GameWorld& GameWorld::Instance()
+{
+    static GameWorld instance;
+    return instance;
+}
+
+GameWorld::GameWorld() :
+  QObject(0)
 {
   _graphicsScene.setItemIndexMethod(QGraphicsScene::NoIndex);
 
