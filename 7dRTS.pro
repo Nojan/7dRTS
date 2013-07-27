@@ -36,6 +36,7 @@ SOURCES += main.cpp \
     generalmap.cpp \
     graphicmap.cpp \
     hardcodedmap.cpp \
+    memorytracker.cpp \
     pathfinder.cpp
 
 HEADERS  += pch.h \
@@ -58,5 +59,6 @@ HEADERS  += pch.h \
     graphicmap.h \
     gimpimage.h \
     hardcodedmap.h \
+    memorytracker.h \
     grid.h \
     pathfinder.h
