@@ -21,6 +21,7 @@
 // Qt
 #include <QGraphicsScene>
 #include <QPainter>
+#include <QTimer>
 
 #endif // __cplusplus
 

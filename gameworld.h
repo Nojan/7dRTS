@@ -2,8 +2,6 @@
 #define GAMEWORLD_H
 #include "pch.h"
 
-#include <QTimer>
-
 class GameWorld : public QObject
 {
   Q_OBJECT

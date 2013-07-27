@@ -1,8 +1,9 @@
 #ifndef GAMEVIEW_H
 #define GAMEVIEW_H
 
+#include "pch.h"
+
 #include <QGraphicsView>
-#include <QTimer>
 
 class QEvent;
 
