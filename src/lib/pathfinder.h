@@ -84,7 +84,6 @@ PathFinder<M>::find(const model_t& model, const index_t& start, const index_t& o
 
     if(bestNode->index == objectif)
     {
-      ///@todo delete all node in open and closed
       std::size_t nrNode = 0;
       Node* curNode = bestNode;
       while(curNode)
@@ -99,6 +98,15 @@ PathFinder<M>::find(const model_t& model, const index_t& start, const index_t& o
       {
         result[nrNode - i - 1] = curNode->index;
         curNode = curNode->parent;
+      }
+
+      for(Node* n: openSet)
+      {
+        delete n;
+      }
+      for(Node* n: closedSet)
+      {
+        delete n;
       }
 
       return result;
@@ -140,7 +148,10 @@ PathFinder<M>::find(const model_t& model, const index_t& start, const index_t& o
     }
   }
 
-  /// @todo delete all closed
+  for(Node* n: closedSet)
+  {
+    delete n;
+  }
   return std::vector<index_t>();
 }
 
