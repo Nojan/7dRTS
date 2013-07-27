@@ -19,7 +19,8 @@ public:
   std::size_t width() const;
   std::size_t height() const;
 
-  bool inGrid(std::size_t x, std::size_t y) const;
+  template <typename SIZE>
+  bool inGrid(SIZE x, SIZE y) const;
 
   void resize(std::size_t width, std::size_t height);
 
@@ -66,9 +67,12 @@ inline std::size_t Grid<T>::height() const
 
 
 template <typename T>
-bool Grid<T>::inGrid(std::size_t x, std::size_t y) const
+template <typename SIZE>
+bool Grid<T>::inGrid(SIZE x, SIZE y) const
 {
-  return x < _width && y < _height;
+  typedef typename std::make_unsigned<SIZE>::type SSIZE;
+  return x >= 0 && SSIZE(x) < _width &&
+      y >= 0 && SSIZE(y) < _height;
 }
 
 

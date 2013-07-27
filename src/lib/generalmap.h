@@ -20,7 +20,7 @@ namespace core
 class GimpImage;
 
 
-typedef unsigned int tile_index;
+typedef std::ptrdiff_t tile_index;
 
 
 struct TilePos
