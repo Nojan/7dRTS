@@ -6,6 +6,7 @@
 #ifdef __cplusplus
 // add C++ includes here
 
+// std
 #include <assert.h>
 #include <cfloat>
 #include <cmath>
@@ -16,6 +17,9 @@
 #pragma GCC diagnostic ignored "-Wunused-local-typedefs"
 #include <Eigen/Eigen>
 #pragma GCC diagnostic pop
+
+// Qt
+#include <QPainter>
 
 #endif // __cplusplus
 

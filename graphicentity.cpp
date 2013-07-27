@@ -1,7 +1,6 @@
 #include "graphicentity.h"
 
 #include "constantes.h"
-#include <QPainter>
 
 using namespace core;
 
