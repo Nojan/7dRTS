@@ -42,10 +42,10 @@ MemoryTracker::MemoryTracker()
 
 MemoryTracker::~MemoryTracker()
 {
-  std::cout << _memoryBlockMap.size() << " memory leak" << std::endl;
+  std::cout << std::endl << _memoryBlockMap.size() << " memory leak" << std::endl;
   for(auto it = _memoryBlockMap.cbegin(); it != _memoryBlockMap.cend(); ++it)
   {
     const MemoryBlock& mb = it->second;
-    std::cout << mb._filename << ":" << mb._line << std::endl;
+    std::cout << "leak@" << mb._filename << ":" << mb._line << std::endl;
   }
 }
