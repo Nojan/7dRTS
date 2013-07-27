@@ -13,6 +13,11 @@ GameWorld& GameWorld::Instance()
     return instance;
 }
 
+core::BallisticProjectileManager &GameWorld::ballisticProjectileManager()
+{
+  return _ballisticProjectileManager;
+}
+
 EntityManager &GameWorld::entityManager()
 {
   return _entityManager;
@@ -34,7 +39,9 @@ QGraphicsScene *GameWorld::scene()
 
 void GameWorld::runWorld()
 {
+  const float fdeltaS = static_cast<float>(framestep)/1000.f;
   _entityManager.processModules(framestep);
+  _ballisticProjectileManager.evolve(fdeltaS);
 
   _graphicsScene.advance();
 }

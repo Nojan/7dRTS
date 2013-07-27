@@ -21,7 +21,7 @@ public:
 protected:
   virtual void advance(int step);
 
-private:
+protected:
   QBrush _brush;
   QPointF _position;
 };

@@ -1,5 +1,6 @@
 #include "entityweapon.h"
 
+#include "ballisticprojectilemanager.h"
 #include "entitydamage.h"
 #include "entitymanager.h"
 #include "entityposition.h"
@@ -18,7 +19,7 @@ size_t WeaponTarget::targetId() const
 EntityWeapon::EntityWeapon(size_t entityId)
   : EntityModule(entityId)
   , _damagePower(10)
-  , _range(10.f)
+  , _range(10.f * 32.f)
   , _fireRate(2000)
   , _fireRateCurrent(0)
   , _target(NULL)
@@ -62,5 +63,9 @@ void EntityWeapon::shootAt(Eigen::Vector2f position)
   _fireRateCurrent = _fireRate;
   // emit bullet or something
   EntityManager& entityManager = GameWorld::Instance().entityManager();
+  const Eigen::Vector2f selfPosition = entityManager.positionModule(entityId())->position();
   entityManager.damageModule(_target->targetId())->applyDamage(_damagePower);
+  const Eigen::Vector2f projectileOrientation = (position - selfPosition).normalized();
+  core::BallisticProjectile * projectile = new core::BallisticProjectile(selfPosition, projectileOrientation, 5);
+  GameWorld::Instance().ballisticProjectileManager().addProjectile(projectile);
 }
