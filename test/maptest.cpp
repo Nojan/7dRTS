@@ -38,8 +38,14 @@ private slots:
     std::vector<core::TilePos> expectedPath = {
       {0,0},{1,1},{2,2},{3,3},{4,4},{5,5},{6,6},{7,7},{8,8},{9,9},{10,10},
     };
-
     QCOMPARE(path, expectedPath);
+
+    path = pf.find(pfMap, {28, 46}, {24, 41});
+    expectedPath = {
+      {28,46},{29,46},{29,45},{29,44},{28,43},{27,42},{27,41},{26,41},{25,41},{24,41},
+    };
+    QCOMPARE(path, expectedPath);
+
   }
 };
 
