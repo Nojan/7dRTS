@@ -13,6 +13,11 @@ GameWorld& GameWorld::Instance()
     return instance;
 }
 
+EntityManager &GameWorld::entityManager()
+{
+  return _entityManager;
+}
+
 GameWorld::GameWorld() :
   QObject(0)
 {
@@ -29,7 +34,7 @@ QGraphicsScene *GameWorld::scene()
 
 void GameWorld::runWorld()
 {
-  EntityManager::Instance().processModules(framestep);
+  _entityManager.processModules(framestep);
 
   _graphicsScene.advance();
 }

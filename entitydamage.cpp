@@ -1,6 +1,6 @@
 #include "entitydamage.h"
 
-#include "entitymanager.h"
+#include "gameworld.h"
 
 EntityDamage::EntityDamage(size_t entityId)
   :EntityModule(entityId)
@@ -22,6 +22,6 @@ void EntityDamage::update()
 {
   if(0 > _healthPoint )
   {
-    EntityManager::Instance().deferredRemoveEntity(entityId());
+    GameWorld::Instance().entityManager().deferredRemoveEntity(entityId());
   }
 }

@@ -3,6 +3,7 @@
 #include "constantes.h"
 #include "entitymanager.h"
 #include "entityposition.h"
+#include "gameworld.h"
 
 
 MovememtTarget::MovememtTarget(Eigen::Vector2f position)
@@ -29,8 +30,9 @@ void MovememtTarget::setState(MovememtTarget::State state)
 EntityMovement::EntityMovement(size_t entityId)
   :EntityModule(entityId)
 {
-  assert(EntityManager::Instance().positionModule(entityId));
-  _position = EntityManager::Instance().positionModule(entityId)->position();
+  EntityManager& entityManager = GameWorld::Instance().entityManager();
+  assert(entityManager.positionModule(entityId));
+  _position = entityManager.positionModule(entityId)->position();
   _orientation = Eigen::Vector2f(1.f,0.f);
   _speedMax = core::tileSizef;
   _target = NULL;

@@ -2,6 +2,7 @@
 
 #include "entitymanager.h"
 #include "entityposition.h"
+#include "gameworld.h"
 #include "graphicentity.h"
 
 EntityGraphicHolder::EntityGraphicHolder(size_t entityId, GraphicEntity *entityGraphics)
@@ -22,7 +23,7 @@ EntityGraphicHolder::~EntityGraphicHolder()
 
 void EntityGraphicHolder::update()
 {
-  EntityManager& entityManager = EntityManager::Instance();
+  EntityManager& entityManager = GameWorld::Instance().entityManager();
   EntityPosition* position = entityManager.positionModule(entityId());
   _entityGraphics->setPosition(position->position().x(), position->position().y());
 }

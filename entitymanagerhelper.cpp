@@ -7,13 +7,14 @@
 #include "entitystatemachine.h"
 #include "entityteam.h"
 #include "entityweapon.h"
+#include "gameworld.h"
 
 size_t EntityManagerHelpers::
 createSimpleUnit(GraphicEntity *graphicEntity,
                  Eigen::Vector2f position,
                  EntityTeam::Team teamId)
 {
-  EntityManager& entityManager = EntityManager::Instance();
+  EntityManager& entityManager = GameWorld::Instance().entityManager();
   const size_t entityId = entityManager.createEntityId();
   entityManager.registerDamageModule(new EntityDamage(entityId));
   entityManager.registerPositionModule(new EntityPosition(entityId, position));

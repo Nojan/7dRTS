@@ -2,6 +2,7 @@
 
 #include "entitymanager.h"
 #include "entitymovement.h"
+#include "gameworld.h"
 
 EntityPosition::EntityPosition(size_t entityId, const Eigen::Vector2f position)
   : EntityModule(entityId)
@@ -21,7 +22,8 @@ void EntityPosition::setPosition(const Eigen::Vector2f position)
 
 void EntityPosition::update()
 {
-  const EntityMovement* movementModule = EntityManager::Instance().movementModule(entityId());
+  EntityManager& entityManager = GameWorld::Instance().entityManager();
+  const EntityMovement* movementModule = entityManager.movementModule(entityId());
   if(movementModule)
   {
     _position = movementModule->position();

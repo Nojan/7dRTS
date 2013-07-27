@@ -9,12 +9,6 @@
 #include "entityteam.h"
 #include "entityweapon.h"
 
-EntityManager& EntityManager::Instance()
-{
-    static EntityManager instance;
-    return instance;
-}
-
 EntityManager::EntityManager()
   : _maxEntity()
 {

@@ -18,7 +18,7 @@ class GraphicEntity;
 class EntityManager
 {
 public:
-  static EntityManager& Instance();
+  EntityManager();
 
   size_t entityCount() const;
   size_t createEntityId();
@@ -48,7 +48,6 @@ public:
   EntityWeapon* weaponModule(size_t entityId);
 
 private:
-  EntityManager();
   void removeEntity(size_t entityId);
   void processRemoveEntity();
 

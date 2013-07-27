@@ -3,6 +3,7 @@
 #include "entitydamage.h"
 #include "entitymanager.h"
 #include "entityposition.h"
+#include "gameworld.h"
 
 WeaponTarget::WeaponTarget(size_t entityId)
   : _target(entityId)
@@ -30,10 +31,11 @@ void EntityWeapon::update(int deltaMs)
     _fireRateCurrent -= deltaMs;
   if(0 >= _fireRateCurrent)
   {
+    EntityManager& entityManager = GameWorld::Instance().entityManager();
     _fireRateCurrent = 0;
     if(_target)
     {
-      const Eigen::Vector2f targetPosition = EntityManager::Instance().positionModule(_target->targetId())->position();
+      const Eigen::Vector2f targetPosition = entityManager.positionModule(_target->targetId())->position();
       if(canShootAt(targetPosition))
         shootAt(targetPosition);
     }
@@ -49,7 +51,8 @@ void EntityWeapon::setTarget(WeaponTarget *target)
 
 bool EntityWeapon::canShootAt(Eigen::Vector2f position) const
 {
-  const Eigen::Vector2f selfPosition = EntityManager::Instance().positionModule(entityId())->position();
+  EntityManager& entityManager = GameWorld::Instance().entityManager();
+  const Eigen::Vector2f selfPosition = entityManager.positionModule(entityId())->position();
   return (selfPosition - position).norm() <= float(_range);
 }
 
@@ -58,5 +61,6 @@ void EntityWeapon::shootAt(Eigen::Vector2f position)
   assert(canShootAt(position));
   _fireRateCurrent = _fireRate;
   // emit bullet or something
-  EntityManager::Instance().damageModule(_target->targetId())->applyDamage(_damagePower);
+  EntityManager& entityManager = GameWorld::Instance().entityManager();
+  entityManager.damageModule(_target->targetId())->applyDamage(_damagePower);
 }

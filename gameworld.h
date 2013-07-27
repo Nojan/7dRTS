@@ -2,12 +2,15 @@
 #define GAMEWORLD_H
 #include "pch.h"
 
+#include "entitymanager.h"
+
 class GameWorld : public QObject
 {
   Q_OBJECT
 public:
   static GameWorld& Instance();
 
+  EntityManager& entityManager();
   QGraphicsScene * scene();
 
 signals:
@@ -20,6 +23,7 @@ private:
   GameWorld();
 
 private:
+  EntityManager _entityManager;
   QGraphicsScene _graphicsScene;
   QTimer _gameplayTimer;
 };
