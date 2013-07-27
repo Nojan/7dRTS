@@ -1,7 +1,7 @@
 #ifndef GAMEWORLD_H
 #define GAMEWORLD_H
+#include "pch.h"
 
-#include <QGraphicsScene>
 #include <QTimer>
 
 class GameWorld : public QObject

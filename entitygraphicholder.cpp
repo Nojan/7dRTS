@@ -4,9 +4,6 @@
 #include "entityposition.h"
 #include "graphicentity.h"
 
-#include <assert.h>
-#include <QGraphicsScene>
-
 EntityGraphicHolder::EntityGraphicHolder(size_t entityId, GraphicEntity *entityGraphics)
   : EntityModule(entityId)
   , _entityGraphics(entityGraphics)

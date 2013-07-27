@@ -19,6 +19,7 @@
 #pragma GCC diagnostic pop
 
 // Qt
+#include <QGraphicsScene>
 #include <QPainter>
 
 #endif // __cplusplus
