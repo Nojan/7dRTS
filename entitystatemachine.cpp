@@ -47,10 +47,20 @@ void EntityStateMachine::update()
   EntityManager& entityManager = GameWorld::Instance().entityManager();
   if(static_cast<size_t>(-1) != enemy)
   {
-    const EntityPosition* position = entityManager.positionModule(enemy);
-    EntityMovement* movement = entityManager.movementModule(entityId());
-    //movement->SetTarget(new MovememtTarget(position->position()));
+    const EntityPosition* positionEnemy = entityManager.positionModule(enemy);
     EntityWeapon* weapon = entityManager.weaponModule(entityId());
+    EntityMovement* movement = entityManager.movementModule(entityId());
+    if(!weapon->canShootAt(positionEnemy->position()))
+    {
+        movement->SetTarget(new MovememtTarget(positionEnemy->position()));
+    }
+    else
+    {
+        movement->SetTarget(NULL);
+    }
+
+
+
     weapon->setTarget(new WeaponTarget(enemy));
   }
   else

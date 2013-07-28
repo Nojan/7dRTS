@@ -39,7 +39,7 @@ int main(int argc, char *argv[])
 
   {
     GraphicEntity * unitGraphic = new GraphicEntity();
-    const Eigen::Vector2f position(1,5);
+    const Eigen::Vector2f position(2,0);
     const EntityTeam::Team teamId(EntityTeam::TeamA);
     EntityManagerHelpers::createSimpleUnit(unitGraphic, (position+mapHalfSize)* core::tileSize, teamId);
     unitGraphic->setBrush(EntityTeam::brushFromTeamId(teamId));
@@ -48,7 +48,7 @@ int main(int argc, char *argv[])
 
   {
     GraphicEntity * unitGraphic = new GraphicEntity();
-    const Eigen::Vector2f position(4,4);
+    const Eigen::Vector2f position(10,10);
     const EntityTeam::Team teamId(EntityTeam::TeamB);
     EntityManagerHelpers::createUnitGrosDegats(unitGraphic, (position+mapHalfSize)* core::tileSize, teamId);
     unitGraphic->setBrush(EntityTeam::brushFromTeamId(teamId));
