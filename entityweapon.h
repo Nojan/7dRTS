@@ -17,7 +17,7 @@ private:
 class EntityWeapon : public EntityModule
 {
 public:
-  EntityWeapon(size_t entityId);
+  EntityWeapon(size_t entityId, int damage, float range, int fireRate);
 
   void update(int deltaMs);
 

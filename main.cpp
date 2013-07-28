@@ -38,12 +38,22 @@ int main(int argc, char *argv[])
 
   {
     GraphicEntity * unitGraphic = new GraphicEntity();
-    unitGraphic->setBrush(Qt::blue);
+    unitGraphic->setBrush(Qt::red);
     const Eigen::Vector2f position(1,5);
-    const EntityTeam::Team team(EntityTeam::TeamB);
+    const EntityTeam::Team team(EntityTeam::TeamA);
     EntityManagerHelpers::createSimpleUnit(unitGraphic, (position+mapHalfSize)* core::tileSize, team);
     scene->addItem(unitGraphic);
   }
+
+  {
+    GraphicEntity * unitGraphic = new GraphicEntity();
+    unitGraphic->setBrush(Qt::blue);
+    const Eigen::Vector2f position(4,4);
+    const EntityTeam::Team team(EntityTeam::TeamB);
+    EntityManagerHelpers::createUnitQuiPoutre(unitGraphic, (position+mapHalfSize)* core::tileSize, team);
+    scene->addItem(unitGraphic);
+  }
+
 
   GameView view(scene);
   view.setRenderHint(QPainter::Antialiasing);

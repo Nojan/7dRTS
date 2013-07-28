@@ -22,6 +22,23 @@ createSimpleUnit(GraphicEntity *graphicEntity,
   entityManager.registerGraphicHolderModule(new EntityGraphicHolder(entityId, graphicEntity));
   entityManager.registerStateMachineModule(new EntityStateMachine(entityId));
   entityManager.registerTeamModule(new EntityTeam(entityId, teamId));
-  entityManager.registerWeaponModule(new EntityWeapon(entityId));
+  entityManager.registerWeaponModule(new EntityWeapon(entityId, 10, 10.f, 2000));
+  return entityId;
+}
+
+size_t EntityManagerHelpers::
+createUnitQuiPoutre(GraphicEntity *graphicEntity,
+                 Eigen::Vector2f position,
+                 EntityTeam::Team teamId)
+{
+  EntityManager& entityManager = GameWorld::Instance().entityManager();
+  const size_t entityId = entityManager.createEntityId();
+  entityManager.registerDamageModule(new EntityDamage(entityId));
+  entityManager.registerPositionModule(new EntityPosition(entityId, position));
+  entityManager.registerMovementModule(new EntityMovement(entityId));
+  entityManager.registerGraphicHolderModule(new EntityGraphicHolder(entityId, graphicEntity));
+  entityManager.registerStateMachineModule(new EntityStateMachine(entityId));
+  entityManager.registerTeamModule(new EntityTeam(entityId, teamId));
+  entityManager.registerWeaponModule(new EntityWeapon(entityId, 20, 10.f, 2000));
   return entityId;
 }

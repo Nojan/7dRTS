@@ -1,6 +1,7 @@
 #include "entityweapon.h"
 
 #include "ballisticprojectilemanager.h"
+#include "constantes.h"
 #include "entitydamage.h"
 #include "entitymanager.h"
 #include "entityposition.h"
@@ -15,12 +16,12 @@ size_t WeaponTarget::targetId() const
 {
   return _target;
 }
+EntityWeapon::EntityWeapon(size_t entityId, int damage, float range, int fireRate)
 
-EntityWeapon::EntityWeapon(size_t entityId)
   : EntityModule(entityId)
-  , _damagePower(10)
-  , _range(10.f * 32.f)
-  , _fireRate(2000)
+  , _damagePower(damage)
+  , _range(range * core::tileSizef)
+  , _fireRate(fireRate)
   , _fireRateCurrent(0)
   , _target(NULL)
 {

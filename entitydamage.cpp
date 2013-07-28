@@ -20,7 +20,7 @@ int EntityDamage::healthPoint() const
 
 void EntityDamage::update()
 {
-  if(0 > _healthPoint )
+  if(0 >= _healthPoint )
   {
     GameWorld::Instance().entityManager().deferredRemoveEntity(entityId());
   }
