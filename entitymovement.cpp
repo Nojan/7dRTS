@@ -27,14 +27,14 @@ void MovememtTarget::setState(MovememtTarget::State state)
   _state = state;
 }
 
-EntityMovement::EntityMovement(size_t entityId)
+EntityMovement::EntityMovement(size_t entityId, float speedMax)   // speedMax correspond au nombre de cases par secondes
   :EntityModule(entityId)
 {
   EntityManager& entityManager = GameWorld::Instance().entityManager();
   assert(entityManager.positionModule(entityId));
   _position = entityManager.positionModule(entityId)->position();
   _orientation = Eigen::Vector2f(1.f,0.f);
-  _speedMax = core::tileSizef;
+  _speedMax = speedMax * core::tileSizef;
   _target = NULL;
 }
 

@@ -13,9 +13,18 @@ size_t createSimpleUnit(GraphicEntity* graphicEntity,
                         Eigen::Vector2f position,
                         EntityTeam::Team teamId);
 
-size_t createUnitQuiPoutre(GraphicEntity* graphicEntity,
+size_t createUnitGrosDegats(GraphicEntity* graphicEntity,
                         Eigen::Vector2f position,
                         EntityTeam::Team teamId);
+
+size_t createUnitRapide(GraphicEntity* graphicEntity,
+                        Eigen::Vector2f position,
+                        EntityTeam::Team teamId);
+
+size_t createUnitTank(GraphicEntity* graphicEntity,
+                        Eigen::Vector2f position,
+                        EntityTeam::Team teamId);
+
 }
 
 #endif // ENTITYMANAGERHELPER_H

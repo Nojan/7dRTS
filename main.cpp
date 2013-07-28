@@ -50,7 +50,7 @@ int main(int argc, char *argv[])
     unitGraphic->setBrush(Qt::blue);
     const Eigen::Vector2f position(4,4);
     const EntityTeam::Team team(EntityTeam::TeamB);
-    EntityManagerHelpers::createUnitQuiPoutre(unitGraphic, (position+mapHalfSize)* core::tileSize, team);
+    EntityManagerHelpers::createUnitGrosDegats(unitGraphic, (position+mapHalfSize)* core::tileSize, team);
     scene->addItem(unitGraphic);
   }
 

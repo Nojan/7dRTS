@@ -7,7 +7,7 @@
 class EntityDamage : public EntityModule
 {
 public:
-  EntityDamage(size_t entityId);
+  EntityDamage(size_t entityId, int healthpoint);
 
   void applyDamage(const int damagePoint);
 

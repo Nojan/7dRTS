@@ -2,10 +2,10 @@
 
 #include "gameworld.h"
 
-EntityDamage::EntityDamage(size_t entityId)
-  :EntityModule(entityId)
-  , _healthPoint(10)
+EntityDamage::EntityDamage(size_t entityId, int healthPoint)
+  :EntityModule(entityId)  , _healthPoint(healthPoint)
 {
+
 }
 
 void EntityDamage::applyDamage(const int damagePoint)

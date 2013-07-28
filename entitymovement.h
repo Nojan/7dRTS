@@ -29,7 +29,7 @@ private:
 class EntityMovement : public EntityModule
 {
 public:
-  EntityMovement(size_t entityId);
+  EntityMovement(size_t entityId, float speedMax);
   ~EntityMovement();
 
   Eigen::Vector2f position() const;
@@ -40,7 +40,7 @@ public:
 private:
   Eigen::Vector2f _position;
   Eigen::Vector2f _orientation;
-  int _speedMax;
+  int _speedMax;    // nb pixels par seconde
   MovememtTarget * _target;
 };
 
