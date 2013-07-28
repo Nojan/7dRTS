@@ -11,6 +11,7 @@
 #include <QApplication>
 #include <QtWidgets>
 
+
 int main(int argc, char *argv[])
 {
   QApplication a(argc, argv);
@@ -29,28 +30,28 @@ int main(int argc, char *argv[])
   const Eigen::Vector2f mapHalfSize(map.tileGrid().height()*0.5f, map.tileGrid().width()*0.5f);
   {
     GraphicEntity * unitGraphic = new GraphicEntity();
-    unitGraphic->setBrush(Qt::red);
     const Eigen::Vector2f position(0,0);
-    const EntityTeam::Team team(EntityTeam::TeamA);
-    EntityManagerHelpers::createSimpleUnit(unitGraphic, (position+mapHalfSize)* core::tileSize, team);
+    const EntityTeam::Team teamId(EntityTeam::TeamA);
+    EntityManagerHelpers::createSimpleUnit(unitGraphic, (position+mapHalfSize)* core::tileSize, teamId);
+    unitGraphic->setBrush(EntityTeam::brushFromTeamId(teamId));
     scene->addItem(unitGraphic);
   }
 
   {
     GraphicEntity * unitGraphic = new GraphicEntity();
-    unitGraphic->setBrush(Qt::red);
     const Eigen::Vector2f position(1,5);
-    const EntityTeam::Team team(EntityTeam::TeamA);
-    EntityManagerHelpers::createSimpleUnit(unitGraphic, (position+mapHalfSize)* core::tileSize, team);
+    const EntityTeam::Team teamId(EntityTeam::TeamA);
+    EntityManagerHelpers::createSimpleUnit(unitGraphic, (position+mapHalfSize)* core::tileSize, teamId);
+    unitGraphic->setBrush(EntityTeam::brushFromTeamId(teamId));
     scene->addItem(unitGraphic);
   }
 
   {
     GraphicEntity * unitGraphic = new GraphicEntity();
-    unitGraphic->setBrush(Qt::blue);
     const Eigen::Vector2f position(4,4);
-    const EntityTeam::Team team(EntityTeam::TeamB);
-    EntityManagerHelpers::createUnitGrosDegats(unitGraphic, (position+mapHalfSize)* core::tileSize, team);
+    const EntityTeam::Team teamId(EntityTeam::TeamB);
+    EntityManagerHelpers::createUnitGrosDegats(unitGraphic, (position+mapHalfSize)* core::tileSize, teamId);
+    unitGraphic->setBrush(EntityTeam::brushFromTeamId(teamId));
     scene->addItem(unitGraphic);
   }
 

@@ -3,6 +3,9 @@
 
 #include "entitymodule.h"
 
+#include <QApplication>
+#include <QtWidgets>
+
 class EntityTeam : public EntityModule
 {
 public:
@@ -16,8 +19,12 @@ public:
 
   Team team() const;
 
+  static QBrush brushFromTeamId(const EntityTeam::Team teamId);
+
+
 private:
   Team _team;
+  Qt::GlobalColor _color;
 };
 
 #endif // ENTITYTEAMMODULE_H
