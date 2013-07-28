@@ -1,7 +1,11 @@
 #ifndef MEMORYTRACKER_H
 #define MEMORYTRACKER_H
 
-#ifndef DEBUG
+#ifdef DEBUG
+#define USE_MEMORYTRACKER
+#endif
+
+#ifdef USE_MEMORYTRACKER
 
 #include <map>
 

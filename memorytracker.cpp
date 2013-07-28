@@ -1,6 +1,7 @@
+#ifdef USE_MEMORYTRACKER
+
 #include "memorytracker.h"
 
-#include <iostream>
 #include <malloc.h>
 
 using namespace core;
@@ -49,3 +50,5 @@ MemoryTracker::~MemoryTracker()
     std::cout << "leak@" << mb._filename << ":" << mb._line << std::endl;
   }
 }
+
+#endif //USE_MEMORYTRACKER
