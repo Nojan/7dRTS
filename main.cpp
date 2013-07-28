@@ -50,11 +50,19 @@ int main(int argc, char *argv[])
     GraphicEntity * unitGraphic = new GraphicEntity();
     const Eigen::Vector2f position(10,10);
     const EntityTeam::Team teamId(EntityTeam::TeamB);
-    EntityManagerHelpers::createUnitGrosDegats(unitGraphic, (position+mapHalfSize)* core::tileSize, teamId);
+    EntityManagerHelpers::createUnitTank(unitGraphic, (position+mapHalfSize)* core::tileSize, teamId);
     unitGraphic->setBrush(EntityTeam::brushFromTeamId(teamId));
     scene->addItem(unitGraphic);
   }
 
+  {
+    GraphicEntity * unitGraphic = new GraphicEntity();
+    const Eigen::Vector2f position(12,10);
+    const EntityTeam::Team teamId(EntityTeam::TeamB);
+    EntityManagerHelpers::createUnitRapide(unitGraphic, (position+mapHalfSize)* core::tileSize, teamId);
+    unitGraphic->setBrush(EntityTeam::brushFromTeamId(teamId));
+    scene->addItem(unitGraphic);
+  }
 
   GameView view(scene);
   view.setRenderHint(QPainter::Antialiasing);
