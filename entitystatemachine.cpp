@@ -49,7 +49,7 @@ void EntityStateMachine::update()
   {
     const EntityPosition* position = entityManager.positionModule(enemy);
     EntityMovement* movement = entityManager.movementModule(entityId());
-    movement->SetTarget(new MovememtTarget(position->position()));
+    //movement->SetTarget(new MovememtTarget(position->position()));
     EntityWeapon* weapon = entityManager.weaponModule(entityId());
     weapon->setTarget(new WeaponTarget(enemy));
   }

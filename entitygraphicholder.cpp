@@ -21,6 +21,11 @@ EntityGraphicHolder::~EntityGraphicHolder()
   delete _entityGraphics;
 }
 
+const GraphicEntity *EntityGraphicHolder::graphic() const
+{
+  return _entityGraphics;
+}
+
 void EntityGraphicHolder::update()
 {
   EntityManager& entityManager = GameWorld::Instance().entityManager();

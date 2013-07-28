@@ -13,6 +13,8 @@ public:
   EntityGraphicHolder(size_t entityId, GraphicEntity* entityGraphics);
   ~EntityGraphicHolder();
 
+  const GraphicEntity* graphic() const;
+
   void update();
 
 private:

@@ -2,6 +2,7 @@
 
 #include "gameworld.h"
 
+
 EntityDamage::EntityDamage(size_t entityId, int healthPoint)
   :EntityModule(entityId)  , _healthPoint(healthPoint)
 {

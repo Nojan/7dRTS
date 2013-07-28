@@ -65,8 +65,7 @@ void EntityWeapon::shootAt(Eigen::Vector2f position)
   // emit bullet or something
   EntityManager& entityManager = GameWorld::Instance().entityManager();
   const Eigen::Vector2f selfPosition = entityManager.positionModule(entityId())->position();
-  entityManager.damageModule(_target->targetId())->applyDamage(_damagePower);
   const Eigen::Vector2f projectileOrientation = (position - selfPosition).normalized();
-  core::BallisticProjectile * projectile = new core::BallisticProjectile(selfPosition, projectileOrientation, 5);
+  core::BallisticProjectile * projectile = new core::BallisticProjectile(selfPosition + projectileOrientation*32.f, projectileOrientation, 5);
   GameWorld::Instance().ballisticProjectileManager().addProjectile(projectile);
 }

@@ -1,6 +1,9 @@
 #include "ballisticprojectilemanager.h"
 
 #include "constantes.h"
+#include "entitydamage.h"
+#include "entitygraphicholder.h"
+#include "entityposition.h"
 #include "gameworld.h"
 
 GraphicBallisticProjectile::GraphicBallisticProjectile()
@@ -97,21 +100,47 @@ void BallisticProjectileManager::addProjectile(BallisticProjectile *projectile)
   _projectiles.push_back(projectile);
 }
 
+static bool collideGraphics(BallisticProjectile& projectile, const size_t entity)
+{
+  EntityGraphicHolder* graphicHolder = GameWorld::Instance().entityManager().GraphicHolderModule(entity);
+  if(!graphicHolder)
+    return false;
+  return projectile.graphic()->collidesWithItem(graphicHolder->graphic());
+}
+
+static bool collide(BallisticProjectile& projectile, const size_t entity)
+{
+  EntityPosition* positionModule = GameWorld::Instance().entityManager().positionModule(entity);
+  if(!positionModule)
+    return false;
+  return (positionModule->position() - projectile.position()).norm() < positionModule->size();
+}
+
 void BallisticProjectileManager::evolve(const float deltas)
 {
+  EntityManager& entityManager = GameWorld::Instance().entityManager();
+  const size_t entityCount = entityManager.entityCount();
   BallisticProjectile* projectile;
+  bool collided = false;
   for(size_t i =0; i< _projectiles.size(); ++i)
   {
     projectile = _projectiles.at(i);
     if(projectile)
     {
       projectile->evolve(deltas);
-      if(projectile->timeToLive() < 0.f)
+      for(size_t entityId = 0; entityId<entityCount; ++entityId)
+      {
+        collided = collide(*projectile, entityId);
+        if(collided)
+          entityManager.damageModule(entityId)->applyDamage(projectile->damage());
+      }
+      if(collided || projectile->timeToLive() < 0.f)
       {
         _projectiles[i] = NULL;
         delete projectile;
       }
     }
+    collided = false;
   }
 }
 
