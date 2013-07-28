@@ -12,11 +12,13 @@ public:
   void applyDamage(const int damagePoint);
 
   int healthPoint() const;
+  int maxHealthPoint() const;
 
   void update();
 
 private:
   int _healthPoint;
+  int _maxHealthPoint;
 };
 
 #endif // ENTITYDAMAGE_H
