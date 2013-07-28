@@ -88,15 +88,15 @@ void BallisticProjectileManager::addProjectile(BallisticProjectile *projectile)
 {
   GameWorld::Instance().scene()->addItem(projectile->graphic());
   BallisticProjectile* p;
-  for(size_t i =0; i< _projectiles.size(); ++i)
-  {
-    p=_projectiles.at(i);
-    if(NULL == p)
-    {
-      p = projectile;
-      return;
-    }
-  }
+//  for(size_t i =0; i< _projectiles.size(); ++i)
+//  {
+//    p=_projectiles.at(i);
+//    if(NULL == p)
+//    {
+//      p = projectile;
+//      return;
+//    }
+//  }
   _projectiles.push_back(projectile);
 }
 
