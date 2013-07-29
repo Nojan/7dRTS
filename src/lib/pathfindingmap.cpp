@@ -9,10 +9,32 @@
 namespace core
 {
 
+struct SymetricWallHash
+{
+  std::size_t operator()(const EdgePos& wall) const
+  {
+    return std::hash<TilePos>()(wall.to) &
+        std::hash<TilePos>()(wall.from);
+  }
+};
+
+
+
+struct SymetricWallEqual
+{
+  bool operator()(const EdgePos& w1, const EdgePos& w2) const
+  {
+    return (w1.to == w2.to && w1.from == w2.from) ||
+        (w1.from == w2.to && w1.to == w2.from);
+  }
+};
+
+
+
 PathFindingMap::PathFindingMap(const GeneralMap* map)
   : _nodes(map->tileGrid().width(), map->tileGrid().height())
 {
-  std::unordered_set<EdgePos> wallSet;
+  std::unordered_set<EdgePos, SymetricWallHash, SymetricWallEqual> wallSet;
 
   for(const EdgePos& w: map->rampart().walls)
   {
@@ -37,8 +59,7 @@ PathFindingMap::PathFindingMap(const GeneralMap* map)
       {
         TilePos canPos = {x + xoff, y + yoff};
         if(_nodes.inGrid(canPos.x, canPos.y) &&
-           (wallSet.find({curPos, canPos}) == std::end(wallSet)) &&
-           (wallSet.find({canPos, curPos}) == std::end(wallSet)))
+           (wallSet.find({curPos, canPos}) == std::end(wallSet)))
         {
           n.neighbor.push_back(canPos);
         }
@@ -50,12 +71,8 @@ PathFindingMap::PathFindingMap(const GeneralMap* map)
         TilePos w2Pos = {x, y + yoff};
         if(_nodes.inGrid(canPos.x, canPos.y) &&
            (wallSet.find({curPos, w1Pos}) == std::end(wallSet)) &&
-           (wallSet.find({w1Pos, curPos}) == std::end(wallSet)) &&
            (wallSet.find({curPos, w2Pos}) == std::end(wallSet)) &&
-           (wallSet.find({w2Pos, curPos}) == std::end(wallSet)) &&
-           (wallSet.find({w1Pos, canPos}) == std::end(wallSet)) &&
            (wallSet.find({canPos, w1Pos}) == std::end(wallSet)) &&
-           (wallSet.find({w2Pos, canPos}) == std::end(wallSet)) &&
            (wallSet.find({canPos, w2Pos}) == std::end(wallSet)))
         {
           n.neighbor.push_back(canPos);
