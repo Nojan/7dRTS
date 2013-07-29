@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui multimedia
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -37,7 +37,8 @@ SOURCES += main.cpp \
     graphicmap.cpp \
     hardcodedmap.cpp \
     memorytracker.cpp \
-    pathfinder.cpp
+    pathfinder.cpp \
+    soundengine.cpp
 
 HEADERS  += pch.h \
     constantes.h \
@@ -61,4 +62,8 @@ HEADERS  += pch.h \
     hardcodedmap.h \
     memorytracker.h \
     grid.h \
-    pathfinder.h
+    pathfinder.h \
+    soundengine.h
+
+RESOURCES += \
+    7dRTS_resources.qrc

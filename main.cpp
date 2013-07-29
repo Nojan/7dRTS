@@ -7,6 +7,7 @@
 #include "hardcodedmap.h"
 #include "generalmap.h"
 #include "graphicmap.h"
+#include "soundengine.h"
 
 #include <QApplication>
 #include <QtWidgets>
@@ -74,6 +75,9 @@ int main(int argc, char *argv[])
   view.show();
 
   QObject::connect(&view, SIGNAL(switchPause()), &GameWorld::Instance(), SLOT(switchPause()));
+
+  // Chargement des sons
+  SoundEngine::Instance().preloadSoundEffect(":/sound/Laser_Shoot.wav");
 
   return a.exec();
 }

@@ -4,6 +4,7 @@
 #include "entitymanagerhelper.h"
 #include "entitymovement.h"
 #include "graphicentity.h"
+#include "soundengine.h"
 
 const int framestep = 1000 / 33;
 
