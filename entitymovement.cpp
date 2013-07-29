@@ -57,8 +57,8 @@ void EntityMovement::setTarget(MovementTarget *target)
   _target = target;
   if(NULL != _target)
   {
-    assert(MovememtTarget::Ordered == _target->state());
-    _target->setState(MovememtTarget::InProgress);
+    assert(MovementTarget::Ordered == _target->state());
+    _target->setState(MovementTarget::InProgress);
   }
 }
 

@@ -41,7 +41,7 @@ private:
   Eigen::Vector2f _position;
   Eigen::Vector2f _orientation;
   int _speedMax;    // nb pixels par seconde
-  MovememtTarget * _target;
+  MovementTarget * _target;
 };
 
 #endif // ENTITYMOVEMENT_H

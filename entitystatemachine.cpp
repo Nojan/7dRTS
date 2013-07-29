@@ -52,11 +52,11 @@ void EntityStateMachine::update()
     EntityMovement* movement = entityManager.movementModule(entityId());
     if(!weapon->canShootAt(positionEnemy->position()))
     {
-        movement->SetTarget(new MovememtTarget(positionEnemy->position()));
+        movement->setTarget(new MovementTarget(positionEnemy->position()));
     }
     else
     {
-        movement->SetTarget(NULL);
+        movement->setTarget(NULL);
     }
     weapon->setTarget(new WeaponTarget(enemy));
   }
@@ -64,7 +64,7 @@ void EntityStateMachine::update()
   {
     // A chier, gestion de la mort a faire par module
     EntityMovement* movement = entityManager.movementModule(entityId());
-    movement->SetTarget(NULL);
+    movement->setTarget(NULL);
     EntityWeapon* weapon = entityManager.weaponModule(entityId());
     weapon->setTarget(NULL);
   }
