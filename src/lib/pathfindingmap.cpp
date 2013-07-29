@@ -19,7 +19,6 @@ struct SymetricWallHash
 };
 
 
-
 struct SymetricWallEqual
 {
   bool operator()(const EdgePos& w1, const EdgePos& w2) const
@@ -90,6 +89,18 @@ PathFindingMap::PathFindingMap(const GeneralMap* map)
       _nodes(x, y) = n;
     }
   }
+}
+
+
+std::size_t PathFindingMap::width() const
+{
+  return _nodes.width();
+}
+
+
+std::size_t PathFindingMap::height() const
+{
+  return _nodes.height();
 }
 
 } // core

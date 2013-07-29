@@ -7,6 +7,7 @@
 #include <graphicmap.h>
 #include <hardcodedmap.h>
 #include <pathfindingmap.h>
+#include <graphicpathfindingmap.h>
 #include <pathfinder.h>
 
 class TestMap : public QObject
@@ -26,10 +27,19 @@ private slots:
     core::GeneralMap map(core::GeneralMap::fromGimpImage(core::HardCodedImage::test));
     graphic::GraphicMap* gMap = new graphic::GraphicMap(&map);
     QImage img(gMap->pixmap().toImage());
-    img.save("test.png");
+    img.save("testGraphic.png");
   }
 
   void pathFindingMap()
+  {
+    core::GeneralMap map(core::GeneralMap::fromGimpImage(core::HardCodedImage::test));
+    core::PathFindingMap pfMap(&map);
+    graphic::GraphicPathFindingMap* gpfMap = new graphic::GraphicPathFindingMap(&pfMap);
+    QImage img(gpfMap->pixmap().toImage());
+    img.save("testGraphicPF.png");
+  }
+
+  void pathFinder()
   {
     core::GeneralMap map(core::GeneralMap::fromGimpImage(core::HardCodedImage::test));
     core::PathFindingMap pfMap(&map);

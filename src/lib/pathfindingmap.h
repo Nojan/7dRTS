@@ -21,6 +21,9 @@ public:
 public:
   PathFindingMap(const GeneralMap* map);
 
+  std::size_t width() const;
+  std::size_t height() const;
+
   double cost(const TilePos& from, const TilePos& to) const
   {
     return std::pow(double(from.x) - double(to.x), 2) +
