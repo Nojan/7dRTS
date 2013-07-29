@@ -38,7 +38,8 @@ SOURCES += main.cpp \
     hardcodedmap.cpp \
     memorytracker.cpp \
     pathfinder.cpp \
-    soundengine.cpp
+    soundengine.cpp \
+    healthbar.cpp
 
 HEADERS  += pch.h \
     constantes.h \
@@ -63,7 +64,8 @@ HEADERS  += pch.h \
     memorytracker.h \
     grid.h \
     pathfinder.h \
-    soundengine.h
+    soundengine.h \
+    healthbar.h
 
 RESOURCES += \
     7dRTS_resources.qrc
