@@ -117,18 +117,18 @@ PathFinder<M>::find(const model_t& model, const index_t& start, const index_t& o
     closedSet.insert(bestNode);
     for(const index_t& neighbor: model.neighbor(bestNode->index))
     {
-      Node* candidate = new Node{bestNode->c + model.cost(bestNode->index, neighbor),
-                                 model.heuristic(neighbor, objectif), neighbor, bestNode};
+      Node candidate = {bestNode->c + model.cost(bestNode->index, neighbor),
+                        model.heuristic(neighbor, objectif), neighbor, bestNode};
       // if not in closed
-      if(closedSet.find(candidate) == std::end(closedSet))
+      if(closedSet.find(&candidate) == std::end(closedSet))
       {
-        auto openSetIt = openSetByIndex.find(candidate->index);
+        auto openSetIt = openSetByIndex.find(candidate.index);
         bool neighOk = true;
 
         if(openSetIt != std::end(openSetByIndex))
         {
           // if candidate is better we delete it in openSet
-          if((*openSetIt->second)->c > candidate->c)
+          if((*openSetIt->second)->c > candidate.c)
           {
             openSet.erase(openSetIt->second);
             openSetByIndex.erase(openSetIt);
@@ -141,8 +141,9 @@ PathFinder<M>::find(const model_t& model, const index_t& start, const index_t& o
 
         if(neighOk)
         {
-          auto it = openSet.insert(candidate);
-          openSetByIndex.insert({candidate->index, it});
+          Node* candidatePtr = new Node(candidate);
+          auto it = openSet.insert(candidatePtr);
+          openSetByIndex.insert({candidate.index, it});
         }
       }
     }
