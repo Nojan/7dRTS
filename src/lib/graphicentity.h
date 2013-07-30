@@ -18,12 +18,19 @@ public:
   void setPosition(float x, float y);
   void setBrush(QBrush brush);
 
+  void setHasHealthBar(bool hasHB);
+  bool hasHealthBar();
+
+  void setHealthPercentage(float healthPer);
+
 protected:
   virtual void advance(int step);
 
 protected:
   QBrush _brush;
   QPointF _position;
+  bool _hasHealthBar;
+  float _healthPercentage;
 };
 
 #endif // GRAPHICENTITY_H

@@ -6,7 +6,7 @@
 using namespace core;
 
 GraphicEntity::GraphicEntity()
-  : _brush(Qt::black)
+    : _brush(Qt::black), _hasHealthBar(false), _healthPercentage(1.0f)
 {
 }
 
@@ -29,6 +29,19 @@ void GraphicEntity::paint(QPainter *painter, const QStyleOptionGraphicsItem *opt
   Q_UNUSED(widget);
   painter->setBrush(_brush);
   painter->drawEllipse(0, 0, tileSize, tileSize);
+  if(_hasHealthBar)
+  {
+      painter->setBrush(Qt::black);
+      painter->drawRect(0, -2, tileSize, 4);
+
+      if(_healthPercentage > 0.75f)
+          painter->setBrush(Qt::green);
+      else if(_healthPercentage > 0.25f)
+          painter->setBrush(Qt::yellow);
+      else
+          painter->setBrush(Qt::red);
+      painter->drawRect(0, -2, tileSize * _healthPercentage, 4);
+  }
 }
 
 void GraphicEntity::setPosition(float x, float y)
@@ -47,4 +60,19 @@ void GraphicEntity::advance(int step)
     return;
 
   setPos(_position);
+}
+
+void GraphicEntity::setHasHealthBar(bool hasHB)
+{
+    _hasHealthBar = hasHB;
+}
+
+bool GraphicEntity::hasHealthBar()
+{
+    return _hasHealthBar;
+}
+
+void GraphicEntity::setHealthPercentage(float healthPer)
+{
+    _healthPercentage = healthPer;
 }

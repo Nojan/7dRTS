@@ -15,10 +15,12 @@ public:
 
   const GraphicEntity* graphic() const;
 
+
   void update();
 
 private:
   GraphicEntity* _entityGraphics;
+
 };
 
 #endif // ENTITYGRAPHICHOLDER_H

@@ -31,8 +31,7 @@ SOURCES += ballisticprojectilemanager.cpp \
            pathfindingmap.cpp \
            graphicpathfindingmap.cpp \
            memorytracker.cpp \
-           soundengine.cpp \
-           healthbar.cpp
+           soundengine.cpp
 
 
 HEADERS  += pch.h\
@@ -60,6 +59,5 @@ HEADERS  += pch.h\
             pathfindingmap.h \
             graphicpathfindingmap.h \
             memorytracker.h \
-            soundengine.h \
-            healthbar.h
+            soundengine.h
 
