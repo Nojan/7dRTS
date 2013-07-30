@@ -1,6 +1,6 @@
 TEMPLATE = subdirs
 CONFIG += ordered
 SUBDIRS = lib \
-          bin
+          game
 
-bin.depends += lib
+game.depends += lib
