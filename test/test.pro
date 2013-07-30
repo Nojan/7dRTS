@@ -11,8 +11,4 @@ QMAKE_CXXFLAGS += -std=c++11
 INCLUDEPATH += ../src/lib
 
 # Input
-SOURCES += maptest.cpp \
-    graphicpathfindingmap.cpp
-
-HEADERS += \
-    graphicpathfindingmap.h
+SOURCES += maptest.cpp

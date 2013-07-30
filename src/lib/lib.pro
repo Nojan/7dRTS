@@ -27,7 +27,8 @@ SOURCES += gameview.cpp \
            graphicmap.cpp \
            hardcodedmap.cpp \
            pathfinder.cpp \
-           pathfindingmap.cpp
+           pathfindingmap.cpp \
+           graphicpathfindingmap.cpp
 
 HEADERS  += pch.h\
             constantes.h \
@@ -50,4 +51,5 @@ HEADERS  += pch.h\
             hardcodedmap.h \
             grid.h \
             pathfinder.h \
-            pathfindingmap.h
+            pathfindingmap.h \
+           graphicpathfindingmap.h
