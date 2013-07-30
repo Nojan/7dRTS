@@ -24,8 +24,6 @@ public:
 private:
   QPixmap pixmapFromGeneralMap(const core::GeneralMap* map);
 
-private:
-
 };
 
 } // graphic

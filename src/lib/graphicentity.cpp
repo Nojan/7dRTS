@@ -1,5 +1,6 @@
 #include "graphicentity.h"
 
+#include "pch.h"
 #include "constantes.h"
 
 using namespace core;
