@@ -140,6 +140,7 @@ QPixmap GraphicMap::pixmapFromGeneralMap(const core::GeneralMap* map)
   const core::Grid<core::Tile>& tileGrid = map->tileGrid();
   QImage image(tileGrid.width()*(GridSize.width()),
                tileGrid.height()*(GridSize.height()), QImage::Format_ARGB32);
+  image.fill(Qt::white);
   QPainter painter(&image);
 
   for(std::size_t x = 0; x < tileGrid.width(); ++x)

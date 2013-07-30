@@ -36,6 +36,7 @@ QPixmap GraphicPathFindingMap::pixmapFromPathFindingMap(
 {
   QImage image(map->width()*GridSize.width(),
                map->height()*GridSize.height(), QImage::Format_ARGB32);
+  image.fill(Qt::transparent);
   QPainter painter(&image);
 
   for(std::size_t x = 0; x < map->width(); ++x)
