@@ -7,11 +7,12 @@
 #include <QPainter>
 
 // core
+#include <constantes.h>
 #include <pathfindingmap.h>
 
 
 /// @todo factorize with entity
-static const QSize GridSize(32, 32);
+static const QSize GridSize(core::tileSize, core::tileSize);
 
 
 namespace graphic
