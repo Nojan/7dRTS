@@ -11,7 +11,6 @@
 #include <pathfindingmap.h>
 
 
-/// @todo factorize with entity
 static const QSize GridSize(core::tileSize, core::tileSize);
 
 
