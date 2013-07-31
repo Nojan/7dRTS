@@ -15,11 +15,12 @@ EntityGraphicHolder::EntityGraphicHolder(size_t entityId, GraphicEntity *entityG
   : EntityModule(entityId)
   , _entityGraphics(entityGraphics)
 {
-    EntityManager& entityManager = GameWorld::Instance().entityManager();
-    if(entityManager.damageModule(entityId))
-    {
-        _entityGraphics->setHasHealthBar(true);
-    }
+  EntityManager& entityManager = GameWorld::Instance().entityManager();
+  if(entityManager.damageModule(entityId))
+  {
+    _entityGraphics->setHasHealthBar(true);
+  }
+  _entityGraphics->setEntityId(entityId);
 }
 
 EntityGraphicHolder::~EntityGraphicHolder()

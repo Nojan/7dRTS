@@ -6,7 +6,10 @@
 using namespace core;
 
 GraphicEntity::GraphicEntity()
-    : _brush(Qt::black), _hasHealthBar(false), _healthPercentage(1.0f)
+    : _brush(Qt::black)
+    , _hasHealthBar(false)
+    , _healthPercentage(1.0f)
+    , _entityId(std::numeric_limits<std::size_t>::max())
 {
 }
 
@@ -43,6 +46,13 @@ void GraphicEntity::paint(QPainter *painter, const QStyleOptionGraphicsItem *opt
       painter->drawRect(0, -2, tileSize * _healthPercentage, 4);
   }
 }
+
+
+void GraphicEntity::setEntityId(std::size_t entityId)
+{
+  _entityId = entityId;
+}
+
 
 void GraphicEntity::setPosition(float x, float y)
 {

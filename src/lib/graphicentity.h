@@ -15,6 +15,8 @@ public:
   virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
              QWidget *widget);
 
+  void setEntityId(std::size_t entityId);
+
   void setPosition(float x, float y);
   void setBrush(QBrush brush);
 
@@ -31,6 +33,7 @@ protected:
   QPointF _position;
   bool _hasHealthBar;
   float _healthPercentage;
+  std::size_t _entityId;
 };
 
 #endif // GRAPHICENTITY_H
