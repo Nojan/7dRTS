@@ -68,6 +68,17 @@ float BallisticProjectile::timeToLive() const
   return _timeToLive;
 }
 
+
+void BallisticProjectile::setTeam(EntityTeam* team)
+{
+  _team = team;
+}
+
+EntityTeam * BallisticProjectile::team()
+{
+    return _team;
+}
+
 void BallisticProjectile::evolve(float deltas)
 {
   _timeToLive -= deltas;
@@ -84,7 +95,7 @@ BallisticProjectileManager::BallisticProjectileManager()
 {
 }
 
-void BallisticProjectileManager::addProjectile(BallisticProjectile *projectile)
+void BallisticProjectileManager::addProjectile(BallisticProjectile *projectile, EntityTeam* team)
 {
   GameWorld::Instance().scene()->addItem(projectile->graphic());
   BallisticProjectile* p;
@@ -97,8 +108,11 @@ void BallisticProjectileManager::addProjectile(BallisticProjectile *projectile)
 //      return;
 //    }
 //  }
+
+  projectile->setTeam(team);
   _projectiles.push_back(projectile);
 }
+
 
 static bool collideGraphics(BallisticProjectile& projectile, const size_t entity)
 {
@@ -122,6 +136,7 @@ void BallisticProjectileManager::evolve(const float deltas)
   const size_t entityCount = entityManager.entityCount();
   BallisticProjectile* projectile;
   bool collided = false;
+  bool damageOk = false;
   for(size_t i =0; i< _projectiles.size(); ++i)
   {
     projectile = _projectiles.at(i);
@@ -130,14 +145,24 @@ void BallisticProjectileManager::evolve(const float deltas)
       projectile->evolve(deltas);
       for(size_t entityId = 0; entityId<entityCount; ++entityId)
       {
+
         collided = collide(*projectile, entityId);
         if(collided)
-          entityManager.damageModule(entityId)->applyDamage(projectile->damage());
+        {
+            if(projectile->team()->team() != entityManager.teamModule(entityId)->team())
+            {
+                entityManager.damageModule(entityId)->applyDamage(projectile->damage());
+                damageOk = true;
+            }
+        }
+
       }
-      if(collided || projectile->timeToLive() < 0.f)
+
+      if(damageOk || projectile->timeToLive() < 0.f)
       {
         _projectiles[i] = NULL;
         delete projectile;
+        damageOk = false;
       }
     }
     collided = false;

@@ -3,6 +3,7 @@
 #include "pch.h"
 
 #include "graphicentity.h"
+#include "entityteam.h"
 
 class GraphicBallisticProjectile : public GraphicEntity {
 public:
@@ -27,6 +28,9 @@ public:
   int damage() const;
   float timeToLive() const;
 
+  void setTeam(EntityTeam* team);
+  EntityTeam * team();
+
   void evolve(float deltas);
 
   GraphicBallisticProjectile * graphic();
@@ -37,6 +41,8 @@ private:
   int _damage;
   float _timeToLive;
   GraphicBallisticProjectile _graphic;
+
+  EntityTeam* _team;
 };
 
 class BallisticProjectileManager
@@ -44,7 +50,7 @@ class BallisticProjectileManager
 public:
   BallisticProjectileManager();
 
-  void addProjectile(BallisticProjectile* projectile);
+  void addProjectile(BallisticProjectile* projectile, EntityTeam *team);
 
   void evolve(const float deltas);
 

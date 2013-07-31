@@ -97,7 +97,7 @@ createUnitDoor(graphic::GraphicDoor* graphicDoor,
   EntityManager& entityManager = GameWorld::Instance().entityManager();
   const size_t entityId = entityManager.createEntityId();
 
-  entityManager.registerDamageModule(new EntityDamage(entityId, 200));
+  entityManager.registerDamageModule(new EntityDamage(entityId, 100));
   entityManager.registerPositionModule(new EntityPosition(entityId, position));
   entityManager.registerGraphicHolderModule(new EntityGraphicHolder(entityId, graphicDoor));
   entityManager.registerTeamModule(new EntityTeam(entityId, teamId));
