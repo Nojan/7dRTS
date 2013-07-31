@@ -1,5 +1,8 @@
+// associated header
 #include "entitymanagerhelper.h"
 
+// include
+// core
 #include "entitydamage.h"
 #include "entitygraphicholder.h"
 #include "entitymovement.h"
@@ -9,9 +12,14 @@
 #include "entityweapon.h"
 #include "gameworld.h"
 
+// graphic
+#include "graphicdoor.h"
 
 
-size_t EntityManagerHelpers::
+namespace EntityManagerHelpers
+{
+
+size_t
 createSimpleUnit(GraphicEntity *graphicEntity,
                  Eigen::Vector2f position,
                  EntityTeam::Team teamId)
@@ -28,7 +36,7 @@ createSimpleUnit(GraphicEntity *graphicEntity,
   return entityId;
 }
 
-size_t EntityManagerHelpers::
+size_t
 createUnitGrosDegats(GraphicEntity *graphicEntity,
                  Eigen::Vector2f position,
                  EntityTeam::Team teamId)
@@ -45,7 +53,7 @@ createUnitGrosDegats(GraphicEntity *graphicEntity,
   return entityId;
 }
 
-size_t EntityManagerHelpers::
+size_t
 createUnitRapide(GraphicEntity *graphicEntity,
                  Eigen::Vector2f position,
                  EntityTeam::Team teamId)
@@ -63,7 +71,7 @@ createUnitRapide(GraphicEntity *graphicEntity,
 }
 
 
-size_t EntityManagerHelpers::
+size_t
 createUnitTank(GraphicEntity *graphicEntity,
                  Eigen::Vector2f position,
                  EntityTeam::Team teamId)
@@ -79,3 +87,21 @@ createUnitTank(GraphicEntity *graphicEntity,
   entityManager.registerWeaponModule(new EntityWeapon(entityId, 30, 5.f, 2000));
   return entityId;
 }
+
+
+size_t
+createUnitDoor(graphic::GraphicDoor* graphicDoor,
+               Eigen::Vector2f position,
+               EntityTeam::Team teamId)
+{
+  EntityManager& entityManager = GameWorld::Instance().entityManager();
+  const size_t entityId = entityManager.createEntityId();
+
+  entityManager.registerDamageModule(new EntityDamage(entityId, 200));
+  entityManager.registerPositionModule(new EntityPosition(entityId, position));
+  entityManager.registerGraphicHolderModule(new EntityGraphicHolder(entityId, graphicDoor));
+  entityManager.registerTeamModule(new EntityTeam(entityId, teamId));
+  return entityId;
+}
+
+} // EntityManagerHelpers

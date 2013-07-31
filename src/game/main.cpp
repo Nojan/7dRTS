@@ -8,6 +8,7 @@
 #include "generalmap.h"
 #include "graphicmap.h"
 #include "soundengine.h"
+#include "graphicdoor.h"
 
 #include <QApplication>
 #include <QtWidgets>
@@ -61,6 +62,21 @@ int main(int argc, char *argv[])
     EntityManagerHelpers::createUnitRapide(unitGraphic, (position+mapHalfSize)* core::tileSize, teamId);
     unitGraphic->setBrush(EntityTeam::brushFromTeamId(teamId));
     scene->addItem(unitGraphic);
+  }
+
+  for(const core::Room& r: map.rooms())
+  {
+    for(const core::Door& d: r.doors)
+    {
+      double length = d.edges().size()*core::tileSize;
+      const core::EdgePos& edge = d.edges().front();
+      double angle = edge.from.x == edge.to.x ? 0. : 90.;
+      Eigen::Vector2f pos = d.center().cast<float>();
+      graphic::GraphicDoor* doorGraphic = new graphic::GraphicDoor(length, angle);
+      const EntityTeam::Team teamId(EntityTeam::TeamA);
+      EntityManagerHelpers::createUnitDoor(doorGraphic, pos, teamId);
+      scene->addItem(doorGraphic);
+    }
   }
 
   GameView view(scene);

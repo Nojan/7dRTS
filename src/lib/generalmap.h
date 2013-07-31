@@ -2,6 +2,9 @@
 #define GENERALMAP_H
 
 // include
+// pch
+#include "pch.h"
+
 // std
 #include <functional>
 #include <vector>
@@ -31,6 +34,16 @@ struct TilePos
   {
     return x == p.x && y == p.y;
   }
+
+  bool operator<(const TilePos& p) const
+  {
+    return x < p.x || ((x == p.x) && (y < p.y));
+  }
+
+  operator Eigen::Vector2i() const
+  {
+    return Eigen::Vector2i(x, y);
+  }
 };
 
 
@@ -38,11 +51,28 @@ struct EdgePos
 {
   TilePos from, to;
 
+
+  Eigen::Vector2i direction() const
+  {
+    return Eigen::Vector2i(to) - Eigen::Vector2i(from);
+  }
+
   bool operator==(const EdgePos& p) const
   {
     return from == p.from && to == p.to;
   }
+
+  bool operator<(const EdgePos& p) const
+  {
+    return from < p.from || ((from == p.from) && (to < p.to));
+  }
 };
+
+
+Eigen::Vector2i pixelTopLeft(const TilePos& pos);
+Eigen::Vector2i pixelTopLeft(const EdgePos& pos);
+Eigen::Vector2i pixelCenter(const TilePos& pos);
+Eigen::Vector2i pixelCenter(const EdgePos& pos);
 
 
 struct Tile
@@ -72,9 +102,25 @@ struct Obstacle
 };
 
 
-struct Door
+class Door
 {
-  std::vector<EdgePos> edges;
+public:
+  Door();
+  Door(std::vector<EdgePos> edges);
+  Door& operator=(std::vector<EdgePos> edges);
+
+  const std::vector<EdgePos>& edges() const
+  {
+    return _edges;
+  }
+
+  Eigen::Vector2i center() const;
+
+private:
+  void sort();
+
+private:
+  std::vector<EdgePos> _edges;
 };
 
 
@@ -84,7 +130,7 @@ struct Room
 
   std::vector<TilePos> tiles;
   std::vector<EdgePos> walls;
-  std::vector<Door> door;
+  std::vector<Door> doors;
 };
 
 

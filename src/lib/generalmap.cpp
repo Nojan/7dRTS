@@ -8,9 +8,79 @@
 
 // core
 #include "gimpimage.h"
+#include "constantes.h"
 
 namespace core
 {
+
+/*
+ *               pixel calculator
+ */
+
+Eigen::Vector2i pixelTopLeft(const TilePos& pos)
+{
+  return Eigen::Vector2i(pos)*core::tileSize;
+}
+
+
+Eigen::Vector2i pixelTopLeft(const EdgePos& edge)
+{
+  Eigen::Vector2i dir = edge.direction();
+  Eigen::Vector2i off(-std::abs(dir.y()), -std::abs(dir.x()));
+  return pixelCenter(edge) + off;
+}
+
+
+Eigen::Vector2i pixelCenter(const TilePos& pos)
+{
+  return Eigen::Vector2i(pos)*core::tileSize +
+      Eigen::Vector2i(core::tileHalfSize, core::tileHalfSize);
+}
+
+
+Eigen::Vector2i pixelCenter(const EdgePos& edge)
+{
+  return (pixelCenter(edge.from) + pixelCenter(edge.to))/2;
+}
+
+/*
+ *                  Door
+ */
+
+Door::Door()
+  : _edges()
+{ }
+
+
+Door::Door(std::vector<EdgePos> edges)
+  : _edges(std::move(edges))
+{
+  sort();
+}
+
+
+Door& Door::operator=(std::vector<EdgePos> edges)
+{
+  _edges = std::move(edges);
+  sort();
+  return *this;
+}
+
+
+Eigen::Vector2i Door::center() const
+{
+  return (pixelCenter(_edges.front()) + pixelCenter(_edges.back()))/2;
+}
+
+
+void Door::sort()
+{
+  std::sort(_edges.begin(), _edges.end());
+}
+
+/*
+ *                 GeneralMap
+ */
 
 
 void fillFromTexture(const TilePos& pos, const Grid<Tile>& tileGrid,
@@ -176,7 +246,7 @@ GeneralMap GeneralMap::fromGimpImage(const GimpImage& gImage)
                          gimpFloorEntrance,
                          gimpGrassEntrance))
         {
-          room.door.push_back({entrance});
+          room.doors.push_back({entrance});
           for(const EdgePos& edge: entrance)
           {
             room.walls.erase(

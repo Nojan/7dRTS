@@ -1,9 +1,13 @@
+// associated header
 #include "entitygraphicholder.h"
 
+// core
 #include "entitydamage.h"
 #include "entitymanager.h"
 #include "entityposition.h"
 #include "gameworld.h"
+
+// graphic
 #include "graphicentity.h"
 
 

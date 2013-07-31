@@ -8,7 +8,8 @@ LIBS += ../../lib/lib7dRTS.a
 TARGETDEPS += ../../lib/lib7dRTS.a
 
 QMAKE_CXXFLAGS += -std=c++11
-INCLUDEPATH += ../../src/lib
+INCLUDEPATH += ../../src/lib \
+               ../../external
 
 # Input
 SOURCES += maptest.cpp
