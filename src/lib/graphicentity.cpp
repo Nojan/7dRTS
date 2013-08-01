@@ -84,5 +84,9 @@ bool GraphicEntity::hasHealthBar()
 
 void GraphicEntity::setHealthPercentage(float healthPer)
 {
-    _healthPercentage = healthPer;
+    if(healthPer != _healthPercentage)
+    {
+        _healthPercentage = healthPer;
+        update();
+    }
 }
