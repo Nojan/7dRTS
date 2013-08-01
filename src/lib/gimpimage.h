@@ -30,6 +30,7 @@ const GimpColor gimpFloor = {0x99, 0x99, 0x99};
 const GimpColor gimpFloorEntrance = {0x83, 0x83, 0x83};
 const GimpColor gimpRampart = {0x50, 0x2d, 0x16};
 const GimpColor gimpRampartEntrance = {0x35, 0x1e, 0x0f};
+const GimpColor gimpPath = {0xc8, 0x71, 0x37};
 
 
 class GimpImage : public Grid<GimpColor>

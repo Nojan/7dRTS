@@ -223,8 +223,13 @@ GeneralMap GeneralMap::fromGimpImage(const GimpImage& gImage)
       }
       else if(c == gimpRampart || c == gimpRampartEntrance)
       {
-        type = Tile::Type::Obstacle;
+        type = Tile::Type::Free;
         tex = Tile::Texture::Rampart;
+      }
+      else if(c == gimpPath)
+      {
+        type = Tile::Type::Free;
+        tex = Tile::Texture::Path;
       }
 
       tileGrid(x, y) = Tile{type, tex};

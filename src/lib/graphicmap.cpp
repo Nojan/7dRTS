@@ -102,6 +102,13 @@ void drawRampart(QPainter& painter, QPoint pos)
 }
 
 
+void drawPath(QPainter& painter, QPoint pos)
+{
+  QColor pathColor(0xc8, 0x71, 0x37);
+  drawTile(painter, pos, pathColor);
+}
+
+
 void drawWall(QPainter& painter, const std::vector<core::EdgePos>& walls,
               int size)
 {
@@ -159,6 +166,10 @@ QPixmap GraphicMap::pixmapFromGeneralMap(const core::GeneralMap* map)
       else if(tileGrid.at(x, y).texture == core::Tile::Texture::Rampart)
       {
         drawRampart(painter, pos);
+      }
+      else if(tileGrid.at(x, y).texture == core::Tile::Texture::Path)
+      {
+        drawPath(painter, pos);
       }
     }
   }
