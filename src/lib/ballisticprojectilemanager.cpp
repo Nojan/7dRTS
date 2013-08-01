@@ -136,7 +136,6 @@ void BallisticProjectileManager::evolve(const float deltas)
   const size_t entityCount = entityManager.entityCount();
   BallisticProjectile* projectile;
   bool collided = false;
-  bool damageOk = false;
   for(size_t i =0; i< _projectiles.size(); ++i)
   {
     projectile = _projectiles.at(i);
@@ -152,18 +151,21 @@ void BallisticProjectileManager::evolve(const float deltas)
             if(projectile->team()->team() != entityManager.teamModule(entityId)->team())
             {
                 entityManager.damageModule(entityId)->applyDamage(projectile->damage());
-                damageOk = true;
+                _projectiles[i] = NULL;
+                delete projectile;
+                break;
+            }
+            else if(projectile->timeToLive() < 0.f)
+            {
+                _projectiles[i] = NULL;
+                delete projectile;
+                break;
             }
         }
 
       }
 
-      if(damageOk || projectile->timeToLive() < 0.f)
-      {
-        _projectiles[i] = NULL;
-        delete projectile;
-        damageOk = false;
-      }
+
     }
     collided = false;
   }
