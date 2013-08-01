@@ -51,14 +51,14 @@ void EntityWeapon::setTarget(WeaponTarget *target)
   _target = target;
 }
 
-bool EntityWeapon::canShootAt(Eigen::Vector2f position) const
+bool EntityWeapon::canShootAt(const Eigen::Vector2f& position) const
 {
   EntityManager& entityManager = GameWorld::Instance().entityManager();
   const Eigen::Vector2f selfPosition = entityManager.positionModule(entityId())->position();
   return (selfPosition - position).norm() <= float(_range);
 }
 
-void EntityWeapon::shootAt(Eigen::Vector2f position)
+void EntityWeapon::shootAt(const Eigen::Vector2f& position)
 {
   assert(canShootAt(position));
   _fireRateCurrent = _fireRate;

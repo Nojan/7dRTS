@@ -6,7 +6,7 @@
 #include "gameworld.h"
 
 
-MovementTarget::MovementTarget(Eigen::Vector2f position)
+MovementTarget::MovementTarget(const Eigen::Vector2f& position)
   : _position(position)
   , _state(State::Ordered)
 {

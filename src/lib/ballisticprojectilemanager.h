@@ -20,7 +20,7 @@ namespace core {
 class BallisticProjectile
 {
 public:
-  BallisticProjectile(Eigen::Vector2f start, Eigen::Vector2f orientation, int damage);
+  BallisticProjectile(const Eigen::Vector2f& start, const Eigen::Vector2f& orientation, int damage);
   ~BallisticProjectile();
 
   Eigen::Vector2f position() const;

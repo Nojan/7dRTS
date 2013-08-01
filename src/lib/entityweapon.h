@@ -23,8 +23,8 @@ public:
 
   void setTarget(WeaponTarget * target);
 
-  bool canShootAt(Eigen::Vector2f position) const;
-  void shootAt(Eigen::Vector2f position);
+  bool canShootAt(const Eigen::Vector2f& position) const;
+  void shootAt(const Eigen::Vector2f& position);
 
 private:
   int _damagePower;

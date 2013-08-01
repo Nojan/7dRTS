@@ -33,7 +33,7 @@ void GraphicBallisticProjectile::paint(QPainter *painter, const QStyleOptionGrap
 
 using namespace core;
 
-BallisticProjectile::BallisticProjectile(Eigen::Vector2f start, Eigen::Vector2f orientation, int damage)
+BallisticProjectile::BallisticProjectile(const Eigen::Vector2f& start, const Eigen::Vector2f& orientation, int damage)
   : _position(start)
   , _orientation(orientation)
   , _damage(damage)

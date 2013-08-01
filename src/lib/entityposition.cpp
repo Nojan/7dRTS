@@ -5,7 +5,7 @@
 #include "entitymovement.h"
 #include "gameworld.h"
 
-EntityPosition::EntityPosition(size_t entityId, const Eigen::Vector2f position)
+EntityPosition::EntityPosition(size_t entityId, const Eigen::Vector2f& position)
   : EntityModule(entityId)
   , _position(position)
   , _size(core::tileSizef)
@@ -17,7 +17,7 @@ Eigen::Vector2f EntityPosition::position() const
   return _position;
 }
 
-void EntityPosition::setPosition(const Eigen::Vector2f position)
+void EntityPosition::setPosition(const Eigen::Vector2f& position)
 {
   _position = position;
 }

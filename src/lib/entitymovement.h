@@ -15,7 +15,7 @@ public:
     Abort,
   };
 public:
-  MovementTarget(Eigen::Vector2f position);
+  MovementTarget(const Eigen::Vector2f& position);
 
   Eigen::Vector2f position() const;
   State state() const;
