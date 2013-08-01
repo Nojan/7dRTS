@@ -83,7 +83,7 @@ int main(int argc, char *argv[])
   view.setRenderHint(QPainter::Antialiasing);
   view.setCacheMode(QGraphicsView::CacheBackground);
   view.setViewportUpdateMode(QGraphicsView::BoundingRectViewportUpdate);
-  view.setDragMode(QGraphicsView::ScrollHandDrag);
+  view.setDragMode(QGraphicsView::RubberBandDrag);
   view.setWindowTitle("7dRTS");
   view.resize(800, 600);
   view.show();

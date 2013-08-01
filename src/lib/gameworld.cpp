@@ -24,6 +24,13 @@ EntityManager &GameWorld::entityManager()
   return _entityManager;
 }
 
+
+core::UnitController& GameWorld::unitController()
+{
+  return _unitController;
+}
+
+
 GameWorld::GameWorld() :
   QObject(0)
 {

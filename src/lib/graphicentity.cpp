@@ -1,6 +1,15 @@
+// associated header
 #include "graphicentity.h"
 
+// include
+// pch
 #include "pch.h"
+
+// Qt
+#include <QGraphicsSceneMouseEvent>
+#include <QDebug>
+
+// core
 #include "constantes.h"
 
 using namespace core;
@@ -11,6 +20,7 @@ GraphicEntity::GraphicEntity()
     , _healthPercentage(1.0f)
     , _entityId(std::numeric_limits<std::size_t>::max())
 {
+  setFlag(QGraphicsItem::ItemIsSelectable);
 }
 
 QRectF GraphicEntity::boundingRect() const
@@ -54,6 +64,12 @@ void GraphicEntity::setEntityId(std::size_t entityId)
 }
 
 
+std::size_t GraphicEntity::entityId() const
+{
+  return _entityId;
+}
+
+
 void GraphicEntity::setPosition(float x, float y)
 {
   _position = QPointF(x, y);
@@ -71,6 +87,7 @@ void GraphicEntity::advance(int step)
 
   setPos(_position);
 }
+
 
 void GraphicEntity::setHasHealthBar(bool hasHB)
 {

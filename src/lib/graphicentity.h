@@ -16,6 +16,7 @@ public:
              QWidget *widget);
 
   void setEntityId(std::size_t entityId);
+  std::size_t entityId() const;
 
   void setPosition(float x, float y);
   void setBrush(QBrush brush);

@@ -1,11 +1,16 @@
 #ifndef GAMEVIEW_H
 #define GAMEVIEW_H
 
+// include
+// pch
 #include "pch.h"
 
+// Qt
 #include <QGraphicsView>
 
+// forward declaration
 class QEvent;
+
 
 class GameView : public QGraphicsView
 {
@@ -20,6 +25,7 @@ public slots:
 
 protected:
   virtual void keyPressEvent(QKeyEvent *event);
+  virtual void mouseReleaseEvent(QMouseEvent* event);
 
 private:
 

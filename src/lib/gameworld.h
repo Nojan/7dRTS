@@ -1,9 +1,14 @@
 #ifndef GAMEWORLD_H
 #define GAMEWORLD_H
+
+// include
+// pch
 #include "pch.h"
 
+// core
 #include "ballisticprojectilemanager.h"
 #include "entitymanager.h"
+#include "unitcontroller.h"
 
 class GameWorld : public QObject
 {
@@ -13,6 +18,7 @@ public:
 
   core::BallisticProjectileManager& ballisticProjectileManager();
   EntityManager& entityManager();
+  core::UnitController& unitController();
   QGraphicsScene * scene();
 
 signals:
@@ -27,6 +33,7 @@ private:
 private:
   core::BallisticProjectileManager _ballisticProjectileManager;
   EntityManager _entityManager;
+  core::UnitController _unitController;
   QGraphicsScene _graphicsScene;
   QTimer _gameplayTimer;
 };
