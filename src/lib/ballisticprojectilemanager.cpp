@@ -155,19 +155,26 @@ void BallisticProjectileManager::evolve(const float deltas)
                 delete projectile;
                 break;
             }
-            else if(projectile->timeToLive() < 0.f)
-            {
-                _projectiles[i] = NULL;
-                delete projectile;
-                break;
-            }
+
         }
 
       }
 
+      if(!collided)
+      {
+          if(projectile->timeToLive() < 0.f)
+          {
+              _projectiles[i] = NULL;
+              delete projectile;
+              break;
+          }
 
+      }
+
+      collided = false;
     }
-    collided = false;
+
+
   }
 }
 
