@@ -20,6 +20,28 @@ struct TilePos
   tile_index x, y;
 
 
+  TilePos()
+    : x(-1)
+    , y(-1)
+  { }
+
+  TilePos(tile_index xp, tile_index yp)
+    : x(xp)
+    , y(yp)
+  { }
+
+  TilePos(const Eigen::Vector2i& pos)
+    : x(pos.x())
+    , y(pos.y())
+  { }
+
+  TilePos& operator=(const Eigen::Vector2i& pos)
+  {
+    x = pos.x();
+    y = pos.y();
+    return *this;
+  }
+
   bool operator==(const TilePos& p) const
   {
     return x == p.x && y == p.y;
@@ -63,6 +85,8 @@ Eigen::Vector2i pixelTopLeft(const TilePos& pos);
 Eigen::Vector2i pixelTopLeft(const EdgePos& pos);
 Eigen::Vector2i pixelCenter(const TilePos& pos);
 Eigen::Vector2i pixelCenter(const EdgePos& pos);
+
+TilePos tileFromPixel(const Eigen::Vector2i& pix);
 
 
 struct Tile

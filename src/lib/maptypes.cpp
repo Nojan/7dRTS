@@ -44,6 +44,12 @@ Eigen::Vector2i pixelCenter(const EdgePos& edge)
 }
 
 
+TilePos tileFromPixel(const Eigen::Vector2i& pix)
+{
+  return TilePos{pix/core::tileSize};
+}
+
+
 /*
  *                  Door
  */
