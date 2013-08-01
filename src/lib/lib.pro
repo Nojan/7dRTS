@@ -32,7 +32,8 @@ SOURCES += ballisticprojectilemanager.cpp \
            graphicpathfindingmap.cpp \
            memorytracker.cpp \
            soundengine.cpp \
-           graphicdoor.cpp
+           graphicdoor.cpp \
+           maptypes.cpp
 
 
 HEADERS  += pch.h\
@@ -61,5 +62,6 @@ HEADERS  += pch.h\
             graphicpathfindingmap.h \
             memorytracker.h \
             soundengine.h \
-            graphicdoor.h
+            graphicdoor.h \
+            maptypes.h
 
