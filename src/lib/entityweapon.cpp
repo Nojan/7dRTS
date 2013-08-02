@@ -1,5 +1,8 @@
+// associated header
 #include "entityweapon.h"
 
+// include
+// core
 #include "ballisticprojectilemanager.h"
 #include "constantes.h"
 #include "entitydamage.h"
@@ -7,7 +10,10 @@
 #include "entityposition.h"
 #include "gameworld.h"
 
-WeaponTarget::WeaponTarget(size_t entityId)
+namespace core
+{
+
+WeaponTarget::WeaponTarget(std::size_t entityId)
   : _target(entityId)
 {
 }
@@ -16,7 +22,7 @@ size_t WeaponTarget::targetId() const
 {
   return _target;
 }
-EntityWeapon::EntityWeapon(size_t entityId, int damage, float range, int fireRate)
+EntityWeapon::EntityWeapon(std::size_t entityId, int damage, float range, int fireRate)
 
   : EntityModule(entityId)
   , _damagePower(damage)
@@ -69,3 +75,5 @@ void EntityWeapon::shootAt(const Eigen::Vector2f& position)
   core::BallisticProjectile * projectile = new core::BallisticProjectile(selfPosition + projectileOrientation*32.f, projectileOrientation, 5);
   GameWorld::Instance().ballisticProjectileManager().addProjectile(projectile, entityManager.teamModule(entityId()));
 }
+
+} // core

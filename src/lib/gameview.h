@@ -11,6 +11,8 @@
 // forward declaration
 class QEvent;
 
+namespace graphic
+{
 
 class GameView : public QGraphicsView
 {
@@ -28,8 +30,8 @@ protected:
   virtual void mouseReleaseEvent(QMouseEvent* event);
 
 private:
-
-
 };
+
+} // graphic
 
 #endif // GAMEVIEW_H

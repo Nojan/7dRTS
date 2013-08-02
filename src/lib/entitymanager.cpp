@@ -1,5 +1,8 @@
+// associated header
 #include "entitymanager.h"
 
+// include
+// core
 #include "entitydamage.h"
 #include "entitygraphicholder.h"
 #include "entitymovement.h"
@@ -8,6 +11,9 @@
 #include "entitystatemachine.h"
 #include "entityteam.h"
 #include "entityweapon.h"
+
+namespace core
+{
 
 EntityManager::EntityManager()
   : _maxEntity()
@@ -33,12 +39,12 @@ size_t EntityManager::createEntityId()
   return entityId;
 }
 
-void EntityManager::deferredRemoveEntity(size_t entityId)
+void EntityManager::deferredRemoveEntity(std::size_t entityId)
 {
   _entityToRemove.push_back(entityId);
 }
 
-void EntityManager::removeEntity(size_t entityId)
+void EntityManager::removeEntity(std::size_t entityId)
 {
   if(_damageModules[entityId])
   {
@@ -79,7 +85,7 @@ void EntityManager::removeEntity(size_t entityId)
 
 void EntityManager::processRemoveEntity()
 {
-  foreach(size_t entityId, _entityToRemove)
+  foreach(std::size_t entityId, _entityToRemove)
   {
     removeEntity(entityId);
   }
@@ -129,7 +135,7 @@ void EntityManager::registerDamageModule(EntityDamage *module)
   _damageModules[module->entityId()] = module;
 }
 
-EntityDamage *EntityManager::damageModule(size_t entityId)
+EntityDamage *EntityManager::damageModule(std::size_t entityId)
 {
   assert(entityId < _maxEntity);
   return _damageModules[entityId];
@@ -141,7 +147,7 @@ void EntityManager::registerMovementModule(EntityMovement *module)
   _movementModules[module->entityId()] = module;
 }
 
-EntityMovement *EntityManager::movementModule(size_t entityId)
+EntityMovement *EntityManager::movementModule(std::size_t entityId)
 {
   assert(entityId < _maxEntity);
   return _movementModules[entityId];
@@ -153,7 +159,7 @@ void EntityManager::registerPositionModule(EntityPosition *module)
   _positionModules[module->entityId()] = module;
 }
 
-EntityPosition *EntityManager::positionModule(size_t entityId)
+EntityPosition *EntityManager::positionModule(std::size_t entityId)
 {
   assert(entityId < _maxEntity);
   return _positionModules[entityId];
@@ -165,7 +171,7 @@ void EntityManager::registerGraphicHolderModule(EntityGraphicHolder *module)
   _graphicHolderModules[module->entityId()] = module;
 }
 
-EntityGraphicHolder *EntityManager::GraphicHolderModule(size_t entityId)
+EntityGraphicHolder *EntityManager::GraphicHolderModule(std::size_t entityId)
 {
   assert(entityId < _maxEntity);
   return _graphicHolderModules[entityId];
@@ -177,7 +183,7 @@ void EntityManager::registerStateMachineModule(EntityStateMachine *module)
   _stateMachineModules[module->entityId()] = module;
 }
 
-EntityStateMachine *EntityManager::stateMachineModule(size_t entityId)
+EntityStateMachine *EntityManager::stateMachineModule(std::size_t entityId)
 {
   assert(entityId < _maxEntity);
   return _stateMachineModules[entityId];
@@ -189,7 +195,7 @@ void EntityManager::registerTeamModule(EntityTeam *module)
   _teamModules[module->entityId()] = module;
 }
 
-EntityTeam *EntityManager::teamModule(size_t entityId)
+EntityTeam *EntityManager::teamModule(std::size_t entityId)
 {
   assert(entityId < _maxEntity);
   return _teamModules[entityId];
@@ -201,8 +207,10 @@ void EntityManager::registerWeaponModule(EntityWeapon *module)
   _weaponModules[module->entityId()] = module;
 }
 
-EntityWeapon *EntityManager::weaponModule(size_t entityId)
+EntityWeapon *EntityManager::weaponModule(std::size_t entityId)
 {
   assert(entityId < _maxEntity);
   return _weaponModules[entityId];
 }
+
+} // core

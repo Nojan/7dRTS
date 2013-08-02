@@ -1,17 +1,24 @@
 #ifndef ENTITYMODULE_H
 #define ENTITYMODULE_H
 
-#include <stdlib.h>
+// include
+// std
+#include <cstdlib>
+
+namespace core
+{
 
 class EntityModule
 {
 public:
-  EntityModule(size_t entityId);
+  EntityModule(std::size_t entityId);
 
-  size_t entityId() const;
+  std::size_t entityId() const;
 
 private:
-  size_t _entityId;
+  std::size_t _entityId;
 };
+
+} // core
 
 #endif // ENTITYMODULE_H

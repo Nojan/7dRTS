@@ -1,10 +1,16 @@
+// associated header
 #include "entitymovement.h"
 
+// include
+// core
 #include "constantes.h"
 #include "entitymanager.h"
 #include "entityposition.h"
 #include "gameworld.h"
 
+
+namespace core
+{
 
 MovementTarget::MovementTarget(const Eigen::Vector2f& position)
   : _position(position)
@@ -27,7 +33,7 @@ void MovementTarget::setState(MovementTarget::State state)
   _state = state;
 }
 
-EntityMovement::EntityMovement(size_t entityId, float speedMax)   // speedMax correspond au nombre de cases par secondes
+EntityMovement::EntityMovement(std::size_t entityId, float speedMax)   // speedMax correspond au nombre de cases par secondes
   :EntityModule(entityId)
 {
   EntityManager& entityManager = GameWorld::Instance().entityManager();
@@ -77,3 +83,5 @@ void EntityMovement::update(float deltas)
     }
   }
 }
+
+} // core

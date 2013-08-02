@@ -1,9 +1,13 @@
 #ifndef GRAPHICENTITY_H
 #define GRAPHICENTITY_H
 
+// include
+// Qt
 #include <QGraphicsItem>
-
 #include <QBrush>
+
+namespace graphic
+{
 
 class GraphicEntity : public QGraphicsItem
 {
@@ -36,5 +40,7 @@ protected:
   float _healthPercentage;
   std::size_t _entityId;
 };
+
+} // graphic
 
 #endif // GRAPHICENTITY_H

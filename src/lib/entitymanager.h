@@ -1,10 +1,17 @@
 #ifndef ENTITYMANAGER_H
 #define ENTITYMANAGER_H
 
+// include
+// pch
 #include "pch.h"
 
-#include <stdlib.h>
+// std
+#include <cstdlib>
 
+
+// forward declaration
+namespace core
+{
 class EntityDamage;
 class EntityGraphicHolder;
 class EntityModule;
@@ -13,7 +20,10 @@ class EntityStateMachine;
 class EntityTeam;
 class EntityWeapon;
 class EntityPosition;
-class GraphicEntity;
+}
+
+namespace core
+{
 
 class EntityManager
 {
@@ -22,37 +32,37 @@ public:
 
   size_t entityCount() const;
   size_t createEntityId();
-  void   deferredRemoveEntity(size_t entityId);
+  void   deferredRemoveEntity(std::size_t entityId);
 
   void processModules(int deltaMs);
 
   void registerDamageModule(EntityDamage* module);
-  EntityDamage* damageModule(size_t entityId);
+  EntityDamage* damageModule(std::size_t entityId);
 
   void registerMovementModule(EntityMovement* module);
-  EntityMovement* movementModule(size_t entityId);
+  EntityMovement* movementModule(std::size_t entityId);
 
   void registerPositionModule(EntityPosition* module);
-  EntityPosition* positionModule(size_t entityId);
+  EntityPosition* positionModule(std::size_t entityId);
 
   void registerGraphicHolderModule(EntityGraphicHolder* module);
-  EntityGraphicHolder* GraphicHolderModule(size_t entityId);
+  EntityGraphicHolder* GraphicHolderModule(std::size_t entityId);
 
   void registerStateMachineModule(EntityStateMachine* module);
-  EntityStateMachine* stateMachineModule(size_t entityId);
+  EntityStateMachine* stateMachineModule(std::size_t entityId);
 
   void registerTeamModule(EntityTeam* module);
-  EntityTeam* teamModule(size_t entityId);
+  EntityTeam* teamModule(std::size_t entityId);
 
   void registerWeaponModule(EntityWeapon* module);
-  EntityWeapon* weaponModule(size_t entityId);
+  EntityWeapon* weaponModule(std::size_t entityId);
 
 private:
-  void removeEntity(size_t entityId);
+  void removeEntity(std::size_t entityId);
   void processRemoveEntity();
 
 private:
-  size_t _maxEntity;
+  std::size_t _maxEntity;
   std::vector<EntityDamage*> _damageModules;
   std::vector<EntityMovement*> _movementModules;
   std::vector<EntityPosition*> _positionModules;
@@ -61,7 +71,9 @@ private:
   std::vector<EntityTeam*> _teamModules;
   std::vector<EntityWeapon*> _weaponModules;
 
-  std::vector<size_t> _entityToRemove;
+  std::vector<std::size_t> _entityToRemove;
 };
+
+} // core
 
 #endif // ENTITYMANAGER_H

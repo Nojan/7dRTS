@@ -6,12 +6,20 @@
 #include "entitygraphicholder.h"
 
 // forward declaration
+namespace graphic
+{
 class GraphicUnit;
+}
+
+namespace core
+{
 
 class UnitGraphicHolder : public EntityGraphicHolder
 {
 public:
-  UnitGraphicHolder(std::size_t eId, GraphicUnit* gu);
+  UnitGraphicHolder(std::size_t eId, graphic::GraphicUnit* gu);
 };
+
+} // core
 
 #endif // UNITGRAPHICHOLDER_H

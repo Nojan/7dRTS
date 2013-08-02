@@ -7,7 +7,7 @@
 // add C++ includes here
 
 // std
-#include <assert.h>
+#include <cassert>
 #include <cfloat>
 #include <cmath>
 #include <climits>

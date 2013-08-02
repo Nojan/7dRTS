@@ -1,13 +1,20 @@
 #ifndef ENTITYWEAPON_H
 #define ENTITYWEAPON_H
+
+// include
+// pch
 #include "pch.h"
 
+// core
 #include "entitymodule.h"
+
+namespace core
+{
 
 class WeaponTarget
 {
 public:
-  WeaponTarget(size_t entityId);
+  WeaponTarget(std::size_t entityId);
 
   size_t targetId() const;
 private:
@@ -17,7 +24,7 @@ private:
 class EntityWeapon : public EntityModule
 {
 public:
-  EntityWeapon(size_t entityId, int damage, float range, int fireRate);
+  EntityWeapon(std::size_t entityId, int damage, float range, int fireRate);
 
   void update(int deltaMs);
 
@@ -33,5 +40,7 @@ private:
   int _fireRateCurrent;
   WeaponTarget * _target;
 };
+
+} // core
 
 #endif // ENTITYWEAPON_H

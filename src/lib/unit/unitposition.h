@@ -5,6 +5,9 @@
 // core
 #include "entityposition.h"
 
+namespace core
+{
+
 class UnitPosition : public EntityPosition
 {
 public:
@@ -12,5 +15,7 @@ public:
     : EntityPosition(eId, pos)
   { }
 };
+
+} // core
 
 #endif // UNITPOSITION_H

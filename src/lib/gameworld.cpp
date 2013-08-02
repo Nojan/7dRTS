@@ -1,5 +1,8 @@
+// associated header
 #include "gameworld.h"
 
+// include
+// core
 #include "entitymanager.h"
 #include "entitymanagerhelper.h"
 #include "entitymovement.h"
@@ -8,13 +11,16 @@
 
 const int framestep = 1000 / 33;
 
+namespace core
+{
+
 GameWorld& GameWorld::Instance()
 {
     static GameWorld instance;
     return instance;
 }
 
-core::BallisticProjectileManager &GameWorld::ballisticProjectileManager()
+BallisticProjectileManager &GameWorld::ballisticProjectileManager()
 {
   return _ballisticProjectileManager;
 }
@@ -25,7 +31,7 @@ EntityManager &GameWorld::entityManager()
 }
 
 
-core::UnitController& GameWorld::unitController()
+UnitController& GameWorld::unitController()
 {
   return _unitController;
 }
@@ -61,3 +67,5 @@ void GameWorld::switchPause()
   else
     _gameplayTimer.start(framestep);
 }
+
+} // core

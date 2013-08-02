@@ -5,12 +5,17 @@
 // core
 #include "entityteam.h"
 
+namespace core
+{
+
 class UnitTeam : public EntityTeam
 {
 public:
-  UnitTeam(size_t eId, Team team)
+  UnitTeam(std::size_t eId, Team team)
     : EntityTeam(eId, team)
   { }
 };
+
+} // core
 
 #endif // UNITTEAM_H

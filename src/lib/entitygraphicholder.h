@@ -1,26 +1,37 @@
 #ifndef ENTITYGRAPHICHOLDER_H
 #define ENTITYGRAPHICHOLDER_H
 
+// include
+// core
 #include "entitymodule.h"
-
 #include "gameworld.h"
 
+// forward declaration
+namespace graphic
+{
 class GraphicEntity;
+}
+
+namespace core
+{
 
 class EntityGraphicHolder : public EntityModule
 {
 public:
-  EntityGraphicHolder(size_t entityId, GraphicEntity* entityGraphics);
+  EntityGraphicHolder(std::size_t entityId,
+                      graphic::GraphicEntity* entityGraphics);
   virtual ~EntityGraphicHolder();
 
-  const GraphicEntity* graphic() const;
+  const graphic::GraphicEntity* graphic() const;
 
 
   void update();
 
 private:
-  GraphicEntity* _entityGraphics;
+  graphic::GraphicEntity* _entityGraphics;
 
 };
+
+} // core
 
 #endif // ENTITYGRAPHICHOLDER_H

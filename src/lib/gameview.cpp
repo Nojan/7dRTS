@@ -12,6 +12,9 @@
 // graphic
 #include "unit/graphicunit.h"
 
+namespace graphic
+{
+
 
 GameView::GameView(QGraphicsScene *scene, QWidget *parent)
   : QGraphicsView(scene, parent)
@@ -32,6 +35,8 @@ void GameView::keyPressEvent(QKeyEvent *event)
 
 void GameView::mouseReleaseEvent(QMouseEvent* event)
 {
+  using namespace core;
+
   if(event->button() == Qt::LeftButton)
   {
     std::vector<std::size_t> entities;
@@ -44,7 +49,7 @@ void GameView::mouseReleaseEvent(QMouseEvent* event)
         entities.push_back(entity->entityId());
       }
     }
-    core::UnitController& unitC = GameWorld::Instance().unitController();
+    UnitController& unitC = GameWorld::Instance().unitController();
     unitC.selectedUnit(entities);
 
     event->accept();
@@ -60,3 +65,5 @@ void GameView::mouseReleaseEvent(QMouseEvent* event)
   }
   QGraphicsView::mouseReleaseEvent(event);
 }
+
+} // graphic

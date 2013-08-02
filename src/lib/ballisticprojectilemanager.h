@@ -1,9 +1,18 @@
 #ifndef BALLISTICPROJECTILEMANAGER_H
 #define BALLISTICPROJECTILEMANAGER_H
+
+// include
+// pch
 #include "pch.h"
 
-#include "graphicentity.h"
+// core
 #include "entityteam.h"
+
+// graphic
+#include "graphicentity.h"
+
+namespace graphic
+{
 
 class GraphicBallisticProjectile : public GraphicEntity {
 public:
@@ -14,6 +23,8 @@ public:
   virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
              QWidget *widget);
 };
+
+}
 
 namespace core {
 
@@ -33,14 +44,14 @@ public:
 
   void evolve(float deltas);
 
-  GraphicBallisticProjectile * graphic();
+  graphic::GraphicBallisticProjectile * graphic();
 
 private:
   Eigen::Vector2f _position;
   Eigen::Vector2f _orientation;
   int _damage;
   float _timeToLive;
-  GraphicBallisticProjectile _graphic;
+  graphic::GraphicBallisticProjectile _graphic;
 
   EntityTeam* _team;
 };
@@ -59,5 +70,6 @@ private:
   QGraphicsScene * _scene;
 };
 
-} //namespace core
+} // core
+
 #endif // BALLISTICPROJECTILEMANAGER_H

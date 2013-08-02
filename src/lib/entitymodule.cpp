@@ -1,11 +1,17 @@
+// associated header
 #include "entitymodule.h"
 
-EntityModule::EntityModule(size_t entityId)
+namespace core
+{
+
+EntityModule::EntityModule(std::size_t entityId)
   : _entityId(entityId)
 {
 }
 
-size_t EntityModule::entityId() const
+std::size_t EntityModule::entityId() const
 {
   return _entityId;
 }
+
+} // core

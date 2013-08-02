@@ -1,5 +1,8 @@
+// associated header
 #include "entitystatemachine.h"
 
+// include
+// core
 #include "entitymanager.h"
 #include "entitymovement.h"
 #include "entityposition.h"
@@ -7,8 +10,10 @@
 #include "entityweapon.h"
 #include "gameworld.h"
 
-namespace {
-size_t closestEnemyId(size_t id)
+namespace core
+{
+
+size_t closestEnemyId(std::size_t id)
 {
   float shortDistance = FLT_MAX;
   size_t shortId = -1;
@@ -18,7 +23,7 @@ size_t closestEnemyId(size_t id)
   EntityTeam::Team selfTeam = selfTeamModule->team();
   const Eigen::Vector2f selfPosition = selfPosModule->position();
   const size_t entityCount = entityManager.entityCount();
-  for(size_t i = 0; i<entityCount; ++i)
+  for(std::size_t i = 0; i<entityCount; ++i)
   {
     const EntityPosition* otherPosition = entityManager.positionModule(i);
     const EntityTeam* otherTeamModule = entityManager.teamModule(i);
@@ -34,9 +39,10 @@ size_t closestEnemyId(size_t id)
   }
   return shortId;
 }
-}
 
-EntityStateMachine::EntityStateMachine(size_t entityId)
+
+
+EntityStateMachine::EntityStateMachine(std::size_t entityId)
   :EntityModule(entityId)
 {
 }
@@ -69,3 +75,5 @@ void EntityStateMachine::update()
     weapon->setTarget(NULL);
   }
 }
+
+} // core

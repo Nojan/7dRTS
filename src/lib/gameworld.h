@@ -10,15 +10,18 @@
 #include "entitymanager.h"
 #include "unitcontroller.h"
 
+namespace core
+{
+
 class GameWorld : public QObject
 {
   Q_OBJECT
 public:
   static GameWorld& Instance();
 
-  core::BallisticProjectileManager& ballisticProjectileManager();
+  BallisticProjectileManager& ballisticProjectileManager();
   EntityManager& entityManager();
-  core::UnitController& unitController();
+  UnitController& unitController();
   QGraphicsScene * scene();
 
 signals:
@@ -31,11 +34,13 @@ private:
   GameWorld();
 
 private:
-  core::BallisticProjectileManager _ballisticProjectileManager;
+  BallisticProjectileManager _ballisticProjectileManager;
   EntityManager _entityManager;
-  core::UnitController _unitController;
+  UnitController _unitController;
   QGraphicsScene _graphicsScene;
   QTimer _gameplayTimer;
 };
+
+} // core
 
 #endif // GAMEWORLD_H

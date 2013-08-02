@@ -1,10 +1,16 @@
+// associtaed header
 #include "ballisticprojectilemanager.h"
 
+// include
+// core
 #include "constantes.h"
 #include "entitydamage.h"
 #include "entitygraphicholder.h"
 #include "entityposition.h"
 #include "gameworld.h"
+
+namespace graphic
+{
 
 GraphicBallisticProjectile::GraphicBallisticProjectile()
 {
@@ -31,7 +37,11 @@ void GraphicBallisticProjectile::paint(QPainter *painter, const QStyleOptionGrap
   painter->drawRect(boundingRect());
 }
 
-using namespace core;
+} // graphic
+
+
+namespace core
+{
 
 BallisticProjectile::BallisticProjectile(const Eigen::Vector2f& start, const Eigen::Vector2f& orientation, int damage)
   : _position(start)
@@ -86,7 +96,7 @@ void BallisticProjectile::evolve(float deltas)
   _graphic.setPosition(_position.x(), _position.y());
 }
 
-GraphicBallisticProjectile *BallisticProjectile::graphic()
+graphic::GraphicBallisticProjectile *BallisticProjectile::graphic()
 {
   return &_graphic;
 }
@@ -99,7 +109,7 @@ void BallisticProjectileManager::addProjectile(BallisticProjectile *projectile, 
 {
   GameWorld::Instance().scene()->addItem(projectile->graphic());
   BallisticProjectile* p;
-//  for(size_t i =0; i< _projectiles.size(); ++i)
+//  for(std::size_t i =0; i< _projectiles.size(); ++i)
 //  {
 //    p=_projectiles.at(i);
 //    if(NULL == p)
@@ -136,13 +146,13 @@ void BallisticProjectileManager::evolve(const float deltas)
   const size_t entityCount = entityManager.entityCount();
   BallisticProjectile* projectile;
   bool collided = false;
-  for(size_t i =0; i< _projectiles.size(); ++i)
+  for(std::size_t i =0; i< _projectiles.size(); ++i)
   {
     projectile = _projectiles.at(i);
     if(projectile)
     {
       projectile->evolve(deltas);
-      for(size_t entityId = 0; entityId<entityCount; ++entityId)
+      for(std::size_t entityId = 0; entityId<entityCount; ++entityId)
       {
 
         collided = collide(*projectile, entityId);
@@ -177,4 +187,6 @@ void BallisticProjectileManager::evolve(const float deltas)
 
   }
 }
+
+} // core
 

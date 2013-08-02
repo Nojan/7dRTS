@@ -1,11 +1,17 @@
+// associated header
 #include "entityposition.h"
 
+// include
+// core
 #include "constantes.h"
 #include "entitymanager.h"
 #include "entitymovement.h"
 #include "gameworld.h"
 
-EntityPosition::EntityPosition(size_t entityId, const Eigen::Vector2f& position)
+namespace core
+{
+
+EntityPosition::EntityPosition(std::size_t entityId, const Eigen::Vector2f& position)
   : EntityModule(entityId)
   , _position(position)
   , _size(core::tileSizef)
@@ -36,3 +42,5 @@ void EntityPosition::update()
     _position = movementModule->position();
   }
 }
+
+} // core

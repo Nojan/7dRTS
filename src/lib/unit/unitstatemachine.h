@@ -5,6 +5,9 @@
 // core
 #include "entitystatemachine.h"
 
+namespace core
+{
+
 class UnitStateMachine : public EntityStateMachine
 {
 public:
@@ -12,5 +15,7 @@ public:
     : EntityStateMachine(eId)
   { }
 };
+
+} // core
 
 #endif // UNITSTATEMACHINE_H

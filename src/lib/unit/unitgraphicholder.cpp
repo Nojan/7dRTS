@@ -5,6 +5,12 @@
 // graphic
 #include "unit/graphicunit.h"
 
-UnitGraphicHolder::UnitGraphicHolder(std::size_t eId, GraphicUnit* gu)
+namespace core
+{
+
+UnitGraphicHolder::UnitGraphicHolder(std::size_t eId,
+                                     graphic::GraphicUnit* gu)
   : EntityGraphicHolder(eId, gu)
 { }
+
+} // core

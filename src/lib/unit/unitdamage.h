@@ -5,6 +5,9 @@
 // core
 #include "entitydamage.h"
 
+namespace core
+{
+
 class UnitDamage : public EntityDamage
 {
 public:
@@ -12,5 +15,7 @@ public:
     : EntityDamage(eId, hp)
   { }
 };
+
+} // core
 
 #endif // UNITDAMAGE_H

@@ -1,6 +1,10 @@
+// associated header
 #include "entityteam.h"
 
-EntityTeam::EntityTeam(size_t entityId, Team team)
+namespace core
+{
+
+EntityTeam::EntityTeam(std::size_t entityId, Team team)
   : EntityModule(entityId)
   , _team(team)
 {
@@ -28,3 +32,5 @@ QBrush EntityTeam::brushFromTeamId(const EntityTeam::Team teamId)
     }
     return color;
 }
+
+} // core

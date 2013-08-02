@@ -22,45 +22,45 @@ int main(int argc, char *argv[])
   core::GeneralMap map(core::GeneralMap::fromGimpImage(core::HardCodedImage::test));
   graphic::GraphicMap* gMap = new graphic::GraphicMap(&map);
 
-  QGraphicsScene * scene = GameWorld::Instance().scene();
+  QGraphicsScene * scene = core::GameWorld::Instance().scene();
 
   scene->setSceneRect(0, 0, map.tileGrid().height() * core::tileSize, map.tileGrid().width() * core::tileSize);
   scene->addItem(gMap);
 
   const Eigen::Vector2f mapHalfSize(map.tileGrid().height()*0.5f, map.tileGrid().width()*0.5f);
   {
-    GraphicUnit * unitGraphic = new GraphicUnit();
+    graphic::GraphicUnit * unitGraphic = new graphic::GraphicUnit();
     const Eigen::Vector2f position(0,0);
-    const EntityTeam::Team teamId(EntityTeam::TeamA);
+    const core::EntityTeam::Team teamId(core::EntityTeam::TeamA);
     EntityManagerHelpers::createSimpleUnit(unitGraphic, (position+mapHalfSize)* core::tileSize, teamId);
-    unitGraphic->setBrush(EntityTeam::brushFromTeamId(teamId));
+    unitGraphic->setBrush(core::EntityTeam::brushFromTeamId(teamId));
     scene->addItem(unitGraphic);
   }
 
   {
-    GraphicUnit * unitGraphic = new GraphicUnit();
+    graphic::GraphicUnit * unitGraphic = new graphic::GraphicUnit();
     const Eigen::Vector2f position(2,0);
-    const EntityTeam::Team teamId(EntityTeam::TeamA);
+    const core::EntityTeam::Team teamId(core::EntityTeam::TeamA);
     EntityManagerHelpers::createSimpleUnit(unitGraphic, (position+mapHalfSize)* core::tileSize, teamId);
-    unitGraphic->setBrush(EntityTeam::brushFromTeamId(teamId));
+    unitGraphic->setBrush(core::EntityTeam::brushFromTeamId(teamId));
     scene->addItem(unitGraphic);
   }
 
   {
-    GraphicUnit * unitGraphic = new GraphicUnit();
+    graphic::GraphicUnit * unitGraphic = new graphic::GraphicUnit();
     const Eigen::Vector2f position(10,10);
-    const EntityTeam::Team teamId(EntityTeam::TeamB);
+    const core::EntityTeam::Team teamId(core::EntityTeam::TeamB);
     EntityManagerHelpers::createUnitTank(unitGraphic, (position+mapHalfSize)* core::tileSize, teamId);
-    unitGraphic->setBrush(EntityTeam::brushFromTeamId(teamId));
+    unitGraphic->setBrush(core::EntityTeam::brushFromTeamId(teamId));
     scene->addItem(unitGraphic);
   }
 
   {
-    GraphicUnit * unitGraphic = new GraphicUnit();
+    graphic::GraphicUnit * unitGraphic = new graphic::GraphicUnit();
     const Eigen::Vector2f position(12,10);
-    const EntityTeam::Team teamId(EntityTeam::TeamB);
+    const core::EntityTeam::Team teamId(core::EntityTeam::TeamB);
     EntityManagerHelpers::createUnitRapide(unitGraphic, (position+mapHalfSize)* core::tileSize, teamId);
-    unitGraphic->setBrush(EntityTeam::brushFromTeamId(teamId));
+    unitGraphic->setBrush(core::EntityTeam::brushFromTeamId(teamId));
     scene->addItem(unitGraphic);
   }
 
@@ -73,13 +73,13 @@ int main(int argc, char *argv[])
       double angle = edge.from.x == edge.to.x ? 0. : 90.;
       Eigen::Vector2f pos = d.center().cast<float>();
       graphic::GraphicDoor* doorGraphic = new graphic::GraphicDoor(length, angle);
-      const EntityTeam::Team teamId(EntityTeam::TeamA);
+      const core::EntityTeam::Team teamId(core::EntityTeam::TeamA);
       EntityManagerHelpers::createUnitDoor(doorGraphic, pos, teamId);
       scene->addItem(doorGraphic);
     }
   }
 
-  GameView view(scene);
+  graphic::GameView view(scene);
   view.setRenderHint(QPainter::Antialiasing);
   view.setCacheMode(QGraphicsView::CacheBackground);
   view.setViewportUpdateMode(QGraphicsView::BoundingRectViewportUpdate);
@@ -88,7 +88,7 @@ int main(int argc, char *argv[])
   view.resize(800, 600);
   view.show();
 
-  QObject::connect(&view, SIGNAL(switchPause()), &GameWorld::Instance(), SLOT(switchPause()));
+  QObject::connect(&view, SIGNAL(switchPause()), &core::GameWorld::Instance(), SLOT(switchPause()));
 
   // Chargement des sons
   SoundEngine::Instance().preloadSoundEffect(":/sound/Laser_Shoot.wav");

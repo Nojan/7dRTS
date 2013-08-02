@@ -1,9 +1,16 @@
 #ifndef ENTITYMOVEMENT_H
 #define ENTITYMOVEMENT_H
 
+// include
+// pch
 #include "pch.h"
 
+// core
 #include "entitymodule.h"
+
+
+namespace core
+{
 
 class MovementTarget
 {
@@ -29,7 +36,7 @@ private:
 class EntityMovement : public EntityModule
 {
 public:
-  EntityMovement(size_t entityId, float speedMax);
+  EntityMovement(std::size_t entityId, float speedMax);
   virtual ~EntityMovement();
 
   Eigen::Vector2f position() const;
@@ -43,5 +50,7 @@ private:
   int _speedMax;    // nb pixels par seconde
   MovementTarget * _target;
 };
+
+} // core
 
 #endif // ENTITYMOVEMENT_H

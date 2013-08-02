@@ -5,9 +5,14 @@
 // graphic
 #include "graphicentity.h"
 
+namespace graphic
+{
+
 class GraphicUnit : public GraphicEntity
 {
 public:
 };
+
+} // graphic
 
 #endif // GRAPHICUNIT_H

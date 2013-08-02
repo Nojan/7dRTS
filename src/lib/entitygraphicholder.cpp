@@ -11,7 +11,11 @@
 #include "graphicentity.h"
 
 
-EntityGraphicHolder::EntityGraphicHolder(size_t entityId, GraphicEntity *entityGraphics)
+namespace core
+{
+
+EntityGraphicHolder::EntityGraphicHolder(std::size_t entityId,
+                                         graphic::GraphicEntity *entityGraphics)
   : EntityModule(entityId)
   , _entityGraphics(entityGraphics)
 {
@@ -32,7 +36,7 @@ EntityGraphicHolder::~EntityGraphicHolder()
   delete _entityGraphics;
 }
 
-const GraphicEntity *EntityGraphicHolder::graphic() const
+const graphic::GraphicEntity *EntityGraphicHolder::graphic() const
 {
   return _entityGraphics;
 }
@@ -48,3 +52,5 @@ void EntityGraphicHolder::update()
   }
   _entityGraphics->setPosition(position->position().x(), position->position().y());
 }
+
+} // core

@@ -14,6 +14,9 @@
 
 using namespace core;
 
+namespace graphic
+{
+
 GraphicEntity::GraphicEntity()
     : _brush(Qt::black)
     , _hasHealthBar(false)
@@ -106,4 +109,6 @@ void GraphicEntity::setHealthPercentage(float healthPer)
         _healthPercentage = healthPer;
         update();
     }
+}
+
 }

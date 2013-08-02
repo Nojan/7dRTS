@@ -5,12 +5,17 @@
 // core
 #include "entitymovement.h"
 
+namespace core
+{
+
 class UnitMovement : public EntityMovement
 {
 public:
-  UnitMovement(size_t eId, float speedMax)
+  UnitMovement(std::size_t eId, float speedMax)
     : EntityMovement(eId, speedMax)
   { }
 };
+
+} // core
 
 #endif // UNITMOVEMENT_H

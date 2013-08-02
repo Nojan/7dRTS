@@ -1,9 +1,15 @@
+// associated header
 #include "entitydamage.h"
 
+// include
+// core
 #include "gameworld.h"
 
 
-EntityDamage::EntityDamage(size_t entityId, int healthPoint)
+namespace core
+{
+
+EntityDamage::EntityDamage(std::size_t entityId, int healthPoint)
     :EntityModule(entityId)  , _healthPoint(healthPoint), _maxHealthPoint(healthPoint)
 {
 
@@ -31,3 +37,5 @@ void EntityDamage::update()
     GameWorld::Instance().entityManager().deferredRemoveEntity(entityId());
   }
 }
+
+} // core

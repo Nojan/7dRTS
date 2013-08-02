@@ -1,10 +1,16 @@
 #ifndef ENTITYTEAMMODULE_H
 #define ENTITYTEAMMODULE_H
 
-#include "entitymodule.h"
-
+// include
+// Qt
 #include <QApplication>
 #include <QtWidgets>
+
+// core
+#include "entitymodule.h"
+
+namespace core
+{
 
 class EntityTeam : public EntityModule
 {
@@ -15,7 +21,7 @@ public:
     Invalid
   };
 
-  EntityTeam(size_t entityId, Team team);
+  EntityTeam(std::size_t entityId, Team team);
 
   Team team() const;
 
@@ -26,5 +32,7 @@ private:
   Team _team;
   Qt::GlobalColor _color;
 };
+
+} // core
 
 #endif // ENTITYTEAMMODULE_H

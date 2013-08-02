@@ -18,9 +18,10 @@
 
 namespace EntityManagerHelpers
 {
+using namespace core;
 
-size_t
-createSimpleUnit(GraphicUnit *graphicUnit,
+std::size_t
+createSimpleUnit(graphic::GraphicUnit *graphicUnit,
                  const Eigen::Vector2f& position,
                  UnitTeam::Team teamId)
 {
@@ -36,10 +37,10 @@ createSimpleUnit(GraphicUnit *graphicUnit,
   return entityId;
 }
 
-size_t
-createUnitGrosDegats(GraphicUnit *graphicUnit,
-                 const Eigen::Vector2f& position,
-                 UnitTeam::Team teamId)
+std::size_t
+createUnitGrosDegats(graphic::GraphicUnit *graphicUnit,
+                     const Eigen::Vector2f& position,
+                     UnitTeam::Team teamId)
 {
   EntityManager& entityManager = GameWorld::Instance().entityManager();
   const size_t entityId = entityManager.createEntityId();
@@ -53,8 +54,8 @@ createUnitGrosDegats(GraphicUnit *graphicUnit,
   return entityId;
 }
 
-size_t
-createUnitRapide(GraphicUnit *graphicUnit,
+std::size_t
+createUnitRapide(graphic::GraphicUnit *graphicUnit,
                  const Eigen::Vector2f& position,
                  UnitTeam::Team teamId)
 {
@@ -71,10 +72,10 @@ createUnitRapide(GraphicUnit *graphicUnit,
 }
 
 
-size_t
-createUnitTank(GraphicUnit *graphicUnit,
-                 const Eigen::Vector2f& position,
-                 UnitTeam::Team teamId)
+std::size_t
+createUnitTank(graphic::GraphicUnit *graphicUnit,
+               const Eigen::Vector2f& position,
+               UnitTeam::Team teamId)
 {
   EntityManager& entityManager = GameWorld::Instance().entityManager();
   const size_t entityId = entityManager.createEntityId();
@@ -89,7 +90,7 @@ createUnitTank(GraphicUnit *graphicUnit,
 }
 
 
-size_t
+std::size_t
 createUnitDoor(graphic::GraphicDoor* graphicDoor,
                const Eigen::Vector2f& position,
                UnitTeam::Team teamId)

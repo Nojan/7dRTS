@@ -1,40 +1,44 @@
 #ifndef ENTITYMANAGERHELPER_H
 #define ENTITYMANAGERHELPER_H
+
+// include
+// pch
 #include "pch.h"
 
+// core
 #include "entitymanager.h"
 #include "entityteam.h"
 
 
 // forward declaration
-class GraphicUnit;
 namespace graphic
 {
 class GraphicDoor;
+class GraphicUnit;
 }
 
 namespace EntityManagerHelpers
 {
 
-size_t createSimpleUnit(GraphicUnit* graphicEntity,
-                        const Eigen::Vector2f& position,
-                        EntityTeam::Team teamId);
+std::size_t createSimpleUnit(graphic::GraphicUnit* graphicUnit,
+                             const Eigen::Vector2f& position,
+                             core::EntityTeam::Team teamId);
 
-size_t createUnitGrosDegats(GraphicUnit* graphicEntity,
-                        const Eigen::Vector2f& position,
-                        EntityTeam::Team teamId);
+std::size_t createUnitGrosDegats(graphic::GraphicUnit* graphicUnit,
+                                 const Eigen::Vector2f& position,
+                                 core::EntityTeam::Team teamId);
 
-size_t createUnitRapide(GraphicUnit* graphicEntity,
-                        const Eigen::Vector2f& position,
-                        EntityTeam::Team teamId);
+std::size_t createUnitRapide(graphic::GraphicUnit* graphicUnit,
+                             const Eigen::Vector2f& position,
+                             core::EntityTeam::Team teamId);
 
-size_t createUnitTank(GraphicUnit* graphicEntity,
-                        const Eigen::Vector2f& position,
-                        EntityTeam::Team teamId);
+std::size_t createUnitTank(graphic::GraphicUnit* graphicUnit,
+                           const Eigen::Vector2f& position,
+                           core::EntityTeam::Team teamId);
 
-size_t createUnitDoor(graphic::GraphicDoor* graphicDoor,
-                      const Eigen::Vector2f& position,
-                      EntityTeam::Team teamId);
+std::size_t createUnitDoor(graphic::GraphicDoor* graphicDoor,
+                           const Eigen::Vector2f& position,
+                           core::EntityTeam::Team teamId);
 
 } // EntityManagerHelpers
 

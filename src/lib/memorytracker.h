@@ -37,7 +37,7 @@ private:
       , _filename("")
     {}
 
-    MemoryBlock(size_t size, int line, std::string filename)
+    MemoryBlock(std::size_t size, int line, std::string filename)
       : _size(size)
       , _line(line)
       , _filename(filename)
@@ -48,12 +48,12 @@ private:
 
 } //namespace core
 
-inline void* operator new(size_t size, size_t line, const char* filename)
+inline void* operator new(std::size_t size, size_t line, const char* filename)
 {
   return core::MemoryTracker::Instance().allocate(size, line, filename);
 }
 
-inline void* operator new[](size_t size, size_t line, const char* filename)
+inline void* operator new[](std::size_t size, size_t line, const char* filename)
 {
   return core::MemoryTracker::Instance().allocate(size, line, filename);
 }
