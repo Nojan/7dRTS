@@ -10,7 +10,7 @@
 #include "unitcontroller.h"
 
 // graphic
-#include "graphicentity.h"
+#include "unit/graphicunit.h"
 
 
 GameView::GameView(QGraphicsScene *scene, QWidget *parent)
@@ -37,9 +37,9 @@ void GameView::mouseReleaseEvent(QMouseEvent* event)
     std::vector<std::size_t> entities;
     for(const QGraphicsItem* item: scene()->selectedItems())
     {
-      const GraphicEntity* entity;
+      const GraphicUnit* entity;
       if((entity =
-          dynamic_cast<const GraphicEntity*>(item)) != 0)
+          dynamic_cast<const GraphicUnit*>(item)) != 0)
       {
         entities.push_back(entity->entityId());
       }
