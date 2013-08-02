@@ -11,7 +11,7 @@ class EntityGraphicHolder : public EntityModule
 {
 public:
   EntityGraphicHolder(size_t entityId, GraphicEntity* entityGraphics);
-  ~EntityGraphicHolder();
+  virtual ~EntityGraphicHolder();
 
   const GraphicEntity* graphic() const;
 

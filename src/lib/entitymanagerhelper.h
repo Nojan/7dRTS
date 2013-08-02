@@ -7,7 +7,7 @@
 
 
 // forward declaration
-class GraphicEntity;
+class GraphicUnit;
 namespace graphic
 {
 class GraphicDoor;
@@ -16,19 +16,19 @@ class GraphicDoor;
 namespace EntityManagerHelpers
 {
 
-size_t createSimpleUnit(GraphicEntity* graphicEntity,
+size_t createSimpleUnit(GraphicUnit* graphicEntity,
                         const Eigen::Vector2f& position,
                         EntityTeam::Team teamId);
 
-size_t createUnitGrosDegats(GraphicEntity* graphicEntity,
+size_t createUnitGrosDegats(GraphicUnit* graphicEntity,
                         const Eigen::Vector2f& position,
                         EntityTeam::Team teamId);
 
-size_t createUnitRapide(GraphicEntity* graphicEntity,
+size_t createUnitRapide(GraphicUnit* graphicEntity,
                         const Eigen::Vector2f& position,
                         EntityTeam::Team teamId);
 
-size_t createUnitTank(GraphicEntity* graphicEntity,
+size_t createUnitTank(GraphicUnit* graphicEntity,
                         const Eigen::Vector2f& position,
                         EntityTeam::Team teamId);
 

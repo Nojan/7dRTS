@@ -30,7 +30,7 @@ class EntityMovement : public EntityModule
 {
 public:
   EntityMovement(size_t entityId, float speedMax);
-  ~EntityMovement();
+  virtual ~EntityMovement();
 
   Eigen::Vector2f position() const;
   void setTarget(MovementTarget * target);

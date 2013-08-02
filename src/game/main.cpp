@@ -2,7 +2,7 @@
 #include "entitymanagerhelper.h"
 #include "gameview.h"
 #include "gameworld.h"
-#include "graphicentity.h"
+#include "unit/graphicunit.h"
 
 #include "hardcodedmap.h"
 #include "generalmap.h"
@@ -29,7 +29,7 @@ int main(int argc, char *argv[])
 
   const Eigen::Vector2f mapHalfSize(map.tileGrid().height()*0.5f, map.tileGrid().width()*0.5f);
   {
-    GraphicEntity * unitGraphic = new GraphicEntity();
+    GraphicUnit * unitGraphic = new GraphicUnit();
     const Eigen::Vector2f position(0,0);
     const EntityTeam::Team teamId(EntityTeam::TeamA);
     EntityManagerHelpers::createSimpleUnit(unitGraphic, (position+mapHalfSize)* core::tileSize, teamId);
@@ -38,7 +38,7 @@ int main(int argc, char *argv[])
   }
 
   {
-    GraphicEntity * unitGraphic = new GraphicEntity();
+    GraphicUnit * unitGraphic = new GraphicUnit();
     const Eigen::Vector2f position(2,0);
     const EntityTeam::Team teamId(EntityTeam::TeamA);
     EntityManagerHelpers::createSimpleUnit(unitGraphic, (position+mapHalfSize)* core::tileSize, teamId);
@@ -47,7 +47,7 @@ int main(int argc, char *argv[])
   }
 
   {
-    GraphicEntity * unitGraphic = new GraphicEntity();
+    GraphicUnit * unitGraphic = new GraphicUnit();
     const Eigen::Vector2f position(10,10);
     const EntityTeam::Team teamId(EntityTeam::TeamB);
     EntityManagerHelpers::createUnitTank(unitGraphic, (position+mapHalfSize)* core::tileSize, teamId);
@@ -56,7 +56,7 @@ int main(int argc, char *argv[])
   }
 
   {
-    GraphicEntity * unitGraphic = new GraphicEntity();
+    GraphicUnit * unitGraphic = new GraphicUnit();
     const Eigen::Vector2f position(12,10);
     const EntityTeam::Team teamId(EntityTeam::TeamB);
     EntityManagerHelpers::createUnitRapide(unitGraphic, (position+mapHalfSize)* core::tileSize, teamId);

@@ -3,13 +3,13 @@
 
 // include
 // core
-#include "entitydamage.h"
-#include "entitygraphicholder.h"
-#include "entitymovement.h"
-#include "entityposition.h"
-#include "entitystatemachine.h"
-#include "entityteam.h"
-#include "entityweapon.h"
+#include "unit/unitdamage.h"
+#include "unit/unitgraphicholder.h"
+#include "unit/unitmovement.h"
+#include "unit/unitposition.h"
+#include "unit/unitstatemachine.h"
+#include "unit/unitteam.h"
+#include "unit/unitweapon.h"
 #include "gameworld.h"
 
 // graphic
@@ -20,71 +20,71 @@ namespace EntityManagerHelpers
 {
 
 size_t
-createSimpleUnit(GraphicEntity *graphicEntity,
+createSimpleUnit(GraphicUnit *graphicUnit,
                  const Eigen::Vector2f& position,
-                 EntityTeam::Team teamId)
+                 UnitTeam::Team teamId)
 {
   EntityManager& entityManager = GameWorld::Instance().entityManager();
   const size_t entityId = entityManager.createEntityId();
-  entityManager.registerDamageModule(new EntityDamage(entityId, 100));
-  entityManager.registerPositionModule(new EntityPosition(entityId, position));
-  entityManager.registerMovementModule(new EntityMovement(entityId, 1));
-  entityManager.registerGraphicHolderModule(new EntityGraphicHolder(entityId, graphicEntity));
-  entityManager.registerStateMachineModule(new EntityStateMachine(entityId));
-  entityManager.registerTeamModule(new EntityTeam(entityId, teamId));
-  entityManager.registerWeaponModule(new EntityWeapon(entityId, 10, 10.f, 2000));
+  entityManager.registerDamageModule(new UnitDamage(entityId, 100));
+  entityManager.registerPositionModule(new UnitPosition(entityId, position));
+  entityManager.registerMovementModule(new UnitMovement(entityId, 1));
+  entityManager.registerGraphicHolderModule(new UnitGraphicHolder(entityId, graphicUnit));
+  entityManager.registerStateMachineModule(new UnitStateMachine(entityId));
+  entityManager.registerTeamModule(new UnitTeam(entityId, teamId));
+  entityManager.registerWeaponModule(new UnitWeapon(entityId, 10, 10.f, 2000));
   return entityId;
 }
 
 size_t
-createUnitGrosDegats(GraphicEntity *graphicEntity,
+createUnitGrosDegats(GraphicUnit *graphicUnit,
                  const Eigen::Vector2f& position,
-                 EntityTeam::Team teamId)
+                 UnitTeam::Team teamId)
 {
   EntityManager& entityManager = GameWorld::Instance().entityManager();
   const size_t entityId = entityManager.createEntityId();
-  entityManager.registerDamageModule(new EntityDamage(entityId, 100));
-  entityManager.registerPositionModule(new EntityPosition(entityId, position));
-  entityManager.registerMovementModule(new EntityMovement(entityId, 1));
-  entityManager.registerGraphicHolderModule(new EntityGraphicHolder(entityId, graphicEntity));
-  entityManager.registerStateMachineModule(new EntityStateMachine(entityId));
-  entityManager.registerTeamModule(new EntityTeam(entityId, teamId));
-  entityManager.registerWeaponModule(new EntityWeapon(entityId, 20, 10.f, 2000));
+  entityManager.registerDamageModule(new UnitDamage(entityId, 100));
+  entityManager.registerPositionModule(new UnitPosition(entityId, position));
+  entityManager.registerMovementModule(new UnitMovement(entityId, 1));
+  entityManager.registerGraphicHolderModule(new UnitGraphicHolder(entityId, graphicUnit));
+  entityManager.registerStateMachineModule(new UnitStateMachine(entityId));
+  entityManager.registerTeamModule(new UnitTeam(entityId, teamId));
+  entityManager.registerWeaponModule(new UnitWeapon(entityId, 20, 10.f, 2000));
   return entityId;
 }
 
 size_t
-createUnitRapide(GraphicEntity *graphicEntity,
+createUnitRapide(GraphicUnit *graphicUnit,
                  const Eigen::Vector2f& position,
-                 EntityTeam::Team teamId)
+                 UnitTeam::Team teamId)
 {
   EntityManager& entityManager = GameWorld::Instance().entityManager();
   const size_t entityId = entityManager.createEntityId();
-  entityManager.registerDamageModule(new EntityDamage(entityId, 100));
-  entityManager.registerPositionModule(new EntityPosition(entityId, position));
-  entityManager.registerMovementModule(new EntityMovement(entityId, 2));
-  entityManager.registerGraphicHolderModule(new EntityGraphicHolder(entityId, graphicEntity));
-  entityManager.registerStateMachineModule(new EntityStateMachine(entityId));
-  entityManager.registerTeamModule(new EntityTeam(entityId, teamId));
-  entityManager.registerWeaponModule(new EntityWeapon(entityId, 5, 10.f, 2000));
+  entityManager.registerDamageModule(new UnitDamage(entityId, 100));
+  entityManager.registerPositionModule(new UnitPosition(entityId, position));
+  entityManager.registerMovementModule(new UnitMovement(entityId, 2));
+  entityManager.registerGraphicHolderModule(new UnitGraphicHolder(entityId, graphicUnit));
+  entityManager.registerStateMachineModule(new UnitStateMachine(entityId));
+  entityManager.registerTeamModule(new UnitTeam(entityId, teamId));
+  entityManager.registerWeaponModule(new UnitWeapon(entityId, 5, 10.f, 2000));
   return entityId;
 }
 
 
 size_t
-createUnitTank(GraphicEntity *graphicEntity,
+createUnitTank(GraphicUnit *graphicUnit,
                  const Eigen::Vector2f& position,
-                 EntityTeam::Team teamId)
+                 UnitTeam::Team teamId)
 {
   EntityManager& entityManager = GameWorld::Instance().entityManager();
   const size_t entityId = entityManager.createEntityId();
-  entityManager.registerDamageModule(new EntityDamage(entityId, 200));
-  entityManager.registerPositionModule(new EntityPosition(entityId, position));
-  entityManager.registerMovementModule(new EntityMovement(entityId, 0.5f));
-  entityManager.registerGraphicHolderModule(new EntityGraphicHolder(entityId, graphicEntity));
-  entityManager.registerStateMachineModule(new EntityStateMachine(entityId));
-  entityManager.registerTeamModule(new EntityTeam(entityId, teamId));
-  entityManager.registerWeaponModule(new EntityWeapon(entityId, 30, 5.f, 2000));
+  entityManager.registerDamageModule(new UnitDamage(entityId, 200));
+  entityManager.registerPositionModule(new UnitPosition(entityId, position));
+  entityManager.registerMovementModule(new UnitMovement(entityId, 0.5f));
+  entityManager.registerGraphicHolderModule(new UnitGraphicHolder(entityId, graphicUnit));
+  entityManager.registerStateMachineModule(new UnitStateMachine(entityId));
+  entityManager.registerTeamModule(new UnitTeam(entityId, teamId));
+  entityManager.registerWeaponModule(new UnitWeapon(entityId, 30, 5.f, 2000));
   return entityId;
 }
 
@@ -92,7 +92,7 @@ createUnitTank(GraphicEntity *graphicEntity,
 size_t
 createUnitDoor(graphic::GraphicDoor* graphicDoor,
                const Eigen::Vector2f& position,
-               EntityTeam::Team teamId)
+               UnitTeam::Team teamId)
 {
   EntityManager& entityManager = GameWorld::Instance().entityManager();
   const size_t entityId = entityManager.createEntityId();

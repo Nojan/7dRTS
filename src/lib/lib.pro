@@ -10,6 +10,25 @@ QMAKE_CXXFLAGS += -std=c++11
 INCLUDEPATH += ../../external
 PRECOMPILED_HEADER = pch.h
 
+UNIT_SOURCES = \
+    unit/unitdamage.cpp \
+    unit/unitgraphicholder.cpp \
+    unit/unitmovement.cpp \
+    unit/unitposition.cpp \
+    unit/unitstatemachine.cpp \
+    unit/unitteam.cpp \
+    unit/unitweapon.cpp \
+    unit/graphicunit.cpp
+UNIT_HEADERS = \
+    unit/unitdamage.h \
+    unit/unitgraphicholder.h \
+    unit/unitmovement.h \
+    unit/unitposition.h \
+    unit/unitstatemachine.h \
+    unit/unitteam.h \
+    unit/unitweapon.h \
+    unit/graphicunit.h
+
 SOURCES += ballisticprojectilemanager.cpp \
            gameview.cpp \
            graphicentity.cpp \
@@ -35,6 +54,7 @@ SOURCES += ballisticprojectilemanager.cpp \
            graphicdoor.cpp \
            unitcontroller.cpp \
            maptypes.cpp
+SOURCES += $$UNIT_SOURCES
 
 
 HEADERS  += pch.h\
@@ -66,4 +86,4 @@ HEADERS  += pch.h\
             graphicdoor.h \
             unitcontroller.h \
             maptypes.h
-
+HEADERS += $$UNIT_HEADERS
