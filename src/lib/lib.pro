@@ -7,7 +7,7 @@ QT += core gui multimedia
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 QMAKE_CXXFLAGS += -std=c++11
-INCLUDEPATH += ../../external
+INCLUDEPATH += ../../external/eigen3
 PRECOMPILED_HEADER = pch.h
 
 UNIT_SOURCES = \

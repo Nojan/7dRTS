@@ -8,7 +8,7 @@ LIBS += ../../lib/lib7dRTS.a
 TARGETDEPS += ../../lib/lib7dRTS.a
 
 QMAKE_CXXFLAGS += -std=c++11
-INCLUDEPATH += ../../external \
+INCLUDEPATH += ../../external/eigen3 \
                ../lib
 
 SOURCES = main.cpp
