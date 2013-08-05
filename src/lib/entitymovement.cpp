@@ -20,7 +20,8 @@ namespace core
 
 
 MovementTarget::MovementTarget(const Eigen::Vector2f& start,
-                               const Eigen::Vector2f& target)
+                               const Eigen::Vector2f& target,
+                               float speed)
   :  _splinePath(Eigen::VectorXf(0, 1), Eigen::Matrix2Xf(2, 0))
 {
   PathFinder<PathFindingMap> pf;
@@ -30,18 +31,28 @@ MovementTarget::MovementTarget(const Eigen::Vector2f& start,
 
   if(res.size() > 0)
   {
-    Eigen::VectorXf knots(res.size() + 1 + 1);
+    // knots size is point numbre + order + 1
+    int nrKnots = res.size() + 1 + 1;
+    Eigen::VectorXf knots(nrKnots);
     Eigen::Matrix2Xf ctls(2, res.size());
-    for(int i = 0; i < knots.rows(); ++i)
+
+    knots(0) = knots(1) = 0.;
+    for(int i = 2; i < nrKnots - 1; ++i)
     {
-      knots(i) = i - 1.f;
+      float dist = (pixelCenter(res[i - 1]).cast<float>() -
+                    pixelCenter(res[i - 2]).cast<float>()).norm();
+      knots(i) = knots(i - 1) + dist/speed;
     }
+    knots(nrKnots - 1) = knots(nrKnots - 2);
+
     for(int i = 0; i < ctls.cols(); ++i)
     {
       ctls.col(i) = pixelTopLeft(res[i]).cast<float>();
     }
+
     _splinePath = Eigen::Spline<float, 2, 1>(knots, ctls);
-    _duration = knots.rows() - 3.f;
+    _duration = knots(nrKnots - 1);
+
     _state = Ordered;
   }
   else
@@ -90,16 +101,25 @@ EntityMovement::EntityMovement(std::size_t entityId, float speedMax)   // speedM
   _target = NULL;
 }
 
+
 EntityMovement::~EntityMovement()
 {
   if(_target)
     delete _target;
 }
 
+
 Eigen::Vector2f EntityMovement::position() const
 {
   return _position;
 }
+
+
+float EntityMovement::maxSpeed() const
+{
+  return _speedMax;
+}
+
 
 void EntityMovement::setTarget(MovementTarget *target)
 {
@@ -114,6 +134,7 @@ void EntityMovement::setTarget(MovementTarget *target)
     _target->setState(MovementTarget::InProgress);
   }
 }
+
 
 void EntityMovement::update(float deltas)
 {

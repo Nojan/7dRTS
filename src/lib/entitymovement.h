@@ -26,7 +26,8 @@ public:
     Abort
   };
 public:
-  MovementTarget(const Eigen::Vector2f& start, const Eigen::Vector2f& target);
+  MovementTarget(const Eigen::Vector2f& start, const Eigen::Vector2f& target,
+                 float speed);
 
   Eigen::Vector2f position(float t) const;
   float duration() const;
@@ -48,6 +49,8 @@ public:
   virtual ~EntityMovement();
 
   Eigen::Vector2f position() const;
+  float maxSpeed() const;
+
   void setTarget(MovementTarget * target);
 
   void update(float deltas);

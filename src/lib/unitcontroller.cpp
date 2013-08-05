@@ -27,11 +27,11 @@ void UnitController::selectedTarget(const Eigen::Vector2i& target)
   EntityManager& em = GameWorld::Instance().entityManager();
   for(auto id: _selectedUnit)
   {
-    if(em.movementModule(id))
+    EntityMovement* emm = em.movementModule(id);
+    if(emm)
     {
-      em.movementModule(id)->setTarget(
-            new MovementTarget(em.positionModule(id)->position(),
-                               target.cast<float>()));
+      emm->setTarget(new MovementTarget(em.positionModule(id)->position(),
+                                        target.cast<float>(), emm->maxSpeed()));
     }
   }
 }
