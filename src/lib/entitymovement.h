@@ -31,6 +31,7 @@ public:
 
   Eigen::Vector2f position(float t) const;
   float duration() const;
+  const std::vector<TilePos> path() const;
 
   State state() const;
   void setState(State state);

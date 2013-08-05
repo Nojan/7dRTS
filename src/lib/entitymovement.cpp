@@ -25,29 +25,30 @@ MovementTarget::MovementTarget(const Eigen::Vector2f& start,
   :  _splinePath(Eigen::VectorXf(0, 1), Eigen::Matrix2Xf(2, 0))
 {
   PathFinder<PathFindingMap> pf;
+
   TilePos tileStart = tileFromPixel(start.cast<int>());
   TilePos tileTarget = tileFromPixel(target.cast<int>());
-  std::vector<TilePos> res = pf.find(gameworld().pathFindingMap(), tileStart, tileTarget);
+  _path = pf.find(gameworld().pathFindingMap(), tileStart, tileTarget);
 
-  if(res.size() > 0)
+  if(_path.size() > 0)
   {
     // knots size is point numbre + order + 1
-    int nrKnots = res.size() + 1 + 1;
+    int nrKnots = _path.size() + 1 + 1;
     Eigen::VectorXf knots(nrKnots);
-    Eigen::Matrix2Xf ctls(2, res.size());
+    Eigen::Matrix2Xf ctls(2, _path.size());
 
     knots(0) = knots(1) = 0.;
     for(int i = 2; i < nrKnots - 1; ++i)
     {
-      float dist = (pixelCenter(res[i - 1]).cast<float>() -
-                    pixelCenter(res[i - 2]).cast<float>()).norm();
+      float dist = (pixelCenter(_path[i - 1]).cast<float>() -
+                    pixelCenter(_path[i - 2]).cast<float>()).norm();
       knots(i) = knots(i - 1) + dist/speed;
     }
     knots(nrKnots - 1) = knots(nrKnots - 2);
 
     for(int i = 0; i < ctls.cols(); ++i)
     {
-      ctls.col(i) = pixelTopLeft(res[i]).cast<float>();
+      ctls.col(i) = pixelTopLeft(_path[i]).cast<float>();
     }
 
     _splinePath = Eigen::Spline<float, 2, 1>(knots, ctls);
@@ -71,6 +72,12 @@ Eigen::Vector2f MovementTarget::position(float t) const
 float MovementTarget::duration() const
 {
   return _duration;
+}
+
+
+const std::vector<TilePos> MovementTarget::path() const
+{
+  return _path;
 }
 
 
@@ -145,9 +152,12 @@ void EntityMovement::update(float deltas)
     {
       _time = _target->duration();
       _target->setState(MovementTarget::Done);
+      _position = pixelTopLeft(_target->path().back()).cast<float>();
     }
-
-    _position = _target->position(_time);
+    else
+    {
+      _position = _target->position(_time);
+    }
   }
 }
 
