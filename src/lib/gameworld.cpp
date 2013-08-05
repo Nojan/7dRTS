@@ -14,16 +14,42 @@ const int framestep = 1000 / 33;
 namespace core
 {
 
+GameWorld* GameWorld::_instance = nullptr;
+
+
+GameWorld::GameWorld()
+  :  QObject(0)
+{
+  // GameWorld should be unique
+  // we can also throw instead of assert
+  assert(_instance == nullptr);
+  _instance = this;
+
+  _graphicsScene.setItemIndexMethod(QGraphicsScene::NoIndex);
+
+  QObject::connect(&_gameplayTimer, SIGNAL(timeout()), this, SLOT(runWorld()));
+  switchPause();
+}
+
+
+GameWorld::~GameWorld()
+{
+  assert(_instance == this);
+  _instance = nullptr;
+}
+
+
 GameWorld& GameWorld::Instance()
 {
-    static GameWorld instance;
-    return instance;
+  return *_instance;
 }
+
 
 BallisticProjectileManager &GameWorld::ballisticProjectileManager()
 {
   return _ballisticProjectileManager;
 }
+
 
 EntityManager &GameWorld::entityManager()
 {
@@ -37,19 +63,11 @@ UnitController& GameWorld::unitController()
 }
 
 
-GameWorld::GameWorld() :
-  QObject(0)
-{
-  _graphicsScene.setItemIndexMethod(QGraphicsScene::NoIndex);
-
-  QObject::connect(&_gameplayTimer, SIGNAL(timeout()), this, SLOT(runWorld()));
-  switchPause();
-}
-
 QGraphicsScene *GameWorld::scene()
 {
   return &_graphicsScene;
 }
+
 
 void GameWorld::runWorld()
 {

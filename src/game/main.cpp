@@ -17,6 +17,7 @@
 int main(int argc, char *argv[])
 {
   QApplication a(argc, argv);
+  core::GameWorld world;
 
   // test map
   core::GeneralMap map(core::GeneralMap::fromGimpImage(core::HardCodedImage::test));

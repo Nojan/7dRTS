@@ -19,19 +19,23 @@ class GameWorld : public QObject
 public:
   static GameWorld& Instance();
 
+public:
+  GameWorld();
+  ~GameWorld();
+
   BallisticProjectileManager& ballisticProjectileManager();
   EntityManager& entityManager();
   UnitController& unitController();
   QGraphicsScene * scene();
 
 signals:
-  
+
 public slots:
   void runWorld();
   void switchPause();
 
 private:
-  GameWorld();
+  static GameWorld* _instance;
 
 private:
   BallisticProjectileManager _ballisticProjectileManager;
@@ -40,6 +44,13 @@ private:
   QGraphicsScene _graphicsScene;
   QTimer _gameplayTimer;
 };
+
+
+inline GameWorld& gameworld()
+{
+  return GameWorld::Instance();
+}
+
 
 } // core
 
