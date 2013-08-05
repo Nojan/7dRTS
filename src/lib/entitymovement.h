@@ -5,8 +5,12 @@
 // pch
 #include "pch.h"
 
+// Eigen
+#include <unsupported/Splines>
+
 // core
 #include "entitymodule.h"
+#include "maptypes.h"
 
 
 namespace core
@@ -19,17 +23,21 @@ public:
     Ordered,
     InProgress,
     Done,
-    Abort,
+    Abort
   };
 public:
-  MovementTarget(const Eigen::Vector2f& position);
+  MovementTarget(const Eigen::Vector2f& start, const Eigen::Vector2f& target);
 
-  Eigen::Vector2f position() const;
+  Eigen::Vector2f position(float t) const;
+  float duration() const;
+
   State state() const;
   void setState(State state);
 
 private:
-  Eigen::Vector2f _position;
+  std::vector<TilePos> _path;
+  Eigen::Spline<float, 2, 1> _splinePath;
+  float _duration;
   State _state;
 };
 
@@ -48,6 +56,7 @@ private:
   Eigen::Vector2f _position;
   Eigen::Vector2f _orientation;
   int _speedMax;    // nb pixels par seconde
+  float _time;
   MovementTarget * _target;
 };
 

@@ -7,21 +7,61 @@
 #include "entitymanager.h"
 #include "entityposition.h"
 #include "gameworld.h"
+#include "pathfinder.h"
 
 
 namespace core
 {
 
-MovementTarget::MovementTarget(const Eigen::Vector2f& position)
-  : _position(position)
-  , _state(State::Ordered)
+
+/*
+ *									MovementTarget
+ */
+
+
+MovementTarget::MovementTarget(const Eigen::Vector2f& start,
+                               const Eigen::Vector2f& target)
+  :  _splinePath(Eigen::VectorXf(0, 1), Eigen::Matrix2Xf(2, 0))
 {
+  PathFinder<PathFindingMap> pf;
+  TilePos tileStart = tileFromPixel(start.cast<int>());
+  TilePos tileTarget = tileFromPixel(target.cast<int>());
+  std::vector<TilePos> res = pf.find(gameworld().pathFindingMap(), tileStart, tileTarget);
+
+  if(res.size() > 0)
+  {
+    Eigen::VectorXf knots(res.size() + 1 + 1);
+    Eigen::Matrix2Xf ctls(2, res.size());
+    for(int i = 0; i < knots.rows(); ++i)
+    {
+      knots(i) = i - 1.f;
+    }
+    for(int i = 0; i < ctls.cols(); ++i)
+    {
+      ctls.col(i) = pixelTopLeft(res[i]).cast<float>();
+    }
+    _splinePath = Eigen::Spline<float, 2, 1>(knots, ctls);
+    _duration = knots.rows() - 3.f;
+    _state = Ordered;
+  }
+  else
+  {
+    _state = Abort;
+  }
 }
 
-Eigen::Vector2f MovementTarget::position() const
+
+Eigen::Vector2f MovementTarget::position(float t) const
 {
-  return _position;
+  return _splinePath(t);
 }
+
+
+float MovementTarget::duration() const
+{
+  return _duration;
+}
+
 
 MovementTarget::State MovementTarget::state() const
 {
@@ -32,6 +72,12 @@ void MovementTarget::setState(MovementTarget::State state)
 {
   _state = state;
 }
+
+
+/*
+ *													EntityMovement
+ */
+
 
 EntityMovement::EntityMovement(std::size_t entityId, float speedMax)   // speedMax correspond au nombre de cases par secondes
   :EntityModule(entityId)
@@ -64,23 +110,23 @@ void EntityMovement::setTarget(MovementTarget *target)
   if(NULL != _target)
   {
     assert(MovementTarget::Ordered == _target->state());
+    _time = 0.f;
     _target->setState(MovementTarget::InProgress);
   }
 }
 
 void EntityMovement::update(float deltas)
 {
-  assert(fabs(_orientation.dot(_orientation)-1.f)<0.1f); //check _orientation.IsNormalized(0.1f) ...
   if(_target && MovementTarget::InProgress == _target->state())
   {
-    const Eigen::Vector2f targetDir = _target->position() - _position;
-    _orientation = targetDir.normalized();
-    _position += _orientation*_speedMax*deltas;
-    if(targetDir.dot(_target->position() - _position) <= 0)
+    _time += deltas;
+    if(_time >= _target->duration())
     {
-      _position = _target->position();
+      _time = _target->duration();
       _target->setState(MovementTarget::Done);
     }
+
+    _position = _target->position(_time);
   }
 }
 

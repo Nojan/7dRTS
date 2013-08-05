@@ -5,6 +5,7 @@
 // core
 #include "gameworld.h"
 #include "entitymovement.h"
+#include "entityposition.h"
 
 namespace core
 {
@@ -29,7 +30,8 @@ void UnitController::selectedTarget(const Eigen::Vector2i& target)
     if(em.movementModule(id))
     {
       em.movementModule(id)->setTarget(
-            new MovementTarget(target.cast<float>()));
+            new MovementTarget(em.positionModule(id)->position(),
+                               target.cast<float>()));
     }
   }
 }
