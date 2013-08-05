@@ -29,6 +29,9 @@ struct SymetricWallEqual
 };
 
 
+PathFindingMap::PathFindingMap()
+{ }
+
 
 PathFindingMap::PathFindingMap(const GeneralMap* map)
   : _nodes(map->tileGrid().width(), map->tileGrid().height())

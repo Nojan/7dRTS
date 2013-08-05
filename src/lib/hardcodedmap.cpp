@@ -8,7 +8,13 @@
 namespace core
 {
 
-GimpImage HardCodedImage::test = GimpImage{
+const std::unordered_map<std::string, const GimpImage*> HardCodedImage::ImageFromName =
+{
+  {"test", &HardCodedImage::test}
+};
+
+
+const GimpImage HardCodedImage::test = GimpImage{
   64, 64, 3,
   "\0\200\0\0\200\0\0\200\0\0\200\0\0\200\0\0\200\0\0\200\0\0\200\0\0\200\0"
   "\0\200\0\0\200\0\0\200\0\0\200\0\0\200\0\0\200\0\0\200\0\0\200\0\0\200\0"

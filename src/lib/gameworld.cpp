@@ -7,6 +7,7 @@
 #include "entitymanagerhelper.h"
 #include "entitymovement.h"
 #include "graphicentity.h"
+#include "hardcodedmap.h"
 #include "soundengine.h"
 
 const int framestep = 1000 / 33;
@@ -36,6 +37,25 @@ GameWorld::~GameWorld()
 {
   assert(_instance == this);
   _instance = nullptr;
+}
+
+
+void GameWorld::loadMap(const std::string& mapName)
+{
+  _gMap = GeneralMap::fromGimpImage(*(HardCodedImage::ImageFromName.at(mapName)));
+  _pfMap = PathFindingMap(&_gMap);
+}
+
+
+const GeneralMap& GameWorld::generalMap() const
+{
+  return _gMap;
+}
+
+
+const PathFindingMap& GameWorld::pathFindingMap() const
+{
+  return _pfMap;
 }
 
 

@@ -19,8 +19,11 @@ int main(int argc, char *argv[])
   QApplication a(argc, argv);
   core::GameWorld world;
 
-  // test map
-  core::GeneralMap map(core::GeneralMap::fromGimpImage(core::HardCodedImage::test));
+  // load world map
+  world.loadMap("test");
+  const core::GeneralMap& map = world.generalMap();
+
+  // build graphic map item
   graphic::GraphicMap* gMap = new graphic::GraphicMap(&map);
 
   QGraphicsScene * scene = core::GameWorld::Instance().scene();

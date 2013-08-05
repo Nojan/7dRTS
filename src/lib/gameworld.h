@@ -8,6 +8,8 @@
 // core
 #include "ballisticprojectilemanager.h"
 #include "entitymanager.h"
+#include "generalmap.h"
+#include "pathfindingmap.h"
 #include "unitcontroller.h"
 
 namespace core
@@ -22,6 +24,10 @@ public:
 public:
   GameWorld();
   ~GameWorld();
+
+  void loadMap(const std::string& mapName);
+  const GeneralMap& generalMap() const;
+  const PathFindingMap& pathFindingMap() const;
 
   BallisticProjectileManager& ballisticProjectileManager();
   EntityManager& entityManager();
@@ -41,6 +47,8 @@ private:
   BallisticProjectileManager _ballisticProjectileManager;
   EntityManager _entityManager;
   UnitController _unitController;
+  GeneralMap _gMap;
+  PathFindingMap _pfMap;
   QGraphicsScene _graphicsScene;
   QTimer _gameplayTimer;
 };

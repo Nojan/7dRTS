@@ -25,6 +25,7 @@ public:
   static GeneralMap fromGimpImage(const GimpImage& gImage);
 
 public:
+  GeneralMap();
   // since we must copy tile, obstacles and doors we can pass it by value.
   // this allow compiler optimization and it's less verbose.
   GeneralMap(Grid<Tile> tiles, std::vector<Obstacle> obstacles,

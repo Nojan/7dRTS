@@ -228,6 +228,10 @@ GeneralMap GeneralMap::fromGimpImage(const GimpImage& gImage)
 }
 
 
+GeneralMap::GeneralMap()
+{ }
+
+
 GeneralMap::GeneralMap(Grid<Tile> tiles, std::vector<Obstacle> obstacles,
   std::vector<Room> rooms, Rampart rampart)
   : _tileGrid(std::move(tiles))

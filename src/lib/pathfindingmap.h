@@ -19,6 +19,7 @@ public:
   typedef TilePos index_t;
 
 public:
+  PathFindingMap();
   PathFindingMap(const GeneralMap* map);
 
   std::size_t width() const;
