@@ -37,19 +37,19 @@ MovementTarget::MovementTarget(const Eigen::Vector2f& start,
     Eigen::VectorXf knots(nrKnots);
     Eigen::Matrix2Xf ctls(2, _path.size());
 
-    knots(0) = knots(1) = 0.;
-    for(int i = 2; i < nrKnots - 1; ++i)
-    {
-      float dist = (pixelCenter(_path[i - 1]).cast<float>() -
-                    pixelCenter(_path[i - 2]).cast<float>()).norm();
-      knots(i) = knots(i - 1) + dist/speed;
-    }
-    knots(nrKnots - 1) = knots(nrKnots - 2);
-
-    for(int i = 0; i < ctls.cols(); ++i)
+    ctls.col(0) = start;
+    for(int i = 1; i < ctls.cols(); ++i)
     {
       ctls.col(i) = pixelTopLeft(_path[i]).cast<float>();
     }
+
+    knots(0) = knots(1) = 0.;
+    for(int i = 2; i < nrKnots - 1; ++i)
+    {
+      float dist = (ctls.col(i - 1) - ctls.col(i - 2)).norm();
+      knots(i) = knots(i - 1) + dist/speed;
+    }
+    knots(nrKnots - 1) = knots(nrKnots - 2);
 
     _splinePath = Eigen::Spline<float, 2, 1>(knots, ctls);
     _duration = knots(nrKnots - 1);
