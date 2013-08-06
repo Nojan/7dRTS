@@ -64,8 +64,6 @@ EntityMovement::EntityMovement(std::size_t entityId, float speedMax)   // speedM
 
 EntityMovement::~EntityMovement()
 {
-  if(_target)
-    delete _target;
 }
 
 
@@ -81,20 +79,17 @@ float EntityMovement::maxSpeed() const
 }
 
 
-bool EntityMovement::setTarget(MovementTarget* target)
+bool EntityMovement::setTarget(std::unique_ptr<MovementTarget> target)
 {
-  if(NULL != _target)
-    delete _target;
-
-  _target = target;
-  if(NULL != _target)
+  _target = std::move(target);
+  if(_target)
   {
     assert(MovementTarget::Ordered == _target->state());
 
     // find the path
     PathFinder<PathFindingMap> pf;
     TilePos tileStart = tileFromPixel(_position.cast<int>());
-    TilePos tileTarget = tileFromPixel(target->target().cast<int>());
+    TilePos tileTarget = tileFromPixel(_target->target().cast<int>());
     _path = pf.find(gameworld().pathFindingMap(), tileStart, tileTarget);
 
     if(!_path.empty())
@@ -115,15 +110,13 @@ bool EntityMovement::setTarget(MovementTarget* target)
 }
 
 
-void EntityMovement::setTarget(MovementTarget* target, std::vector<TilePos> path)
+void EntityMovement::setTarget(std::unique_ptr<MovementTarget> target,
+                               std::vector<TilePos> path)
 {
   assert(!path.empty());
 
-  if(NULL != _target)
-    delete _target;
-
-  _target = target;
-  if(NULL != _target)
+  _target = std::move(target);
+  if(_target)
   {
     _path = std::move(path);
     computeSplinePath();

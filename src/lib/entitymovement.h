@@ -5,6 +5,9 @@
 // pch
 #include "pch.h"
 
+// std
+#include <memory>
+
 // Eigen
 #include <unsupported/Splines>
 
@@ -48,8 +51,8 @@ public:
   Eigen::Vector2f position() const;
   float maxSpeed() const;
 
-  bool setTarget(MovementTarget* target);
-  void setTarget(MovementTarget* target, std::vector<TilePos> path);
+  bool setTarget(std::unique_ptr<MovementTarget> target);
+  void setTarget(std::unique_ptr<MovementTarget> target, std::vector<TilePos> path);
 
   void update(float deltas);
 
@@ -60,7 +63,7 @@ private:
   Eigen::Vector2f _position;
   Eigen::Vector2f _orientation;
   int _speedMax;    // nb pixels par seconde
-  MovementTarget* _target;
+  std::unique_ptr<MovementTarget> _target;
 
   std::vector<TilePos> _path;
   Eigen::Spline<float, 2, 1> _splinePath;

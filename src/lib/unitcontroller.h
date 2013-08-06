@@ -15,7 +15,7 @@ class UnitController
 {
 public:
   void selectedUnit(std::vector<std::size_t> su);
-  const std::vector<std::size_t> selectedUnit() const;
+  const std::vector<std::size_t>& selectedUnit() const;
 
   void selectedTarget(const Eigen::Vector2i& target);
 

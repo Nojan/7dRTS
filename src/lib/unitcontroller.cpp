@@ -16,7 +16,7 @@ void UnitController::selectedUnit(std::vector<std::size_t> su)
 }
 
 
-const std::vector<std::size_t> UnitController::selectedUnit() const
+const std::vector<std::size_t>& UnitController::selectedUnit() const
 {
   return _selectedUnit;
 }
@@ -30,7 +30,8 @@ void UnitController::selectedTarget(const Eigen::Vector2i& target)
     EntityMovement* emm = em.movementModule(id);
     if(emm)
     {
-      emm->setTarget(new MovementTarget(target.cast<float>()));
+      std::unique_ptr<MovementTarget> mt(new MovementTarget(target.cast<float>()));
+      emm->setTarget(std::move(mt));
     }
   }
 }
