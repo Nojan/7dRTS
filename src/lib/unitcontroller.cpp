@@ -30,8 +30,7 @@ void UnitController::selectedTarget(const Eigen::Vector2i& target)
     EntityMovement* emm = em.movementModule(id);
     if(emm)
     {
-      emm->setTarget(new MovementTarget(em.positionModule(id)->position(),
-                                        target.cast<float>(), emm->maxSpeed()));
+      emm->setTarget(new MovementTarget(target.cast<float>()));
     }
   }
 }

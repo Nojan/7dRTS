@@ -19,65 +19,16 @@ namespace core
  */
 
 
-MovementTarget::MovementTarget(const Eigen::Vector2f& start,
-                               const Eigen::Vector2f& target,
-                               float speed)
-  :  _splinePath(Eigen::VectorXf(0, 1), Eigen::Matrix2Xf(2, 0))
+MovementTarget::MovementTarget(const Eigen::Vector2f& target)
+  : _target(target)
+  , _state(Ordered)
 {
-  PathFinder<PathFindingMap> pf;
-
-  TilePos tileStart = tileFromPixel(start.cast<int>());
-  TilePos tileTarget = tileFromPixel(target.cast<int>());
-  _path = pf.find(gameworld().pathFindingMap(), tileStart, tileTarget);
-
-  if(_path.size() > 0)
-  {
-    // knots size is point numbre + order + 1
-    int nrKnots = _path.size() + 1 + 1;
-    Eigen::VectorXf knots(nrKnots);
-    Eigen::Matrix2Xf ctls(2, _path.size());
-
-    ctls.col(0) = start;
-    for(int i = 1; i < ctls.cols(); ++i)
-    {
-      ctls.col(i) = pixelTopLeft(_path[i]).cast<float>();
-    }
-
-    knots(0) = knots(1) = 0.;
-    for(int i = 2; i < nrKnots - 1; ++i)
-    {
-      float dist = (ctls.col(i - 1) - ctls.col(i - 2)).norm();
-      knots(i) = knots(i - 1) + dist/speed;
-    }
-    knots(nrKnots - 1) = knots(nrKnots - 2);
-
-    _splinePath = Eigen::Spline<float, 2, 1>(knots, ctls);
-    _duration = knots(nrKnots - 1);
-
-    _state = Ordered;
-  }
-  else
-  {
-    _state = Abort;
-  }
 }
 
 
-Eigen::Vector2f MovementTarget::position(float t) const
+const Eigen::Vector2f& MovementTarget::target() const
 {
-  return _splinePath(t);
-}
-
-
-float MovementTarget::duration() const
-{
-  return _duration;
-}
-
-
-const std::vector<TilePos> MovementTarget::path() const
-{
-  return _path;
+  return _target;
 }
 
 
@@ -85,6 +36,7 @@ MovementTarget::State MovementTarget::state() const
 {
   return _state;
 }
+
 
 void MovementTarget::setState(MovementTarget::State state)
 {
@@ -98,7 +50,8 @@ void MovementTarget::setState(MovementTarget::State state)
 
 
 EntityMovement::EntityMovement(std::size_t entityId, float speedMax)   // speedMax correspond au nombre de cases par secondes
-  :EntityModule(entityId)
+  : EntityModule(entityId)
+  , _splinePath(Eigen::VectorXf(0, 1), Eigen::Matrix2Xf(2, 0))
 {
   EntityManager& entityManager = GameWorld::Instance().entityManager();
   assert(entityManager.positionModule(entityId));
@@ -128,7 +81,7 @@ float EntityMovement::maxSpeed() const
 }
 
 
-void EntityMovement::setTarget(MovementTarget *target)
+bool EntityMovement::setTarget(MovementTarget* target)
 {
   if(NULL != _target)
     delete _target;
@@ -137,7 +90,44 @@ void EntityMovement::setTarget(MovementTarget *target)
   if(NULL != _target)
   {
     assert(MovementTarget::Ordered == _target->state());
-    _time = 0.f;
+
+    // find the path
+    PathFinder<PathFindingMap> pf;
+    TilePos tileStart = tileFromPixel(_position.cast<int>());
+    TilePos tileTarget = tileFromPixel(target->target().cast<int>());
+    _path = pf.find(gameworld().pathFindingMap(), tileStart, tileTarget);
+
+    if(!_path.empty())
+    {
+      computeSplinePath();
+      _pathTime = 0.f;
+      _target->setState(MovementTarget::InProgress);
+      return true;
+    }
+    else
+    {
+      // path is impossible to follow
+      _target->setState(MovementTarget::Abort);
+      return false;
+    }
+  }
+  return false;
+}
+
+
+void EntityMovement::setTarget(MovementTarget* target, std::vector<TilePos> path)
+{
+  assert(!path.empty());
+
+  if(NULL != _target)
+    delete _target;
+
+  _target = target;
+  if(NULL != _target)
+  {
+    _path = std::move(path);
+    computeSplinePath();
+    _pathTime = 0.f;
     _target->setState(MovementTarget::InProgress);
   }
 }
@@ -147,18 +137,46 @@ void EntityMovement::update(float deltas)
 {
   if(_target && MovementTarget::InProgress == _target->state())
   {
-    _time += deltas;
-    if(_time >= _target->duration())
+    _pathTime += deltas;
+    if(_pathTime >= _pathDuration)
     {
-      _time = _target->duration();
+      _pathTime = _pathDuration;
+      _position = pixelTopLeft(_path.back()).cast<float>();
       _target->setState(MovementTarget::Done);
-      _position = pixelTopLeft(_target->path().back()).cast<float>();
     }
     else
     {
-      _position = _target->position(_time);
+      _position = _splinePath(_pathTime);
     }
   }
+}
+
+
+void EntityMovement::computeSplinePath()
+{
+  assert(!_path.empty());
+
+  // knots size is point numbre + order + 1
+  int nrKnots = _path.size() + 1 + 1;
+  Eigen::VectorXf knots(nrKnots);
+  Eigen::Matrix2Xf ctls(2, _path.size());
+
+  ctls.col(0) = _position;
+  for(int i = 1; i < ctls.cols(); ++i)
+  {
+    ctls.col(i) = pixelTopLeft(_path[i]).cast<float>();
+  }
+
+  knots(0) = knots(1) = 0.;
+  for(int i = 2; i < nrKnots - 1; ++i)
+  {
+    float dist = (ctls.col(i - 1) - ctls.col(i - 2)).norm();
+    knots(i) = knots(i - 1) + dist/_speedMax;
+  }
+  knots(nrKnots - 1) = knots(nrKnots - 2);
+
+  _splinePath = Eigen::Spline<float, 2, 1>(knots, ctls);
+  _pathDuration = knots(nrKnots - 1);
 }
 
 } // core
