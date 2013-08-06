@@ -54,7 +54,7 @@ void EntityStateMachine::move(const Eigen::Vector2f& target)
   EntityManager& entityManager = gameworld().entityManager();
   std::unique_ptr<MovementTarget> mt(new MovementTarget(target.cast<float>()));
   entityManager.movementModule(entityId())->setTarget(std::move(mt));
-  _state == State::Move;
+  _state = State::Move;
   ///@todo find a mechanism to cleanup the old state
 }
 
