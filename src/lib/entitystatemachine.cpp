@@ -58,11 +58,13 @@ void EntityStateMachine::update()
     EntityMovement* movement = entityManager.movementModule(entityId());
     if(!weapon->canShootAt(positionEnemy->position()))
     {
-        movement->setTarget(new MovementTarget(positionEnemy->position()));
+
+      movement->setTarget(std::unique_ptr<MovementTarget>(
+                            new MovementTarget(positionEnemy->position())));
     }
     else
     {
-        movement->setTarget(NULL);
+      movement->setTarget(std::unique_ptr<MovementTarget>());
     }
     weapon->setTarget(new WeaponTarget(enemy));
   }
