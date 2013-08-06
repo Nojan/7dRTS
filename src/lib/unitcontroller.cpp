@@ -4,8 +4,7 @@
 // include
 // core
 #include "gameworld.h"
-#include "entitymovement.h"
-#include "entityposition.h"
+#include "entitystatemachine.h"
 
 namespace core
 {
@@ -27,12 +26,7 @@ void UnitController::selectedTarget(const Eigen::Vector2i& target)
   EntityManager& em = GameWorld::Instance().entityManager();
   for(auto id: _selectedUnit)
   {
-    EntityMovement* emm = em.movementModule(id);
-    if(emm)
-    {
-      std::unique_ptr<MovementTarget> mt(new MovementTarget(target.cast<float>()));
-      emm->setTarget(std::move(mt));
-    }
+    em.stateMachineModule(id)->move(target.cast<float>());
   }
 }
 

@@ -126,6 +126,13 @@ void EntityMovement::setTarget(std::unique_ptr<MovementTarget> target,
 }
 
 
+MovementTarget::State EntityMovement::movementTargetState() const
+{
+  assert(_target);
+  return _target->state();
+}
+
+
 void EntityMovement::update(float deltas)
 {
   if(_target && MovementTarget::InProgress == _target->state())

@@ -54,6 +54,8 @@ public:
   bool setTarget(std::unique_ptr<MovementTarget> target);
   void setTarget(std::unique_ptr<MovementTarget> target, std::vector<TilePos> path);
 
+  MovementTarget::State movementTargetState() const;
+
   void update(float deltas);
 
 protected:

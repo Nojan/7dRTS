@@ -14,9 +14,17 @@ namespace core
 class EntityStateMachine : public EntityModule
 {
 public:
+  enum class State {Idle, Move, MoveToFight, Fight};
+
+public:
   EntityStateMachine(std::size_t entityId);
 
+  void move(const Eigen::Vector2f& target);
+
   void update();
+
+private:
+  State _state;
 };
 
 } // core

@@ -43,38 +43,62 @@ size_t closestEnemyId(std::size_t id)
 
 
 EntityStateMachine::EntityStateMachine(std::size_t entityId)
-  :EntityModule(entityId)
+  : EntityModule(entityId)
+  , _state(State::Idle)
 {
 }
 
+
+void EntityStateMachine::move(const Eigen::Vector2f& target)
+{
+  EntityManager& entityManager = gameworld().entityManager();
+  std::unique_ptr<MovementTarget> mt(new MovementTarget(target.cast<float>()));
+  entityManager.movementModule(entityId())->setTarget(std::move(mt));
+  _state == State::Move;
+  ///@todo find a mechanism to cleanup the old state
+}
+
+
 void EntityStateMachine::update()
 {
-  const size_t enemy = closestEnemyId(entityId());
-  EntityManager& entityManager = GameWorld::Instance().entityManager();
-  if(static_cast<size_t>(-1) != enemy)
+  if(_state == State::Idle)
   {
-    const EntityPosition* positionEnemy = entityManager.positionModule(enemy);
-    EntityWeapon* weapon = entityManager.weaponModule(entityId());
-    EntityMovement* movement = entityManager.movementModule(entityId());
-    if(!weapon->canShootAt(positionEnemy->position()))
-    {
+    // we look for enemy
+    const size_t enemy = closestEnemyId(entityId());
+    EntityManager& entityManager = gameworld().entityManager();
 
-      movement->setTarget(std::unique_ptr<MovementTarget>(
-                            new MovementTarget(positionEnemy->position())));
-    }
-    else
+    // enemy found
+    if(static_cast<size_t>(-1) != enemy)
     {
-      movement->setTarget(std::unique_ptr<MovementTarget>());
+      const EntityPosition* positionEnemy = entityManager.positionModule(enemy);
+      EntityWeapon* weapon = entityManager.weaponModule(entityId());
+      EntityMovement* movement = entityManager.movementModule(entityId());
+      if(!weapon->canShootAt(positionEnemy->position()))
+      {
+        movement->setTarget(std::unique_ptr<MovementTarget>(
+                              new MovementTarget(positionEnemy->position())));
+        _state = State::MoveToFight;
+      }
+      weapon->setTarget(new WeaponTarget(enemy));
     }
-    weapon->setTarget(new WeaponTarget(enemy));
   }
-  else
+  else if(_state == State::Move)
   {
-    // A chier, gestion de la mort a faire par module
+    EntityManager& entityManager = gameworld().entityManager();
     EntityMovement* movement = entityManager.movementModule(entityId());
-    movement->setTarget(NULL);
-    EntityWeapon* weapon = entityManager.weaponModule(entityId());
-    weapon->setTarget(NULL);
+    if(movement->movementTargetState() == MovementTarget::Done ||
+       movement->movementTargetState() == MovementTarget::Abort)
+    {
+      _state = State::Idle;
+    }
+  }
+  else if(_state == State::MoveToFight)
+  {
+    ///@todo follow targeted enemy
+  }
+  else if(_state == State::Fight)
+  {
+    ///@todo don't know...
   }
 }
 
