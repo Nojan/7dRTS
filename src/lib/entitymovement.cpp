@@ -57,10 +57,11 @@ EntityMovement::EntityMovement(std::size_t entityId, float speedMax)   // speedM
   assert(entityManager.positionModule(entityId));
   _position = entityManager.positionModule(entityId)->position();
   _tilePosition = entityManager.positionModule(entityId)->tilePosition();
-   _tileCandidate = _tilePosition;
+  _tileCandidate = _tilePosition;
   _orientation = Eigen::Vector2f(1.f,0.f);
   _speedMax = speedMax * core::tileSizef;
-  _target = NULL;
+  _target = std::unique_ptr<MovementTarget>(new MovementTarget(_position));
+  _target->setState(MovementTarget::Done);
 }
 
 
