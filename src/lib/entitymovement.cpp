@@ -57,6 +57,7 @@ EntityMovement::EntityMovement(std::size_t entityId, float speedMax)   // speedM
   assert(entityManager.positionModule(entityId));
   _position = entityManager.positionModule(entityId)->position();
   _tilePosition = entityManager.positionModule(entityId)->tilePosition();
+   _tileCandidate = _tilePosition;
   _orientation = Eigen::Vector2f(1.f,0.f);
   _speedMax = speedMax * core::tileSizef;
   _target = NULL;
@@ -96,10 +97,19 @@ bool EntityMovement::setTarget(std::unique_ptr<MovementTarget> target)
     // find the path
     PathFinder<PathFindingMap> pf;
     TilePos tileTarget = tileFromPixel(_target->target().cast<int>());
-    _path = pf.find(gameworld().pathFindingMap(), _tilePosition, tileTarget);
+
+    // we launch the path finding from tile candidate
+    _path = pf.find(gameworld().pathFindingMap(), _tileCandidate, tileTarget);
 
     if(!_path.empty())
     {
+      // if the path doesn't contain tile position
+      // we add it in first position to avoid teleportation
+      // of the unit in tile candidate
+      if(_path[1] != _tilePosition)
+      {
+        _path.insert(_path.begin(), _tilePosition);
+      }
       computeSplinePath();
       _pathTime = 0.f;
       _target->setState(MovementTarget::InProgress);
@@ -121,6 +131,8 @@ void EntityMovement::setTarget(std::unique_ptr<MovementTarget> target,
 {
   assert(!path.empty());
 
+  /// @todo maybe modify the path to avoid some path issue when the unit
+  /// is moving.
   _target = std::move(target);
   if(_target)
   {
@@ -148,22 +160,19 @@ void EntityMovement::update(float deltas)
     {
       _pathTime = _pathDuration;
       _tilePosition = _path.back();
+      _tileCandidate = _tilePosition;
       _position = pixelTopLeft(_tilePosition).cast<float>();
       _target->setState(MovementTarget::Done);
     }
     else
     {
-      for(std::size_t i = 1; i < _path.size(); ++i)
+      if(_pathTime >= _splinePath.knots()(_curKnot))
       {
-        // we try to find the targeted knot
-        // when founded we know that our
-        // position is knok - 1
-        if(_pathTime <= _splinePath.knots()(i))
-        {
-          _tilePosition = _path[i - 1];
-          break;
-        }
+        _tilePosition = _path[_curKnot - 1];
+        _tileCandidate = _path[_curKnot];
+        ++_curKnot;
       }
+
       _position = _splinePath(_pathTime);
     }
   }
@@ -200,6 +209,7 @@ void EntityMovement::computeSplinePath()
 
   _splinePath = Eigen::Spline<float, 2, 1>(knots, ctls);
   _pathDuration = knots(nrKnots - 1);
+   _curKnot = 1;
 }
 
 } // core

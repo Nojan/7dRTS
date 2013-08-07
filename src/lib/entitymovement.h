@@ -67,6 +67,7 @@ private:
   Eigen::Vector2f _position;
   Eigen::Vector2f _orientation;
   TilePos _tilePosition;
+  TilePos _tileCandidate;
   int _speedMax;    // nb pixels par seconde
   std::unique_ptr<MovementTarget> _target;
 
@@ -74,6 +75,7 @@ private:
   Eigen::Spline<float, 2, 1> _splinePath;
   float _pathTime;
   float _pathDuration;
+  int _curKnot;
 };
 
 } // core
