@@ -14,14 +14,23 @@ namespace core
 EntityPosition::EntityPosition(std::size_t entityId, const Eigen::Vector2f& position)
   : EntityModule(entityId)
   , _position(position)
+  , _tilePosition(tileFromPixel(position.cast<int>()))
   , _size(core::tileSizef)
 {
 }
 
-Eigen::Vector2f EntityPosition::position() const
+
+const Eigen::Vector2f& EntityPosition::position() const
 {
   return _position;
 }
+
+
+const TilePos& EntityPosition::tilePosition() const
+{
+  return _tilePosition;
+}
+
 
 void EntityPosition::setPosition(const Eigen::Vector2f& position)
 {

@@ -7,6 +7,7 @@
 
 // core
 #include "entitymodule.h"
+#include "maptypes.h"
 
 namespace core
 {
@@ -16,7 +17,9 @@ class EntityPosition : public EntityModule
 public:
   EntityPosition(std::size_t entityId, const Eigen::Vector2f& position);
 
-  Eigen::Vector2f position() const;
+  const Eigen::Vector2f& position() const;
+  const TilePos& tilePosition() const;
+
   void setPosition(const Eigen::Vector2f& position);
 
   float size() const;
@@ -25,6 +28,7 @@ public:
 
 private:
   Eigen::Vector2f _position;
+  TilePos _tilePosition;
   float _size;
 };
 

@@ -56,6 +56,7 @@ EntityMovement::EntityMovement(std::size_t entityId, float speedMax)   // speedM
   EntityManager& entityManager = GameWorld::Instance().entityManager();
   assert(entityManager.positionModule(entityId));
   _position = entityManager.positionModule(entityId)->position();
+  _tilePosition = entityManager.positionModule(entityId)->tilePosition();
   _orientation = Eigen::Vector2f(1.f,0.f);
   _speedMax = speedMax * core::tileSizef;
   _target = NULL;
@@ -67,9 +68,15 @@ EntityMovement::~EntityMovement()
 }
 
 
-Eigen::Vector2f EntityMovement::position() const
+const Eigen::Vector2f& EntityMovement::position() const
 {
   return _position;
+}
+
+
+const TilePos& EntityMovement::tilePosition() const
+{
+  return _tilePosition;
 }
 
 

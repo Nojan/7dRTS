@@ -48,7 +48,9 @@ public:
   EntityMovement(std::size_t entityId, float speedMax);
   virtual ~EntityMovement();
 
-  Eigen::Vector2f position() const;
+  const Eigen::Vector2f& position() const;
+  const TilePos& tilePosition() const;
+
   float maxSpeed() const;
 
   bool setTarget(std::unique_ptr<MovementTarget> target);
@@ -64,6 +66,7 @@ protected:
 private:
   Eigen::Vector2f _position;
   Eigen::Vector2f _orientation;
+  TilePos _tilePosition;
   int _speedMax;    // nb pixels par seconde
   std::unique_ptr<MovementTarget> _target;
 
