@@ -3,12 +3,17 @@
 
 // include
 // core
+#include "constantes.h"
 #include "entitymanager.h"
 #include "entitymanagerhelper.h"
 #include "entitymovement.h"
+#include "graphicdoor.h"
 #include "graphicentity.h"
 #include "hardcodedmap.h"
 #include "soundengine.h"
+
+// graphic
+#include "graphicmap.h"
 
 const int framestep = 1000 / 33;
 
@@ -19,7 +24,8 @@ GameWorld* GameWorld::_instance = nullptr;
 
 
 GameWorld::GameWorld()
-  :  QObject(0)
+  : QObject(0)
+  , _graphicMap(nullptr)
 {
   // GameWorld should be unique
   // we can also throw instead of assert
@@ -42,8 +48,36 @@ GameWorld::~GameWorld()
 
 void GameWorld::loadMap(const std::string& mapName)
 {
+  /// @todo cleanup entities
+  _graphicsScene.clear();
+
   _gMap = GeneralMap::fromGimpImage(*(HardCodedImage::ImageFromName.at(mapName)));
   _pfMap = PathFindingMap(&_gMap);
+
+  _graphicsScene.setSceneRect(0, 0,
+                              _gMap.tileGrid().height()*core::tileSize,
+                              _gMap.tileGrid().width()*core::tileSize);
+
+  // create the GraphicMap
+  // _graphicMap belong to _graphicsScene so we don't need to delete it
+  _graphicMap = new graphic::GraphicMap(&_gMap);
+  _graphicsScene.addItem(_graphicMap);
+
+  // create all door entity
+  for(const core::Room& r: _gMap.rooms())
+  {
+    for(const core::Door& d: r.doors)
+    {
+      double length = d.edges().size()*core::tileSize;
+      const core::EdgePos& edge = d.edges().front();
+      double angle = edge.from.x == edge.to.x ? 0. : 90.;
+      Eigen::Vector2f pos = d.center().cast<float>();
+      graphic::GraphicDoor* doorGraphic = new graphic::GraphicDoor(length, angle);
+      const core::EntityTeam::Team teamId(core::EntityTeam::TeamA);
+      EntityManagerHelpers::createUnitDoor(doorGraphic, pos, teamId);
+      _graphicsScene.addItem(doorGraphic);
+    }
+  }
 }
 
 

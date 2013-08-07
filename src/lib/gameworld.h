@@ -12,6 +12,13 @@
 #include "pathfindingmap.h"
 #include "unitcontroller.h"
 
+// forward declaration
+namespace graphic
+{
+class GraphicMap;
+}
+
+
 namespace core
 {
 
@@ -49,6 +56,8 @@ private:
   UnitController _unitController;
   GeneralMap _gMap;
   PathFindingMap _pfMap;
+
+  graphic::GraphicMap* _graphicMap;
   QGraphicsScene _graphicsScene;
   QTimer _gameplayTimer;
 };
