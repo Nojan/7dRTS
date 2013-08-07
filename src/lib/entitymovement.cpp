@@ -95,9 +95,8 @@ bool EntityMovement::setTarget(std::unique_ptr<MovementTarget> target)
 
     // find the path
     PathFinder<PathFindingMap> pf;
-    TilePos tileStart = tileFromPixel(_position.cast<int>());
     TilePos tileTarget = tileFromPixel(_target->target().cast<int>());
-    _path = pf.find(gameworld().pathFindingMap(), tileStart, tileTarget);
+    _path = pf.find(gameworld().pathFindingMap(), _tilePosition, tileTarget);
 
     if(!_path.empty())
     {
@@ -148,11 +147,23 @@ void EntityMovement::update(float deltas)
     if(_pathTime >= _pathDuration)
     {
       _pathTime = _pathDuration;
-      _position = pixelTopLeft(_path.back()).cast<float>();
+      _tilePosition = _path.back();
+      _position = pixelTopLeft(_tilePosition).cast<float>();
       _target->setState(MovementTarget::Done);
     }
     else
     {
+      for(std::size_t i = 1; i < _path.size(); ++i)
+      {
+        // we try to find the targeted knot
+        // when founded we know that our
+        // position is knok - 1
+        if(_pathTime <= _splinePath.knots()(i))
+        {
+          _tilePosition = _path[i - 1];
+          break;
+        }
+      }
       _position = _splinePath(_pathTime);
     }
   }
@@ -174,6 +185,11 @@ void EntityMovement::computeSplinePath()
     ctls.col(i) = pixelTopLeft(_path[i]).cast<float>();
   }
 
+  // knots(0) => no tile
+  // knots(1) => ctls.col(0)
+  // ...
+  // knots(last - 1) => ctls.col(last)
+  // knots(last) => no tile
   knots(0) = knots(1) = 0.;
   for(int i = 2; i < nrKnots - 1; ++i)
   {

@@ -49,6 +49,7 @@ void EntityPosition::update()
   if(movementModule)
   {
     _position = movementModule->position();
+    _tilePosition = movementModule->tilePosition();
   }
 }
 
