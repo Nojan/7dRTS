@@ -47,6 +47,11 @@ struct TilePos
     return x == p.x && y == p.y;
   }
 
+  bool operator!=(const TilePos& p) const
+  {
+    return !(*this == p);
+  }
+
   bool operator<(const TilePos& p) const
   {
     return x < p.x || ((x == p.x) && (y < p.y));
@@ -183,6 +188,13 @@ public:
         (std::hash<core::TilePos>()(s.to) << 1);
   }
 };
+
+
+inline ostream& operator<<(ostream& stream, const core::TilePos& pos)
+{
+  stream << pos.x << " " << pos.y;
+  return stream;
+}
 
 } // std
 
