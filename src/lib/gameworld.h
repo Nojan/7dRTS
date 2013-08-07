@@ -8,6 +8,7 @@
 // core
 #include "ballisticprojectilemanager.h"
 #include "entitymanager.h"
+#include "entitymap.h"
 #include "generalmap.h"
 #include "pathfindingmap.h"
 #include "unitcontroller.h"
@@ -39,6 +40,7 @@ public:
   BallisticProjectileManager& ballisticProjectileManager();
   EntityManager& entityManager();
   UnitController& unitController();
+  EntityMap& entityMap();
   QGraphicsScene * scene();
 
 signals:
@@ -56,6 +58,7 @@ private:
   UnitController _unitController;
   GeneralMap _gMap;
   PathFindingMap _pfMap;
+  EntityMap _eMap;
 
   graphic::GraphicMap* _graphicMap;
   QGraphicsScene _graphicsScene;

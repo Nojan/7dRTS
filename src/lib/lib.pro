@@ -53,7 +53,8 @@ SOURCES += ballisticprojectilemanager.cpp \
            soundengine.cpp \
            graphicdoor.cpp \
            unitcontroller.cpp \
-           maptypes.cpp
+           maptypes.cpp \
+           entitymap.cpp
 SOURCES += $$UNIT_SOURCES
 
 
@@ -85,5 +86,6 @@ HEADERS  += pch.h\
             soundengine.h \
             graphicdoor.h \
             unitcontroller.h \
-            maptypes.h
+            maptypes.h \
+            entitymap.h
 HEADERS += $$UNIT_HEADERS

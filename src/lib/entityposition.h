@@ -16,6 +16,7 @@ class EntityPosition : public EntityModule
 {
 public:
   EntityPosition(std::size_t entityId, const Eigen::Vector2f& position);
+  virtual ~EntityPosition() {}
 
   const Eigen::Vector2f& position() const;
   const TilePos& tilePosition() const;
@@ -24,9 +25,9 @@ public:
 
   float size() const;
 
-  void update();
+  virtual void update();
 
-private:
+protected:
   Eigen::Vector2f _position;
   TilePos _tilePosition;
   float _size;

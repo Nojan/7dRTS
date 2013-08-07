@@ -117,6 +117,12 @@ UnitController& GameWorld::unitController()
 }
 
 
+EntityMap& GameWorld::entityMap()
+{
+  return _eMap;
+}
+
+
 QGraphicsScene *GameWorld::scene()
 {
   return &_graphicsScene;

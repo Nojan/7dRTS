@@ -14,6 +14,8 @@ public:
   UnitPosition(std::size_t eId, const Eigen::Vector2f& pos)
     : EntityPosition(eId, pos)
   { }
+
+  virtual void update();
 };
 
 } // core
