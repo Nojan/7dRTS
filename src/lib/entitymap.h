@@ -14,7 +14,7 @@ namespace core
 class EntityMap
 {
 public:
-  const std::size_t not_found = std::numeric_limits<std::size_t>::max();
+  static const std::size_t not_found = std::numeric_limits<std::size_t>::max();
 
 public:
   void registerUnit(const TilePos& pos, std::size_t unitId);
