@@ -9,26 +9,6 @@
 namespace core
 {
 
-struct SymetricWallHash
-{
-  std::size_t operator()(const EdgePos& wall) const
-  {
-    return std::hash<TilePos>()(wall.to) &
-        std::hash<TilePos>()(wall.from);
-  }
-};
-
-
-struct SymetricWallEqual
-{
-  bool operator()(const EdgePos& w1, const EdgePos& w2) const
-  {
-    return (w1.to == w2.to && w1.from == w2.from) ||
-        (w1.from == w2.to && w1.to == w2.from);
-  }
-};
-
-
 PathFindingMap::PathFindingMap()
 { }
 
@@ -36,7 +16,8 @@ PathFindingMap::PathFindingMap()
 PathFindingMap::PathFindingMap(const GeneralMap* map)
   : _nodes(map->tileGrid().width(), map->tileGrid().height())
 {
-  std::unordered_set<EdgePos, SymetricWallHash, SymetricWallEqual> wallSet;
+  std::unordered_set<EdgePos, std::symetric_hash<core::EdgePos>,
+      std::symetric_equal<core::EdgePos>> wallSet;
 
   for(const EdgePos& w: map->rampart().walls)
   {

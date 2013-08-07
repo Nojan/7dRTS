@@ -169,7 +169,6 @@ namespace std
 template<>
 struct hash<core::TilePos>
 {
-public:
   std::size_t operator()(const core::TilePos& s) const
   {
     return std::hash<core::tile_index>()(s.x);
@@ -181,11 +180,40 @@ public:
 template<>
 struct hash<core::EdgePos>
 {
-public:
   std::size_t operator()(const core::EdgePos& s) const
   {
     return std::hash<core::TilePos>()(s.from);
         (std::hash<core::TilePos>()(s.to) << 1);
+  }
+};
+
+
+template<typename T>
+struct symetric_hash;
+
+
+template<>
+struct symetric_hash<core::EdgePos>
+{
+  std::size_t operator()(const core::EdgePos& s) const
+  {
+    return std::hash<core::TilePos>()(s.to) &
+        std::hash<core::TilePos>()(s.from);
+  }
+};
+
+
+template<typename T>
+struct symetric_equal;
+
+
+template<>
+struct symetric_equal<core::EdgePos>
+{
+  bool operator()(const core::EdgePos& w1, const core::EdgePos& w2) const
+  {
+    return (w1.to == w2.to && w1.from == w2.from) ||
+        (w1.from == w2.to && w1.to == w2.from);
   }
 };
 
