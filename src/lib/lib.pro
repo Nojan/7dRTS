@@ -29,6 +29,13 @@ UNIT_HEADERS = \
     unit/unitweapon.h \
     unit/graphicunit.h
 
+DOOR_SOURCES = \
+    door/doorposition.cpp \
+    door/graphicdoor.cpp
+DOOR_HEADERS = \
+    door/doorposition.h \
+    door/graphicdoor.h
+
 SOURCES += ballisticprojectilemanager.cpp \
            gameview.cpp \
            graphicentity.cpp \
@@ -51,11 +58,11 @@ SOURCES += ballisticprojectilemanager.cpp \
            graphicpathfindingmap.cpp \
            memorytracker.cpp \
            soundengine.cpp \
-           graphicdoor.cpp \
            unitcontroller.cpp \
            maptypes.cpp \
            entitymap.cpp
 SOURCES += $$UNIT_SOURCES
+SOURCES += $$DOOR_SOURCES
 
 
 HEADERS  += pch.h\
@@ -84,8 +91,8 @@ HEADERS  += pch.h\
             graphicpathfindingmap.h \
             memorytracker.h \
             soundengine.h \
-            graphicdoor.h \
             unitcontroller.h \
             maptypes.h \
             entitymap.h
 HEADERS += $$UNIT_HEADERS
+HEADERS += $$DOOR_HEADERS

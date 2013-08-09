@@ -3,6 +3,7 @@
 
 // include
 // core
+#include "door/doorposition.h"
 #include "unit/unitdamage.h"
 #include "unit/unitgraphicholder.h"
 #include "unit/unitmovement.h"
@@ -13,7 +14,7 @@
 #include "gameworld.h"
 
 // graphic
-#include "graphicdoor.h"
+#include "door/graphicdoor.h"
 
 
 namespace EntityManagerHelpers
@@ -93,13 +94,14 @@ createUnitTank(graphic::GraphicUnit *graphicUnit,
 std::size_t
 createUnitDoor(graphic::GraphicDoor* graphicDoor,
                const Eigen::Vector2f& position,
+               const std::vector<core::EdgePos>& edges,
                UnitTeam::Team teamId)
 {
   EntityManager& entityManager = GameWorld::Instance().entityManager();
   const size_t entityId = entityManager.createEntityId();
 
   entityManager.registerDamageModule(new EntityDamage(entityId, 100));
-  entityManager.registerPositionModule(new EntityPosition(entityId, position));
+  entityManager.registerPositionModule(new DoorPosition(entityId, position, edges));
   entityManager.registerGraphicHolderModule(new EntityGraphicHolder(entityId, graphicDoor));
   entityManager.registerTeamModule(new EntityTeam(entityId, teamId));
   return entityId;

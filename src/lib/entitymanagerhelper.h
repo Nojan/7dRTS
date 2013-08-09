@@ -11,6 +11,10 @@
 
 
 // forward declaration
+namespace core
+{
+class EdgePos;
+}
 namespace graphic
 {
 class GraphicDoor;
@@ -38,6 +42,7 @@ std::size_t createUnitTank(graphic::GraphicUnit* graphicUnit,
 
 std::size_t createUnitDoor(graphic::GraphicDoor* graphicDoor,
                            const Eigen::Vector2f& position,
+                           const std::vector<core::EdgePos>& edges,
                            core::EntityTeam::Team teamId);
 
 } // EntityManagerHelpers

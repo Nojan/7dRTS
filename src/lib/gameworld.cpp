@@ -7,7 +7,7 @@
 #include "entitymanager.h"
 #include "entitymanagerhelper.h"
 #include "entitymovement.h"
-#include "graphicdoor.h"
+#include "door/graphicdoor.h"
 #include "graphicentity.h"
 #include "hardcodedmap.h"
 #include "soundengine.h"
@@ -74,7 +74,7 @@ void GameWorld::loadMap(const std::string& mapName)
       Eigen::Vector2f pos = d.center().cast<float>();
       graphic::GraphicDoor* doorGraphic = new graphic::GraphicDoor(length, angle);
       const core::EntityTeam::Team teamId(core::EntityTeam::TeamA);
-      EntityManagerHelpers::createUnitDoor(doorGraphic, pos, teamId);
+      EntityManagerHelpers::createUnitDoor(doorGraphic, pos, d.edges(), teamId);
       _graphicsScene.addItem(doorGraphic);
     }
   }
