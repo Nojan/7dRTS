@@ -180,7 +180,10 @@ void EntityMovement::update(float deltas)
         processDoor();
       }
 
-      _position = _splinePath(_pathTime);
+      if(_target->state() != MovementTarget::Abort)
+      {
+        _position = _splinePath(_pathTime);
+      }
     }
   }
 }
@@ -230,7 +233,13 @@ void EntityMovement::processDoor()
         dynamic_cast<DoorStateMachine*>(eMan.stateMachineModule(_crossedDoor));
     assert(dsm);
 
-    dsm->lock();
+    EntityTeam::Team doorTeam = eMan.teamModule(_crossedDoor)->team();
+    EntityTeam::Team entityTeam = eMan.teamModule(entityId())->team();
+    if(doorTeam == entityTeam)
+    {
+      dsm->lock();
+    }
+
     _crossedDoor = std::numeric_limits<std::size_t>::max();
   }
 
@@ -244,8 +253,18 @@ void EntityMovement::processDoor()
         dynamic_cast<DoorStateMachine*>(eMan.stateMachineModule(doorId));
     assert(dsm);
 
-    dsm->open();
-    _crossedDoor = doorId;
+    EntityTeam::Team doorTeam = eMan.teamModule(doorId)->team();
+    EntityTeam::Team entityTeam = eMan.teamModule(entityId())->team();
+    if(doorTeam == entityTeam)
+    {
+      dsm->open();
+      _crossedDoor = doorId;
+    }
+    else
+    {
+      _target->setState(MovementTarget::Abort);
+      _tileCandidate = _tilePosition;
+    }
   }
 }
 
