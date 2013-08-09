@@ -62,6 +62,7 @@ public:
 
 protected:
   void computeSplinePath();
+  void processDoor();
 
 private:
   Eigen::Vector2f _position;
@@ -76,6 +77,7 @@ private:
   float _pathTime;
   float _pathDuration;
   int _curKnot;
+  std::size_t _crossedDoor;
 };
 
 } // core

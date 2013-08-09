@@ -4,6 +4,7 @@
 // include
 // core
 #include "constantes.h"
+#include "door/doorstatemachine.h"
 #include "entitymanager.h"
 #include "entityposition.h"
 #include "gameworld.h"
@@ -52,6 +53,7 @@ void MovementTarget::setState(MovementTarget::State state)
 EntityMovement::EntityMovement(std::size_t entityId, float speedMax)   // speedMax correspond au nombre de cases par secondes
   : EntityModule(entityId)
   , _splinePath(Eigen::VectorXf(0, 1), Eigen::Matrix2Xf(2, 0))
+  , _crossedDoor(std::numeric_limits<std::size_t>::max())
 {
   EntityManager& entityManager = GameWorld::Instance().entityManager();
   assert(entityManager.positionModule(entityId));
@@ -164,6 +166,8 @@ void EntityMovement::update(float deltas)
       _tileCandidate = _tilePosition;
       _position = pixelTopLeft(_tilePosition).cast<float>();
       _target->setState(MovementTarget::Done);
+
+      processDoor();
     }
     else
     {
@@ -172,6 +176,8 @@ void EntityMovement::update(float deltas)
         _tilePosition = _path[_curKnot - 1];
         _tileCandidate = _path[_curKnot];
         ++_curKnot;
+
+        processDoor();
       }
 
       _position = _splinePath(_pathTime);
@@ -211,6 +217,36 @@ void EntityMovement::computeSplinePath()
   _splinePath = Eigen::Spline<float, 2, 1>(knots, ctls);
   _pathDuration = knots(nrKnots - 1);
    _curKnot = 1;
+}
+
+
+void EntityMovement::processDoor()
+{
+  // close door if openned
+  if(_crossedDoor != std::numeric_limits<std::size_t>::max())
+  {
+    EntityManager& eMan = gameworld().entityManager();
+    DoorStateMachine* dsm =
+        dynamic_cast<DoorStateMachine*>(eMan.stateMachineModule(_crossedDoor));
+    assert(dsm);
+
+    dsm->lock();
+    _crossedDoor = std::numeric_limits<std::size_t>::max();
+  }
+
+  // open door if we cross one
+  EntityMap& eMap = gameworld().entityMap();
+  std::size_t doorId;
+  if((doorId = eMap.door({_tilePosition, _tileCandidate})) != EntityMap::not_found)
+  {
+    EntityManager& eMan = gameworld().entityManager();
+    DoorStateMachine* dsm =
+        dynamic_cast<DoorStateMachine*>(eMan.stateMachineModule(doorId));
+    assert(dsm);
+
+    dsm->open();
+    _crossedDoor = doorId;
+  }
 }
 
 } // core

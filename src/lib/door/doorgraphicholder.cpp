@@ -30,12 +30,12 @@ void DoorGraphicHolder::update()
 {
   if(_openning)
   {
-    float open = std::min(_doorGraphics->open() + 0.05f, .8f);
+    float open = std::min(_doorGraphics->open() + 0.1f, .8f);
     _doorGraphics->open(open);
   }
   else
   {
-    float open = std::max(_doorGraphics->open() - 0.05f, 0.f);
+    float open = std::max(_doorGraphics->open() - 0.1f, 0.f);
     _doorGraphics->open(open);
   }
 }

@@ -25,8 +25,8 @@ void DoorStateMachine::open()
 
 void DoorStateMachine::lock()
 {
-  --_openQuery;
   assert(_openQuery > 0);
+  --_openQuery;
 }
 
 

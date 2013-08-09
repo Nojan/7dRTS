@@ -106,10 +106,8 @@ createUnitDoor(graphic::GraphicDoor* graphicDoor,
   entityManager.registerPositionModule(new DoorPosition(entityId, position, edges));
   entityManager.registerGraphicHolderModule(
         new DoorGraphicHolder(entityId, graphicDoor, position));
-  DoorStateMachine* test = new DoorStateMachine(entityId);
-  entityManager.registerStateMachineModule(test);
+  entityManager.registerStateMachineModule(new DoorStateMachine(entityId));
   entityManager.registerTeamModule(new EntityTeam(entityId, teamId));
-  test->open();
   return entityId;
 }
 
