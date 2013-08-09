@@ -30,6 +30,7 @@ float GraphicDoor::open() const
 void GraphicDoor::open(float open)
 {
   _percentOpen = open;
+  update();
 }
 
 

@@ -31,10 +31,14 @@ UNIT_HEADERS = \
 
 DOOR_SOURCES = \
     door/doorposition.cpp \
-    door/graphicdoor.cpp
+    door/graphicdoor.cpp \
+    door/doorstatemachine.cpp \
+    door/doorgraphicholder.cpp
 DOOR_HEADERS = \
     door/doorposition.h \
-    door/graphicdoor.h
+    door/graphicdoor.h \
+    door/doorstatemachine.h \
+    door/doorgraphicholder.h
 
 SOURCES += ballisticprojectilemanager.cpp \
            gameview.cpp \

@@ -4,7 +4,7 @@
 // include
 // core
 #include "entitymodule.h"
-#include "gameworld.h"
+
 
 // forward declaration
 namespace graphic
@@ -25,7 +25,7 @@ public:
   const graphic::GraphicEntity* graphic() const;
 
 
-  void update();
+  virtual void update();
 
 private:
   graphic::GraphicEntity* _entityGraphics;

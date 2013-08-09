@@ -3,7 +3,9 @@
 
 // include
 // core
+#include "door/doorgraphicholder.h"
 #include "door/doorposition.h"
+#include "door/doorstatemachine.h"
 #include "unit/unitdamage.h"
 #include "unit/unitgraphicholder.h"
 #include "unit/unitmovement.h"
@@ -102,8 +104,12 @@ createUnitDoor(graphic::GraphicDoor* graphicDoor,
 
   entityManager.registerDamageModule(new EntityDamage(entityId, 100));
   entityManager.registerPositionModule(new DoorPosition(entityId, position, edges));
-  entityManager.registerGraphicHolderModule(new EntityGraphicHolder(entityId, graphicDoor));
+  entityManager.registerGraphicHolderModule(
+        new DoorGraphicHolder(entityId, graphicDoor, position));
+  DoorStateMachine* test = new DoorStateMachine(entityId);
+  entityManager.registerStateMachineModule(test);
   entityManager.registerTeamModule(new EntityTeam(entityId, teamId));
+  test->open();
   return entityId;
 }
 

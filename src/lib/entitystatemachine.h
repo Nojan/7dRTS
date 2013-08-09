@@ -18,10 +18,11 @@ public:
 
 public:
   EntityStateMachine(std::size_t entityId);
+  virtual ~EntityStateMachine() {}
 
   void move(const Eigen::Vector2f& target);
 
-  void update();
+  virtual void update();
 
 private:
   State _state;
