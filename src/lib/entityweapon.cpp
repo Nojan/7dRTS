@@ -76,4 +76,13 @@ void EntityWeapon::shootAt(const Eigen::Vector2f& position)
   GameWorld::Instance().ballisticProjectileManager().addProjectile(projectile, entityManager.teamModule(entityId()));
 }
 
+void EntityWeapon::processDeadEntity(const std::size_t entityId)
+{
+  if(_target && _target->targetId() == entityId)
+  {
+    delete _target;
+    _target = nullptr;
+  }
+}
+
 } // core

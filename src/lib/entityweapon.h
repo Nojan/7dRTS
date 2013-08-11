@@ -33,6 +33,8 @@ public:
   bool canShootAt(const Eigen::Vector2f& position) const;
   void shootAt(const Eigen::Vector2f& position);
 
+  virtual void processDeadEntity(const std::size_t entityId);
+
 private:
   int _damagePower;
   float _range;

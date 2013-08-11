@@ -14,4 +14,8 @@ std::size_t EntityModule::entityId() const
   return _entityId;
 }
 
+void EntityModule::processDeadEntity(const std::size_t entityId)
+{
+}
+
 } // core

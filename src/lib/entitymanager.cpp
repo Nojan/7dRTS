@@ -87,6 +87,11 @@ void EntityManager::processRemoveEntity()
 {
   foreach(std::size_t entityId, _entityToRemove)
   {
+    foreach(EntityWeapon* weaponModule, _weaponModules)
+    {
+      if(weaponModule)
+        weaponModule->processDeadEntity(entityId);
+    }
     removeEntity(entityId);
   }
   _entityToRemove.clear();
