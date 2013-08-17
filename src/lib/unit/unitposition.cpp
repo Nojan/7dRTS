@@ -8,10 +8,10 @@
 namespace core
 {
 
-void UnitPosition::update()
+void UnitPosition::update(const int deltaMs)
 {
   TilePos oldP = _tilePosition;
-  EntityPosition::update();
+  EntityPosition::update(deltaMs);
   if(oldP != _tilePosition)
   {
     EntityMap& eMap = gameworld().entityMap();

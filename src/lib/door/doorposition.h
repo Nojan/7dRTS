@@ -17,7 +17,7 @@ public:
   DoorPosition(std::size_t entityId, const Eigen::Vector2f& centerPos,
                std::vector<EdgePos> edges);
 
-  void update();
+  virtual void update(const int deltaMs);
 
 private:
   std::vector<EdgePos> _edges;

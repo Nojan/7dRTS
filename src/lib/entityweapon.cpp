@@ -33,7 +33,7 @@ EntityWeapon::EntityWeapon(std::size_t entityId, int damage, float range, int fi
 {
 }
 
-void EntityWeapon::update(int deltaMs)
+void EntityWeapon::update(const int deltaMs)
 {
   if(0 < _fireRateCurrent)
     _fireRateCurrent -= deltaMs;

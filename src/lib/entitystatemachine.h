@@ -22,7 +22,7 @@ public:
 
   void move(const Eigen::Vector2f& target);
 
-  virtual void update();
+  virtual void update(const int deltaMs) override;
 
 private:
   State _state;

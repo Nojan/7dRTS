@@ -32,6 +32,7 @@ createSimpleUnit(graphic::GraphicUnit *graphicUnit,
   const size_t entityId = entityManager.createEntityId();
   entityManager.registerDamageModule(new UnitDamage(entityId, 100));
   entityManager.registerPositionModule(new UnitPosition(entityId, position));
+  assert(entityManager.positionModule(entityId));
   entityManager.registerMovementModule(new UnitMovement(entityId, 1));
   entityManager.registerGraphicHolderModule(new UnitGraphicHolder(entityId, graphicUnit));
   entityManager.registerStateMachineModule(new UnitStateMachine(entityId));

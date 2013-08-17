@@ -26,7 +26,7 @@ class EntityWeapon : public EntityModule
 public:
   EntityWeapon(std::size_t entityId, int damage, float range, int fireRate);
 
-  void update(int deltaMs);
+  virtual void update(const int deltaMs) override;
 
   void setTarget(WeaponTarget * target);
 

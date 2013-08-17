@@ -30,7 +30,7 @@ void DoorStateMachine::lock()
 }
 
 
-void DoorStateMachine::update()
+void DoorStateMachine::update(const int deltaMs)
 {
   EntityManager& entityManager = gameworld().entityManager();
   DoorGraphicHolder* dgh = dynamic_cast<DoorGraphicHolder*>(

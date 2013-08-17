@@ -25,7 +25,7 @@ public:
   const graphic::GraphicEntity* graphic() const;
 
 
-  virtual void update();
+  virtual void update(const int deltaMs) override;
 
 private:
   graphic::GraphicEntity* _entityGraphics;

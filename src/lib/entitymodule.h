@@ -12,8 +12,11 @@ class EntityModule
 {
 public:
   EntityModule(std::size_t entityId);
+  virtual ~EntityModule() {}
 
   std::size_t entityId() const;
+
+  virtual void update(const int deltaMs);
 
   // Each module must reimplement this method if they are storing entityId
   // This way, they will be warn of the removal of such entity.

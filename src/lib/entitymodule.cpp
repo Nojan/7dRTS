@@ -14,6 +14,10 @@ std::size_t EntityModule::entityId() const
   return _entityId;
 }
 
+void EntityModule::update(const int deltaMs)
+{
+}
+
 void EntityModule::processDeadEntity(const std::size_t entityId)
 {
 }

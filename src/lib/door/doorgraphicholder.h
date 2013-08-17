@@ -28,7 +28,7 @@ public:
 
   void openning(bool op);
 
-  virtual void update();
+  virtual void update(const int deltaMs);
 
 private:
   graphic::GraphicDoor* _doorGraphics;

@@ -30,7 +30,7 @@ int EntityDamage::maxHealthPoint() const
   return _maxHealthPoint;
 }
 
-void EntityDamage::update()
+void EntityDamage::update(const int deltaMs)
 {
   if(0 >= _healthPoint )
   {

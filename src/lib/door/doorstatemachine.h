@@ -16,7 +16,7 @@ public:
   void open();
   void lock();
 
-  virtual void update();
+  virtual void update(const int deltaMs);
 
 private:
   bool _open;

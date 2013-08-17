@@ -21,7 +21,7 @@ public:
   int healthPoint() const;
   int maxHealthPoint() const;
 
-  void update();
+  virtual void update(const int deltaMs) override;
 
 private:
   int _healthPoint;

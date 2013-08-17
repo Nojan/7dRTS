@@ -25,7 +25,7 @@ public:
 
   float size() const;
 
-  virtual void update();
+  virtual void update(const int deltaMs) override;
 
 protected:
   Eigen::Vector2f _position;

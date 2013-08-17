@@ -42,7 +42,7 @@ float EntityPosition::size() const
   return _size;
 }
 
-void EntityPosition::update()
+void EntityPosition::update(const int /*deltaMs*/)
 {
   EntityManager& entityManager = GameWorld::Instance().entityManager();
   const EntityMovement* movementModule = entityManager.movementModule(entityId());

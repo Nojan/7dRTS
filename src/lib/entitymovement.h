@@ -58,7 +58,7 @@ public:
 
   MovementTarget::State movementTargetState() const;
 
-  void update(float deltas);
+  virtual void update(const int deltaMs) override;
 
 protected:
   void computeSplinePath();

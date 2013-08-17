@@ -59,7 +59,7 @@ void EntityStateMachine::move(const Eigen::Vector2f& target)
 }
 
 
-void EntityStateMachine::update()
+void EntityStateMachine::update(const int deltaMs)
 {
   if(_state == State::Idle)
   {
@@ -72,6 +72,8 @@ void EntityStateMachine::update()
     {
       const EntityPosition* positionEnemy = entityManager.positionModule(enemy);
       EntityWeapon* weapon = entityManager.weaponModule(entityId());
+      if(NULL == weapon)
+        return; //nothing to do
       EntityMovement* movement = entityManager.movementModule(entityId());
       if(!weapon->canShootAt(positionEnemy->position()))
       {

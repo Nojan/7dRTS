@@ -154,11 +154,12 @@ MovementTarget::State EntityMovement::movementTargetState() const
 }
 
 
-void EntityMovement::update(float deltas)
+void EntityMovement::update(const int deltaMs)
 {
+  const float fdeltaS = static_cast<float>(deltaMs)/1000.f;
   if(_target && MovementTarget::InProgress == _target->state())
   {
-    _pathTime += deltas;
+    _pathTime += fdeltaS;
     if(_pathTime >= _pathDuration)
     {
       _pathTime = _pathDuration;

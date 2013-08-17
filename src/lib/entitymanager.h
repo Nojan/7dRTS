@@ -28,6 +28,18 @@ namespace core
 class EntityManager
 {
 public:
+  enum moduleType
+  {
+    movement,
+    position,
+    graphicHolder,
+    stateMachine,
+    team,
+    weapon,
+    damage,
+    length
+  };
+
   EntityManager();
 
   size_t entityCount() const;
@@ -35,6 +47,9 @@ public:
   void   deferredRemoveEntity(std::size_t entityId);
 
   void processModules(int deltaMs);
+
+  void registerModule(EntityModule* module, moduleType type);
+  EntityModule* module(std::size_t entityId, moduleType type);
 
   void registerDamageModule(EntityDamage* module);
   EntityDamage* damageModule(std::size_t entityId);
@@ -63,13 +78,7 @@ private:
 
 private:
   std::size_t _maxEntity;
-  std::vector<EntityDamage*> _damageModules;
-  std::vector<EntityMovement*> _movementModules;
-  std::vector<EntityPosition*> _positionModules;
-  std::vector<EntityGraphicHolder*> _graphicHolderModules;
-  std::vector<EntityStateMachine*> _stateMachineModules;
-  std::vector<EntityTeam*> _teamModules;
-  std::vector<EntityWeapon*> _weaponModules;
+  std::vector< std::vector<EntityModule*> > _modules;
 
   std::vector<std::size_t> _entityToRemove;
 };

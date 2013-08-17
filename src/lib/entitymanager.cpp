@@ -18,6 +18,7 @@ namespace core
 EntityManager::EntityManager()
   : _maxEntity()
 {
+  _modules.resize(moduleType::length);
 }
 
 size_t EntityManager::entityCount() const
@@ -29,13 +30,12 @@ size_t EntityManager::createEntityId()
 {
   const size_t entityId = _maxEntity;
   ++_maxEntity;
-  _damageModules.push_back(NULL);
-  _movementModules.push_back(NULL);
-  _positionModules.push_back(NULL);
-  _graphicHolderModules.push_back(NULL);
-  _stateMachineModules.push_back(NULL);
-  _teamModules.push_back(NULL);
-  _weaponModules.push_back(NULL);
+
+  for(std::vector<EntityModule*>& moduleVector : _modules)
+  {
+    moduleVector.push_back(NULL);
+    assert(moduleVector.size() == _maxEntity);
+  }
   return entityId;
 }
 
@@ -46,52 +46,30 @@ void EntityManager::deferredRemoveEntity(std::size_t entityId)
 
 void EntityManager::removeEntity(std::size_t entityId)
 {
-  if(_damageModules[entityId])
+  for(std::vector<EntityModule*>& module : _modules)
   {
-    delete _damageModules[entityId];
-    _damageModules[entityId] = NULL;
-  }
-  if(_movementModules[entityId])
-  {
-    delete _movementModules[entityId];
-    _movementModules[entityId] = NULL;
-  }
-  if(_positionModules[entityId])
-  {
-    delete _positionModules[entityId];
-    _positionModules[entityId] = NULL;
-  }
-  if(_graphicHolderModules[entityId])
-  {
-    delete _graphicHolderModules[entityId];
-    _graphicHolderModules[entityId] = NULL;
-  }
-  if(_stateMachineModules[entityId])
-  {
-    delete _stateMachineModules[entityId];
-    _stateMachineModules[entityId] = NULL;
-  }
-  if(_teamModules[entityId])
-  {
-    delete _teamModules[entityId];
-    _teamModules[entityId] = NULL;
-  }
-  if(_weaponModules[entityId])
-  {
-    delete _weaponModules[entityId];
-    _weaponModules[entityId] = NULL;
+    if(module[entityId])
+    {
+      delete module[entityId];
+      module[entityId] = NULL;
+    }
   }
 }
 
 void EntityManager::processRemoveEntity()
 {
-  foreach(std::size_t entityId, _entityToRemove)
+  for(std::size_t entityId : _entityToRemove)
   {
-    foreach(EntityWeapon* weaponModule, _weaponModules)
+    // warn module of death of entityId
+    for(std::vector<EntityModule*>& module : _modules)
     {
-      if(weaponModule)
-        weaponModule->processDeadEntity(entityId);
+      for(EntityModule* moduleInstance : module)
+      {
+        if(moduleInstance)
+          moduleInstance->processDeadEntity(entityId);
+      }
     }
+    // remove the dead entity
     removeEntity(entityId);
   }
   _entityToRemove.clear();
@@ -99,123 +77,103 @@ void EntityManager::processRemoveEntity()
 
 void EntityManager::processModules(int deltaMs)
 {
-  const float fdeltaS = static_cast<float>(deltaMs)/1000.f;
-  foreach(EntityMovement* movementModule, _movementModules)
+  for(std::vector<EntityModule*>& moduleVector : _modules)
   {
-    if(movementModule)
-      movementModule->update(fdeltaS);
+    for(EntityModule* module : moduleVector)
+    {
+      if(module)
+        module->update(deltaMs);
+    }
   }
-  foreach(EntityPosition* positionModule, _positionModules)
-  {
-    if(positionModule)
-      positionModule->update();
-  }
-  foreach(EntityGraphicHolder* graphicModule, _graphicHolderModules)
-  {
-    if(graphicModule)
-      graphicModule->update();
-  }
-  foreach(EntityStateMachine* stateMachineModule, _stateMachineModules)
-  {
-    if(stateMachineModule)
-      stateMachineModule->update();
-  }
-  foreach(EntityWeapon* weaponModule, _weaponModules)
-  {
-    if(weaponModule)
-      weaponModule->update(deltaMs);
-  }
-  foreach(EntityDamage* damageModule, _damageModules)
-  {
-    if(damageModule)
-      damageModule->update();
-  }
-
   processRemoveEntity();
+}
+
+void EntityManager::registerModule(EntityModule *module, EntityManager::moduleType type)
+{
+  assert(NULL != module);
+  const std::size_t entityId = module->entityId();
+  assert(entityId < _maxEntity);
+  std::vector<EntityModule*>& moduleVector = _modules[type];
+  assert(_maxEntity == moduleVector.size());
+  assert(NULL == moduleVector[entityId]);
+  moduleVector[entityId] = module;
+}
+
+EntityModule *EntityManager::module(std::size_t entityId, moduleType type)
+{
+  assert(entityId < _maxEntity);
+  std::vector<EntityModule*>& moduleVector = _modules[type];
+  return moduleVector[entityId];
 }
 
 void EntityManager::registerDamageModule(EntityDamage *module)
 {
-  assert(NULL == _damageModules[module->entityId()]);
-  _damageModules[module->entityId()] = module;
+  registerModule(module, EntityManager::damage);
 }
 
 EntityDamage *EntityManager::damageModule(std::size_t entityId)
 {
-  assert(entityId < _maxEntity);
-  return _damageModules[entityId];
+  return static_cast<EntityDamage*> (module(entityId, EntityManager::damage));
 }
 
 void EntityManager::registerMovementModule(EntityMovement *module)
 {
-  assert(NULL == _movementModules[module->entityId()]);
-  _movementModules[module->entityId()] = module;
+  registerModule(module, EntityManager::movement);
 }
 
 EntityMovement *EntityManager::movementModule(std::size_t entityId)
 {
-  assert(entityId < _maxEntity);
-  return _movementModules[entityId];
+  return static_cast<EntityMovement*> (module(entityId, EntityManager::movement));
 }
 
 void EntityManager::registerPositionModule(EntityPosition *module)
 {
-  assert(NULL == _positionModules[module->entityId()]);
-  _positionModules[module->entityId()] = module;
+  registerModule(module, EntityManager::position);
 }
 
 EntityPosition *EntityManager::positionModule(std::size_t entityId)
 {
-  assert(entityId < _maxEntity);
-  return _positionModules[entityId];
+  return static_cast<EntityPosition*> (module(entityId, EntityManager::position));
 }
 
 void EntityManager::registerGraphicHolderModule(EntityGraphicHolder *module)
 {
-  assert(NULL == _graphicHolderModules[module->entityId()]);
-  _graphicHolderModules[module->entityId()] = module;
+  registerModule(module, EntityManager::graphicHolder);
 }
 
 EntityGraphicHolder *EntityManager::GraphicHolderModule(std::size_t entityId)
 {
-  assert(entityId < _maxEntity);
-  return _graphicHolderModules[entityId];
+  return static_cast<EntityGraphicHolder*> (module(entityId, EntityManager::graphicHolder));
 }
 
 void EntityManager::registerStateMachineModule(EntityStateMachine *module)
 {
-  assert(NULL == _stateMachineModules[module->entityId()]);
-  _stateMachineModules[module->entityId()] = module;
+  registerModule(module, EntityManager::stateMachine);
 }
 
 EntityStateMachine *EntityManager::stateMachineModule(std::size_t entityId)
 {
-  assert(entityId < _maxEntity);
-  return _stateMachineModules[entityId];
+  return static_cast<EntityStateMachine*> (module(entityId, EntityManager::stateMachine));
 }
 
 void EntityManager::registerTeamModule(EntityTeam *module)
 {
-  assert(NULL == _teamModules[module->entityId()]);
-  _teamModules[module->entityId()] = module;
+  registerModule(module, EntityManager::team);
 }
 
 EntityTeam *EntityManager::teamModule(std::size_t entityId)
 {
-  assert(entityId < _maxEntity);
-  return _teamModules[entityId];
+return static_cast<EntityTeam*> (module(entityId, EntityManager::team));
 }
 
 void EntityManager::registerWeaponModule(EntityWeapon *module)
 {
-  assert(NULL == _weaponModules[module->entityId()]);
-  _weaponModules[module->entityId()] = module;
+  registerModule(module, EntityManager::weapon);
 }
 
 EntityWeapon *EntityManager::weaponModule(std::size_t entityId)
 {
-  assert(entityId < _maxEntity);
-  return _weaponModules[entityId];
+return static_cast<EntityWeapon*> (module(entityId, EntityManager::weapon));
 }
 
 } // core

@@ -28,7 +28,7 @@ DoorPosition::DoorPosition(std::size_t entityId, const Eigen::Vector2f& centerPo
 }
 
 
-void DoorPosition::update()
+void DoorPosition::update(const int deltaMs)
 { }
 
 } // core

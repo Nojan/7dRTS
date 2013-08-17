@@ -15,7 +15,7 @@ public:
     : EntityPosition(eId, pos)
   { }
 
-  virtual void update();
+  virtual void update(const int deltaMs);
 };
 
 } // core
