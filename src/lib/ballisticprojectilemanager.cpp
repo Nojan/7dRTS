@@ -108,18 +108,15 @@ BallisticProjectileManager::BallisticProjectileManager()
 void BallisticProjectileManager::addProjectile(BallisticProjectile *projectile, EntityTeam* team)
 {
   GameWorld::Instance().scene()->addItem(projectile->graphic());
-  BallisticProjectile* p;
-//  for(std::size_t i =0; i< _projectiles.size(); ++i)
-//  {
-//    p=_projectiles.at(i);
-//    if(NULL == p)
-//    {
-//      p = projectile;
-//      return;
-//    }
-//  }
-
   projectile->setTeam(team);
+  for(std::size_t i =0; i< _projectiles.size(); ++i)
+  {
+    if(_projectiles.at(i) == NULL)
+    {
+      _projectiles[i] = projectile;
+      return;
+    }
+  }
   _projectiles.push_back(projectile);
 }
 
