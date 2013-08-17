@@ -8,9 +8,6 @@
 // std
 #include <memory>
 
-// Eigen
-#include <unsupported/Splines>
-
 // core
 #include "entitymodule.h"
 #include "maptypes.h"

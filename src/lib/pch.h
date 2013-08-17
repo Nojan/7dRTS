@@ -17,6 +17,7 @@
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunused-local-typedefs"
 #include <Eigen/Eigen>
+#include <unsupported/Splines>
 #pragma GCC diagnostic pop
 
 // Qt
