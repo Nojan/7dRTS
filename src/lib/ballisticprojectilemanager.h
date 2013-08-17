@@ -61,7 +61,7 @@ class BallisticProjectileManager
 public:
   BallisticProjectileManager();
 
-  void addProjectile(BallisticProjectile* projectile, EntityTeam *team);
+  void addProjectile(BallisticProjectile* projectile);
 
   void evolve(const float deltas);
 

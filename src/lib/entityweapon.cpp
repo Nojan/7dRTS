@@ -73,7 +73,8 @@ void EntityWeapon::shootAt(const Eigen::Vector2f& position)
   const Eigen::Vector2f selfPosition = entityManager.positionModule(entityId())->position();
   const Eigen::Vector2f projectileOrientation = (position - selfPosition).normalized();
   core::BallisticProjectile * projectile = new core::BallisticProjectile(selfPosition + projectileOrientation*32.f, projectileOrientation, 5);
-  GameWorld::Instance().ballisticProjectileManager().addProjectile(projectile, entityManager.teamModule(entityId()));
+  projectile->setTeam( entityManager.teamModule(entityId()) );
+  GameWorld::Instance().ballisticProjectileManager().addProjectile(projectile);
 }
 
 void EntityWeapon::processDeadEntity(const std::size_t entityId)
