@@ -9,9 +9,9 @@ SoundEngine& SoundEngine::Instance()
 }
 
 SoundEngine::SoundEngine()
-  : _globalVolume(1.f)
-  , _soundVolume(1.f)
+  : _soundVolume(1.f)
   , _musicVolume(1.f)
+  , _globalVolume(1.f)
 {
 }
 
