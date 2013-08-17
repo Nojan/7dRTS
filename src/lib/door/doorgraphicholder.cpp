@@ -26,7 +26,7 @@ void DoorGraphicHolder::openning(bool op)
 }
 
 
-void DoorGraphicHolder::update(const int deltaMs)
+void DoorGraphicHolder::update(const int )
 {
   if(_openning)
   {

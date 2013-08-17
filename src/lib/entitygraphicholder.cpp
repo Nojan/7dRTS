@@ -41,7 +41,7 @@ const graphic::GraphicEntity *EntityGraphicHolder::graphic() const
   return _entityGraphics;
 }
 
-void EntityGraphicHolder::update(const int deltaMs)
+void EntityGraphicHolder::update(const int )
 {
   EntityManager& entityManager = GameWorld::Instance().entityManager();
   EntityPosition* position = entityManager.positionModule(entityId());

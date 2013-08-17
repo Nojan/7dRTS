@@ -59,7 +59,7 @@ void EntityStateMachine::move(const Eigen::Vector2f& target)
 }
 
 
-void EntityStateMachine::update(const int deltaMs)
+void EntityStateMachine::update(const int )
 {
   if(_state == State::Idle)
   {

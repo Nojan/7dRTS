@@ -14,11 +14,11 @@ std::size_t EntityModule::entityId() const
   return _entityId;
 }
 
-void EntityModule::update(const int deltaMs)
+void EntityModule::update(const int )
 {
 }
 
-void EntityModule::processDeadEntity(const std::size_t entityId)
+void EntityModule::processDeadEntity(const std::size_t )
 {
 }
 
