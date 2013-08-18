@@ -7,6 +7,7 @@
 #include "door/doorstatemachine.h"
 #include "entitymanager.h"
 #include "entityposition.h"
+#include "entityteam.h"
 #include "gameworld.h"
 #include "pathfinder.h"
 

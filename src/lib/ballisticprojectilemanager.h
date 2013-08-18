@@ -5,11 +5,13 @@
 // pch
 #include "pch.h"
 
-// core
-#include "entityteam.h"
-
 // graphic
 #include "graphicentity.h"
+
+namespace core
+{
+  class EntityTeam;
+}
 
 namespace graphic
 {

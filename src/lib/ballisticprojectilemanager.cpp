@@ -7,6 +7,7 @@
 #include "entitydamage.h"
 #include "entitygraphicholder.h"
 #include "entityposition.h"
+#include "entityteam.h"
 #include "gameworld.h"
 
 namespace graphic
