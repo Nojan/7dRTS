@@ -185,6 +185,7 @@ void EntityMovement::update(const int deltaMs)
       if(_target->state() != MovementTarget::Abort)
       {
         _position = _splinePath(_pathTime);
+        _position += Eigen::Vector2f(tileHalfSize, tileHalfSize);
       }
     }
   }
