@@ -28,7 +28,7 @@ GraphicEntity::GraphicEntity()
 
 QRectF GraphicEntity::boundingRect() const
 {
-  return QRectF(0, -6, tileSize, tileSize+6);
+  return QRectF(-tileHalfSize, -tileHalfSize-6, tileSize, tileSize+6);
 }
 
 QPainterPath GraphicEntity::shape() const
@@ -44,11 +44,11 @@ void GraphicEntity::paint(QPainter *painter, const QStyleOptionGraphicsItem *opt
   Q_UNUSED(option)
   Q_UNUSED(widget);
   painter->setBrush(_brush);
-  painter->drawEllipse(0, 0, tileSize, tileSize);
+  painter->drawEllipse(-tileHalfSize, -tileHalfSize, tileSize, tileSize);
   if(_hasHealthBar)
   {
       painter->setBrush(Qt::black);
-      painter->drawRect(0, -6, tileSize, 4);
+      painter->drawRect(-tileHalfSize, -tileHalfSize-6, tileSize, 4);
 
       if(_healthPercentage > 0.75f)
           painter->setBrush(Qt::green);
@@ -56,7 +56,7 @@ void GraphicEntity::paint(QPainter *painter, const QStyleOptionGraphicsItem *opt
           painter->setBrush(Qt::yellow);
       else
           painter->setBrush(Qt::red);
-      painter->drawRect(0, -6, tileSize * _healthPercentage, 4);
+      painter->drawRect(-tileHalfSize, -tileHalfSize-6, tileSize * _healthPercentage, 4);
   }
 }
 
