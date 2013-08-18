@@ -62,6 +62,9 @@ class BallisticProjectileManager
 {
 public:
   BallisticProjectileManager();
+  ~BallisticProjectileManager();
+
+  void clear();
 
   void addProjectile(BallisticProjectile* projectile);
 
@@ -69,7 +72,6 @@ public:
 
 private:
   std::vector<BallisticProjectile*> _projectiles;
-  QGraphicsScene * _scene;
 };
 
 } // core

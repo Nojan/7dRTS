@@ -42,6 +42,7 @@ GameWorld::GameWorld()
 GameWorld::~GameWorld()
 {
   assert(_instance == this);
+  _ballisticProjectileManager.clear();
   _instance = nullptr;
 }
 

@@ -106,6 +106,21 @@ BallisticProjectileManager::BallisticProjectileManager()
 {
 }
 
+BallisticProjectileManager::~BallisticProjectileManager()
+{
+  clear();
+}
+
+void BallisticProjectileManager::clear()
+{
+  for(BallisticProjectile *projectile : _projectiles)
+  {
+    if(projectile)
+      delete projectile;
+  }
+  _projectiles.clear();
+}
+
 void BallisticProjectileManager::addProjectile(BallisticProjectile *projectile)
 {
   GameWorld::Instance().scene()->addItem(projectile->graphic());
