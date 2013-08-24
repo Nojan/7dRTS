@@ -144,14 +144,6 @@ static bool collideGraphics(BallisticProjectile& projectile, const size_t entity
   return projectile.graphic()->collidesWithItem(graphicHolder->graphic());
 }
 
-static bool collide(BallisticProjectile& projectile, const size_t entity)
-{
-  EntityPosition* positionModule = GameWorld::Instance().entityManager().positionModule(entity);
-  if(!positionModule)
-    return false;
-  return (positionModule->position() - projectile.position()).norm() < positionModule->size();
-}
-
 void BallisticProjectileManager::evolve(const float deltas)
 {
   EntityManager& entityManager = GameWorld::Instance().entityManager();
@@ -167,7 +159,7 @@ void BallisticProjectileManager::evolve(const float deltas)
       for(std::size_t entityId = 0; entityId<entityCount; ++entityId)
       {
 
-        collided = collide(*projectile, entityId);
+        collided = collideGraphics(*projectile, entityId);
         if(collided)
         {
             if(projectile->team()->team() != entityManager.teamModule(entityId)->team())

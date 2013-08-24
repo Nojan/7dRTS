@@ -166,7 +166,7 @@ void EntityMovement::update(const int deltaMs)
       _pathTime = _pathDuration;
       _tilePosition = _path.back();
       _tileCandidate = _tilePosition;
-      _position = pixelTopLeft(_tilePosition).cast<float>();
+      _position = pixelCenter(_tilePosition).cast<float>();
       _target->setState(MovementTarget::Done);
 
       processDoor();
@@ -185,7 +185,6 @@ void EntityMovement::update(const int deltaMs)
       if(_target->state() != MovementTarget::Abort)
       {
         _position = _splinePath(_pathTime);
-        _position += Eigen::Vector2f(tileHalfSize, tileHalfSize);
       }
     }
   }
@@ -204,7 +203,7 @@ void EntityMovement::computeSplinePath()
   ctls.col(0) = _position;
   for(int i = 1; i < ctls.cols(); ++i)
   {
-    ctls.col(i) = pixelTopLeft(_path[i]).cast<float>();
+    ctls.col(i) = pixelCenter(_path[i]).cast<float>();
   }
 
   // knots(0) => no tile
