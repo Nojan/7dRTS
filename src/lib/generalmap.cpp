@@ -144,7 +144,7 @@ GeneralMap GeneralMap::fromGimpImage(const GimpImage& gImage)
       Tile::Type type = Tile::Type::None;
       Tile::Texture tex = Tile::Texture::None;
       const GimpColor& c = gImage.at(x, y);
-      if(c == gimpGrass || c == gimpGrassEntrance)
+      if(c == gimpGrass || c == gimpGrassEntrance || c == gimpRampartDoor)
       {
         type = Tile::Type::Free;
         tex = Tile::Texture::Grass;
@@ -159,7 +159,7 @@ GeneralMap GeneralMap::fromGimpImage(const GimpImage& gImage)
         type = Tile::Type::Free;
         tex = Tile::Texture::Rampart;
       }
-      else if(c == gimpPath)
+      else if(c == gimpPath || c == gimpPathEntrance)
       {
         type = Tile::Type::Free;
         tex = Tile::Texture::Path;
@@ -199,6 +199,7 @@ GeneralMap GeneralMap::fromGimpImage(const GimpImage& gImage)
 
   bool rampartFound = false;
   Rampart rampart;
+  /// @todo fix multiple door issue
   for(std::size_t x = 0; !rampartFound && x < tileGrid.width(); ++x)
   {
     for(std::size_t y = 0; !rampartFound && y < tileGrid.height(); ++y)

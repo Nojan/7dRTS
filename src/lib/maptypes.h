@@ -157,6 +157,7 @@ struct Rampart
 {
   std::vector<TilePos> tiles;
   std::vector<EdgePos> walls;
+  std::vector<Door> doors;
 };
 
 } // core
