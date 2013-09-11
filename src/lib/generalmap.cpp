@@ -16,6 +16,29 @@ namespace core
  */
 
 
+
+template<typename T, typename Func>
+void applyOnNeigbor(const Grid<T>& grid, int x, int y, Func& func)
+{
+  if(grid.inGrid(x + 1, y))
+  {
+    func(x + 1, y);
+  }
+  if(grid.inGrid(x - 1, y))
+  {
+    func(x - 1, y);
+  }
+  if(grid.inGrid(x, y + 1))
+  {
+    func(x, y + 1);
+  }
+  if(grid.inGrid(x, y - 1))
+  {
+    func(x, y - 1);
+  }
+}
+
+
 void fillFromTexture(const TilePos& pos, const Grid<Tile>& tileGrid,
                      Tile::Texture texture,
                      std::vector<TilePos>& tiles,
@@ -136,6 +159,9 @@ GeneralMap GeneralMap::fromGimpImage(const GimpImage& gImage)
   std::vector<Obstacle> obstacles;
   std::vector<Room> rooms;
 
+  std::vector<EdgePos> rampartDoors;
+  Rampart rampart;
+
   // initialize tile from image
   for(std::size_t x = 0; x < tileGrid.width(); ++x)
   {
@@ -144,7 +170,8 @@ GeneralMap GeneralMap::fromGimpImage(const GimpImage& gImage)
       Tile::Type type = Tile::Type::None;
       Tile::Texture tex = Tile::Texture::None;
       const GimpColor& c = gImage.at(x, y);
-      if(c == gimpGrass || c == gimpGrassEntrance || c == gimpRampartDoor)
+      TilePos pos{tile_index(x), tile_index(y)};
+      if(c == gimpGrass || c == gimpGrassEntrance)
       {
         type = Tile::Type::Free;
         tex = Tile::Texture::Grass;
@@ -158,11 +185,38 @@ GeneralMap GeneralMap::fromGimpImage(const GimpImage& gImage)
       {
         type = Tile::Type::Free;
         tex = Tile::Texture::Rampart;
+
+        rampart.tiles.push_back(pos);
+        auto findWall = [&gImage, &rampart, &pos](int xc, int yc)
+        {
+          const GimpColor& c = gImage.at(xc, yc);
+          if(!(c == gimpRampart || c == gimpRampartEntrance))
+          {
+            rampart.walls.push_back({pos, {xc, yc}});
+          }
+        };
+        applyOnNeigbor(gImage, x, y, findWall);
       }
       else if(c == gimpPath || c == gimpPathEntrance)
       {
         type = Tile::Type::Free;
         tex = Tile::Texture::Path;
+      }
+      else if(c == gimpRampartDoor)
+      {
+        type = Tile::Type::Free;
+        tex = Tile::Texture::Grass;
+
+        auto findEntrance = [&gImage, &rampartDoors, &pos](int xc, int yc)
+        {
+          const GimpColor& c = gImage.at(xc, yc);
+          if(c == gimpPathEntrance || c == gimpGrassEntrance)
+          {
+            rampartDoors.push_back({pos, {xc, yc}});
+          }
+        };
+
+        applyOnNeigbor(gImage, x, y, findEntrance);
       }
 
       tileGrid(x, y) = Tile{type, tex};
@@ -197,30 +251,15 @@ GeneralMap GeneralMap::fromGimpImage(const GimpImage& gImage)
     }
   }
 
-  bool rampartFound = false;
-  Rampart rampart;
-  /// @todo fix multiple door issue
-  for(std::size_t x = 0; !rampartFound && x < tileGrid.width(); ++x)
+  for(const std::vector<EdgePos>& entrance: findEntrance(rampart.tiles, gImage,
+                                                         gimpRampartEntrance,
+                                                         gimpGrassEntrance))
   {
-    for(std::size_t y = 0; !rampartFound && y < tileGrid.height(); ++y)
+    for(const EdgePos& edge: entrance)
     {
-      if(tileGrid(x, y).texture == Tile::Texture::Rampart)
-      {
-        rampart = createRampart({tile_index(x), tile_index(y)}, tileGrid);
-        for(const std::vector<EdgePos>& entrance:
-            findEntrance(rampart.tiles, gImage,
-                         gimpRampartEntrance,
-                         gimpGrassEntrance))
-        {
-          for(const EdgePos& edge: entrance)
-          {
-            rampart.walls.erase(
-                  std::find(std::begin(rampart.walls),
-                            std::end(rampart.walls), edge));
-          }
-        }
-        rampartFound = true;
-      }
+      rampart.walls.erase(
+            std::find(std::begin(rampart.walls),
+                      std::end(rampart.walls), edge));
     }
   }
 
