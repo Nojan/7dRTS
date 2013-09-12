@@ -79,6 +79,18 @@ void GameWorld::loadMap(const std::string& mapName)
       _graphicsScene.addItem(doorGraphic);
     }
   }
+
+  for(const core::Door& d: _gMap.rampart().doors)
+  {
+    double length = d.edges().size()*core::tileSize;
+    const core::EdgePos& edge = d.edges().front();
+    double angle = edge.from.x == edge.to.x ? 0. : 90.;
+    Eigen::Vector2f pos = d.center().cast<float>();
+    graphic::GraphicDoor* doorGraphic = new graphic::GraphicDoor(length, angle);
+    const core::EntityTeam::Team teamId(core::EntityTeam::TeamA);
+    EntityManagerHelpers::createUnitDoor(doorGraphic, pos, d.edges(), teamId);
+    _graphicsScene.addItem(doorGraphic);
+  }
 }
 
 
