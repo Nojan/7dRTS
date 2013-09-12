@@ -181,7 +181,7 @@ GeneralMap GeneralMap::fromGimpImage(const GimpImage& gImage)
         type = Tile::Type::Free;
         tex = Tile::Texture::Floor;
       }
-      else if(c == gimpRampart || c == gimpRampartEntrance)
+      else if(c == gimpRampart)
       {
         type = Tile::Type::Free;
         tex = Tile::Texture::Rampart;
@@ -191,6 +191,22 @@ GeneralMap GeneralMap::fromGimpImage(const GimpImage& gImage)
         {
           const GimpColor& c = gImage.at(xc, yc);
           if(!(c == gimpRampart || c == gimpRampartEntrance))
+          {
+            rampart.walls.push_back({pos, {xc, yc}});
+          }
+        };
+        applyOnNeigbor(gImage, x, y, findWall);
+      }
+      else if(c == gimpRampartEntrance)
+      {
+        type = Tile::Type::Free;
+        tex = Tile::Texture::Rampart;
+        rampart.tiles.push_back(pos);
+        auto findWall = [&gImage, &rampart, &pos](int xc, int yc)
+        {
+          const GimpColor& c = gImage.at(xc, yc);
+          if(!(c == gimpRampart || c == gimpRampartEntrance ||
+               c == gimpGrassEntrance))
           {
             rampart.walls.push_back({pos, {xc, yc}});
           }
@@ -215,7 +231,6 @@ GeneralMap GeneralMap::fromGimpImage(const GimpImage& gImage)
             rampartDoors.push_back({pos, {xc, yc}});
           }
         };
-
         applyOnNeigbor(gImage, x, y, findEntrance);
       }
 
@@ -248,18 +263,6 @@ GeneralMap GeneralMap::fromGimpImage(const GimpImage& gImage)
         }
         rooms.push_back(room);
       }
-    }
-  }
-
-  for(const std::vector<EdgePos>& entrance: findEntrance(rampart.tiles, gImage,
-                                                         gimpRampartEntrance,
-                                                         gimpGrassEntrance))
-  {
-    for(const EdgePos& edge: entrance)
-    {
-      rampart.walls.erase(
-            std::find(std::begin(rampart.walls),
-                      std::end(rampart.walls), edge));
     }
   }
 
