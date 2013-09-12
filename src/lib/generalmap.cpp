@@ -185,8 +185,8 @@ GeneralMap GeneralMap::fromGimpImage(const GimpImage& gImage)
       {
         type = Tile::Type::Free;
         tex = Tile::Texture::Rampart;
-
         rampart.tiles.push_back(pos);
+
         auto findWall = [&gImage, &rampart, &pos](int xc, int yc)
         {
           const GimpColor& c = gImage.at(xc, yc);
@@ -202,6 +202,7 @@ GeneralMap GeneralMap::fromGimpImage(const GimpImage& gImage)
         type = Tile::Type::Free;
         tex = Tile::Texture::Rampart;
         rampart.tiles.push_back(pos);
+
         auto findWall = [&gImage, &rampart, &pos](int xc, int yc)
         {
           const GimpColor& c = gImage.at(xc, yc);
@@ -264,6 +265,33 @@ GeneralMap GeneralMap::fromGimpImage(const GimpImage& gImage)
         rooms.push_back(room);
       }
     }
+  }
+
+  // find all adjacent rampart door edge to make rampart doors
+  while(!rampartDoors.empty())
+  {
+    std::vector<EdgePos> edges = {rampartDoors.back()};
+    rampartDoors.pop_back();
+    bool found = true;
+    while(found)
+    {
+      found = false;
+      for(const EdgePos& e1: edges)
+      {
+        rampartDoors.erase(std::remove_if(rampartDoors.begin(), rampartDoors.end(),
+                                          [&e1, &edges, &found](const EdgePos& e2)
+        {
+          if(e1.from.manhattan(e2.from) == 1)
+          {
+            found = true;
+            edges.push_back(e2);
+            return true;
+          }
+          return false;
+        }), rampartDoors.end());
+      }
+    }
+    rampart.doors.push_back({edges});
   }
 
   return GeneralMap(std::move(tileGrid), std::move(obstacles),

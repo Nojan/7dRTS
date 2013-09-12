@@ -35,6 +35,11 @@ struct TilePos
     , y(pos.y())
   { }
 
+  int manhattan(const TilePos& tp) const
+  {
+    return std::abs(x - tp.x) + std::abs(y - tp.y);
+  }
+
   TilePos& operator=(const Eigen::Vector2i& pos)
   {
     x = pos.x();
